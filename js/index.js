@@ -5,6 +5,9 @@
   // start / pause button
   let button = document.createElement('button');
   $(button).clone().addClass('start-btn').text('Start').appendTo(".pomodoro-button-wrapper.footer");
+
+  // reset button
+  $(button).clone().addClass('reset-btn').text('Reset').appendTo(".pomodoro-button-wrapper.footer");
   
   // pomodoro button 
   $(button).clone().addClass('pomodoro-btn').text('Pomodoro').appendTo(".pomodoro-button-wrapper.header");
