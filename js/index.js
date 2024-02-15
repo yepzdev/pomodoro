@@ -44,20 +44,9 @@
         $("#timer").text(formatTime(timeLeft));
     }
 
-    // function startTimer() {
-    //     timer = setInterval(function() {
-    //         timeLeft--;
-    //         updateTimer();
-    //         if (timeLeft === 0) {
-    //             clearInterval(timer);
-    //             alert("¡Tiempo terminado!");
-    //         }
-    //     }, 1000);
-    // }
-
-
     function toggleTimer() {
         if (isPaused) {
+            console.log('inicia');
             timer = setInterval(function() {
                 timeLeft--;
                 updateTimer();
@@ -69,6 +58,7 @@
             isPaused = false;
             $("#start").text("Pause");
         } else {
+            console.log('pausa');
             clearInterval(timer);
             isPaused = true;
             $("#start").text("Start");
@@ -76,27 +66,8 @@
     }
 
     $("#start").click(function() {
-        // if (!isPaused) {
-        //     startTimer();
-        // } else {
-        //     timer = setInterval(function() {
-        //         timeLeft--;
-        //         updateTimer();
-        //         if (timeLeft === 0) {
-        //             clearInterval(timer);
-        //             alert("¡Tiempo terminado!");
-        //         }
-        //     }, 1000);
-        //     isPaused = false;
-        // }
-
         toggleTimer();
     });
-
-    // $("#pause").click(function() {
-    //     clearInterval(timer);
-    //     isPaused = true;
-    // });
 
     $("#reset").click(function() {
         clearInterval(timer);
