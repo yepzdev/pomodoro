@@ -44,21 +44,20 @@
         $("#timer").text(formatTime(timeLeft));
     }
 
-    function startTimer() {
-        timer = setInterval(function() {
-            timeLeft--;
-            updateTimer();
-            if (timeLeft === 0) {
-                clearInterval(timer);
-                alert("¡Tiempo terminado!");
-            }
-        }, 1000);
-    }
+    // function startTimer() {
+    //     timer = setInterval(function() {
+    //         timeLeft--;
+    //         updateTimer();
+    //         if (timeLeft === 0) {
+    //             clearInterval(timer);
+    //             alert("¡Tiempo terminado!");
+    //         }
+    //     }, 1000);
+    // }
 
-    $("#start").click(function() {
-        if (!isPaused) {
-            startTimer();
-        } else {
+
+    function toggleTimer() {
+        if (isPaused) {
             timer = setInterval(function() {
                 timeLeft--;
                 updateTimer();
@@ -68,13 +67,36 @@
                 }
             }, 1000);
             isPaused = false;
+            $("#start").text("Pause");
+        } else {
+            clearInterval(timer);
+            isPaused = true;
+            $("#start").text("Start");
         }
+    }
+
+    $("#start").click(function() {
+        // if (!isPaused) {
+        //     startTimer();
+        // } else {
+        //     timer = setInterval(function() {
+        //         timeLeft--;
+        //         updateTimer();
+        //         if (timeLeft === 0) {
+        //             clearInterval(timer);
+        //             alert("¡Tiempo terminado!");
+        //         }
+        //     }, 1000);
+        //     isPaused = false;
+        // }
+
+        toggleTimer();
     });
 
-    $("#pause").click(function() {
-        clearInterval(timer);
-        isPaused = true;
-    });
+    // $("#pause").click(function() {
+    //     clearInterval(timer);
+    //     isPaused = true;
+    // });
 
     $("#reset").click(function() {
         clearInterval(timer);
