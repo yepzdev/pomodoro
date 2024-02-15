@@ -32,7 +32,7 @@
   $(document).ready(function() {
     let timer;
     let timeLeft = 25 * 60; // 25 minutes in seconds
-    let isPaused = false;
+    let isPaused = true;
 
     function formatTime(seconds) {
         let minutes = Math.floor(seconds / 60);
