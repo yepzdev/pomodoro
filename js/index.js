@@ -29,7 +29,7 @@
   $(button).clone().addClass('short-break-btn').text('Short Break').appendTo(".pomodoro-button-wrapper.header");
 
   // codigo de chatGPT
-  $(document).ready(function() {
+  $(document).ready(() => {
     let timer;
     let timeLeft = 25 * 60; // 25 minutes in seconds
     let isPaused = true;
@@ -46,8 +46,7 @@
 
     function toggleTimer() {
         if (isPaused) {
-            console.log('inicia');
-            timer = setInterval(function() {
+            timer = setInterval(() => {
                 timeLeft--;
                 updateTimer();
                 if (timeLeft === 0) {
@@ -58,18 +57,15 @@
             isPaused = false;
             $("#start").text("Pause");
         } else {
-            console.log('pausa');
             clearInterval(timer);
             isPaused = true;
             $("#start").text("Start");
         }
     }
 
-    $("#start").click(function() {
-        toggleTimer();
-    });
+    $("#start").click(() => toggleTimer());
 
-    $("#reset").click(function() {
+    $("#reset").click(() => {
         clearInterval(timer);
         timeLeft = 25 * 60;
         updateTimer();
