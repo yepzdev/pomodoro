@@ -64,41 +64,33 @@
     }
 
     $("#short-break-btn").click(() => {
-        timeLeft = 5 * 60;
-        clearInterval(timer);
-        isPaused = true;
-        $("#start").text("Start");
-        updateTimer();
+        resetInterval(5);
     });
 
     $("#long-break-btn").click(() => {
-        timeLeft = 15 * 60;
-        clearInterval(timer);
-        isPaused = true;
-        $("#start").text("Start");
-        updateTimer();
+        resetInterval(15);
     });
 
 
     $("#pomodoro-btn").click(() => {
-        timeLeft = 25 * 60;
-        clearInterval(timer);
-        isPaused = true;
-        $("#start").text("Start");
-        updateTimer();
+        resetInterval(25);
     });
 
     $("#start").click(() => toggleTimer());
 
     $("#reset").click(() => {
-        clearInterval(timer);
-        timeLeft = 25 * 60;
-        isPaused = false;
-        $("#start").text("Start");
-        updateTimer();
+        resetInterval(25);
     });
 
     updateTimer();
+
+    const resetInterval = (time) => {
+        timeLeft = time * 60;
+        clearInterval(timer);
+        isPaused = true;
+        $("#start").text("Start");
+        updateTimer();
+    }
 });
 
 })();
