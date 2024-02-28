@@ -93,8 +93,9 @@
     $("#reset").click(() => {
         clearInterval(timer);
         timeLeft = 25 * 60;
-        updateTimer();
         isPaused = false;
+        $("#start").text("Start");
+        updateTimer();
     });
 
     updateTimer();
