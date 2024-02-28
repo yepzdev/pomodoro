@@ -65,17 +65,23 @@
 
     $("#short-break-btn").click(() => {
         timeLeft = 5 * 60;
+        // isPaused = true;
+        clearInterval(timer);
         updateTimer();
     });
 
     $("#long-break-btn").click(() => {
         timeLeft = 15 * 60;
+        // isPaused = true;
+        clearInterval(timer);
         updateTimer();
     });
 
 
     $("#pomodoro-btn").click(() => {
         timeLeft = 25 * 60;
+        // isPaused = true;
+        clearInterval(timer);
         updateTimer();
     });
 
