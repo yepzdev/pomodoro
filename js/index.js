@@ -20,10 +20,10 @@
     .appendTo(".pomodoro-button-wrapper.footer");
   
   // pomodoro button 
-  $(button).clone().addClass('pomodoro-btn').text('Pomodoro').appendTo(".pomodoro-button-wrapper.header");
+  $(button).clone().attr('id', 'pomodoro-btn').text('Pomodoro').appendTo(".pomodoro-button-wrapper.header");
 
   // long break button  
-  $(button).clone().addClass('long-break-btn').text('Long Break').appendTo(".pomodoro-button-wrapper.header");
+  $(button).clone().attr('id', 'long-break-btn').text('Long Break').appendTo(".pomodoro-button-wrapper.header");
 
   // short break button 
   $(button).clone().addClass('short-break-btn').text('Short Break').appendTo(".pomodoro-button-wrapper.header");
@@ -33,6 +33,8 @@
     let timer;
     let timeLeft = 25 * 60; // 25 minutes in seconds
     let isPaused = true;
+
+
 
     function formatTime(seconds) {
         let minutes = Math.floor(seconds / 60);
