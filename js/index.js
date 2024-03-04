@@ -6,7 +6,7 @@
 
   task_field.clone()
     .attr("id", "task-field")
-    .appendTo(".task-list-container");
+    .appendTo(".task-container");
 
   $(button)
     .clone()
@@ -49,7 +49,7 @@
     .clone()
     .attr("id", "add-task")
     .text("Add task")
-    .appendTo(".task-list-container");
+    .appendTo(".task-container");
 
   $(document).ready(() => {
     let timer;
