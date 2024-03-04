@@ -1,14 +1,12 @@
 (() => {
   "use strict";
 
-  let button = document.createElement("button");
+  let button = $("<button>"),
+    task_field = $("<input>");
 
-  // crea un elemento con jquery
-
-  // text field
-  let task_field = $("<input>");
-
-  task_field.clone().attr("id").appendTo(".task-list-container");
+  task_field.clone()
+    .attr("id", "task-field")
+    .appendTo(".task-list-container");
 
   $(button)
     .clone()
