@@ -2,8 +2,17 @@
 
   "use strict";
 
-  // start / pause button
   let button = document.createElement('button');
+
+   // crea un elemento con jquery
+
+   // text field 
+   let task_field = $("<input>");
+
+   task_field
+   .clone()
+   .attr("id")
+   .appendTo(".task-list-container");
 
   $(button)
     .clone()
