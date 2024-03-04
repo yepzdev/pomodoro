@@ -4,6 +4,7 @@
 
   // start / pause button
   let button = document.createElement('button');
+
   $(button)
     .clone()
     .attr('id', 'start')
@@ -28,7 +29,10 @@
   // short break button 
   $(button).clone().attr('id', 'short-break-btn').text('Short Break').appendTo(".pomodoro-button-wrapper.header");
 
-  // codigo de chatGPT
+  // add task button
+  $(button).clone().attr('id', 'add-task').text('Add task').appendTo(".task-list-container");
+
+
   $(document).ready(() => {
     let timer;
     let timeLeft = 25 * 60; // 25 minutes in seconds
