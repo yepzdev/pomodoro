@@ -6,6 +6,17 @@ import * as buttons from "./buttons.js";
 let task_field = $("<input>");
 task_field.clone().attr("id", "task-field").appendTo(".task-container");
 
+$(() => {
+  $("#add-task").click(() => {
+    
+    const newTask = $("#task-field").val();
+    if (newTask !== "") {
+      $("#list-ul-pending").append(`<li>${newTask}</li>`);
+      $("#task-field").val('');
+    }
+  })
+})
+
 $(document).ready(() => {
   let timer;
   let timeLeft = 25 * 60; // 25 minutes in seconds
