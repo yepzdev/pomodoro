@@ -47,15 +47,13 @@ $(button)
 .appendTo(".task-container");
 
 // finish task
-$(button)
+export let finish_task = $(button)
 .clone()
 .attr("id", "check-task")
-.text("finish")
-.appendTo(".task-container");
+.text("finish");
 
 // remove task
-$(button)
+export let remove_task = $(button)
 .clone()
 .attr("id", "remove-task")
-.text("remove")
-.appendTo(".task-container");
+.text("remove");

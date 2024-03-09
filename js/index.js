@@ -17,18 +17,20 @@ let pending_list = $("<div>")
 
 // complete list container
 let complete_list = $("<div>")
-.attr({
-  id: "complete-list",
-  class: "complete-list-container",
-})
-.html("<h3>complete list</h3><ul></ul>")
-.appendTo("#task-list");
+  .attr({
+    id: "complete-list",
+    class: "complete-list-container",
+  })
+  .html("<h3>complete list</h3><ul></ul>")
+  .appendTo("#task-list");
 
 $(() => {
   $("#add-task").click(() => {
-    const newTask = $("#task-field").val();
+    const newTask = $("#task-field").val(),
+      finish = buttons.finish_task.get(0).outerHTML,
+      remove = buttons.remove_task.get(0).outerHTML;
     if (newTask !== "") {
-      $("#pending-list ul").append(`<li>${newTask}</li>`);
+      $("#pending-list ul").append(`<li>${newTask}${finish}${remove}</li>`);
       $("#task-field").val("");
     }
   });
