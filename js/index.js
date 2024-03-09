@@ -32,6 +32,10 @@ $(() => {
     if (newTask !== "") {
       $("#pending-list ul").append(`<li>${newTask}${finish}${remove}</li>`);
       $("#task-field").val("");
+      
+        $(".remove-task").click(function () {
+          $(this).parent().remove();
+        });
     }
   });
 });

@@ -49,11 +49,11 @@ $(button)
 // finish task
 export let finish_task = $(button)
 .clone()
-.attr("id", "check-task")
+.addClass("check-task")
 .text("finish");
 
 // remove task
 export let remove_task = $(button)
 .clone()
-.attr("id", "remove-task")
+.addClass("remove-task")
 .text("remove");
