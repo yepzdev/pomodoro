@@ -3,19 +3,36 @@
 import * as buttons from "./buttons.js";
 
 // task list field
-let task_field = $("<input>");
-task_field.clone().attr("id", "task-field").appendTo(".task-container");
+let add_task_field = $("<input>");
+add_task_field.clone().attr("id", "task-field").appendTo(".task-container");
+
+// pending list container
+let pending_list = $("<div>")
+  .attr({
+    id: "pending-list",
+    class: "pending-list-container",
+  })
+  .html("<h3>Pending list</h3><ul></ul>")
+  .appendTo("#task-list");
+
+// complete list container
+let complete_list = $("<div>")
+.attr({
+  id: "complete-list",
+  class: "complete-list-container",
+})
+.html("<h3>complete list</h3><ul></ul>")
+.appendTo("#task-list");
 
 $(() => {
   $("#add-task").click(() => {
-    
     const newTask = $("#task-field").val();
     if (newTask !== "") {
-      $("#list-ul-pending").append(`<li>${newTask}</li>`);
-      $("#task-field").val('');
+      $("#pending-list ul").append(`<li>${newTask}</li>`);
+      $("#task-field").val("");
     }
-  })
-})
+  });
+});
 
 $(document).ready(() => {
   let timer;
@@ -26,12 +43,13 @@ $(document).ready(() => {
     let minutes = Math.floor(seconds / 60);
     let remainingSeconds = seconds % 60;
     return `${minutes < 10 ? "0" : ""}${minutes}:${
-      remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
+      remainingSeconds < 10 ? "0" : ""
+    }${remainingSeconds}`;
   }
 
   const updateTimer = () => {
     $("#timer").text(formatTime(timeLeft));
-  }
+  };
 
   const toggleTimer = () => {
     if (isPaused) {
@@ -50,7 +68,7 @@ $(document).ready(() => {
       isPaused = true;
       $("#start").text("Start");
     }
-  }
+  };
 
   $("#short-break-btn").click(() => {
     resetInterval(5);

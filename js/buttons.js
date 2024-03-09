@@ -37,9 +37,25 @@ $(button)
 .text("Short Break")
 .appendTo(".pomodoro-button-wrapper.header");
 
+// ======================== task list elements ==============================
+
 // add task
 $(button)
 .clone()
 .attr("id", "add-task")
 .text("Add task")
+.appendTo(".task-container");
+
+// finish task
+$(button)
+.clone()
+.attr("id", "check-task")
+.text("finish")
+.appendTo(".task-container");
+
+// remove task
+$(button)
+.clone()
+.attr("id", "remove-task")
+.text("remove")
 .appendTo(".task-container");
