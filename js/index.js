@@ -1,13 +1,13 @@
 "use strict";
 
-import * as buttons from "./buttons.js";
+import * as button from "./buttons.js";
 
 // task list field
-let add_task_field = $("<input>");
-add_task_field.clone().attr("id", "task-field").appendTo(".task-container");
+let addTaskField = $("<input>");
+addTaskField.clone().attr("id", "task-field").appendTo(".task-container");
 
 // pending list container
-let pending_list = $("<div>")
+let pendingList = $("<div>")
   .attr({
     id: "pending-list",
     class: "pending-list-container",
@@ -15,7 +15,7 @@ let pending_list = $("<div>")
   .html("<h3>Pending list</h3><ul></ul>");
 
 // complete list container
-let complete_list = $("<div>")
+let completeList = $("<div>")
   .attr({
     id: "complete-list",
     class: "complete-list-container",
@@ -26,10 +26,10 @@ $(() => {
   let counter = 0;
   $("#add-task").click(() => {
     const newTask = $("#task-field").val(),
-      finish = buttons.finish_task.get(0).outerHTML,
-      remove = buttons.remove_task.get(0).outerHTML;
+      finish = button.finish.get(0).outerHTML,
+      remove = button.remove.get(0).outerHTML;
     if (newTask !== "") {
-      pending_list.appendTo("#task-list");
+      pendingList.appendTo("#task-list");
       let taskItem = $("#pending-list ul").append(
         `<li data-task-id="${counter}">${newTask}${finish}${remove}</li>`
       );

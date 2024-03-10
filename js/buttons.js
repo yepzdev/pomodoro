@@ -1,4 +1,4 @@
-export let button = $("<button>");
+let button = $("<button>");
 
 // start
 $(button)
@@ -46,14 +46,14 @@ $(button)
 .text("Add task")
 .appendTo(".task-container");
 
-// finish task
-export let finish_task = $(button)
+// finish
+export let finish = $(button)
 .clone()
 .addClass("check-task")
 .text("finish");
 
-// remove task
-export let remove_task = $(button)
+// remove
+export let remove = $(button)
 .clone()
 .addClass("remove-task")
 .text("remove");
