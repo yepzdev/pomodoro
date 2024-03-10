@@ -12,8 +12,7 @@ let pending_list = $("<div>")
     id: "pending-list",
     class: "pending-list-container",
   })
-  .html("<h3>Pending list</h3><ul></ul>")
-  .appendTo("#task-list");
+  .html("<h3>Pending list</h3><ul></ul>");
 
 // complete list container
 let complete_list = $("<div>")
@@ -21,21 +20,31 @@ let complete_list = $("<div>")
     id: "complete-list",
     class: "complete-list-container",
   })
-  .html("<h3>complete list</h3><ul></ul>")
-  .appendTo("#task-list");
+  .html("<h3>complete list</h3><ul></ul>");
 
 $(() => {
+  let counter = 0;
   $("#add-task").click(() => {
     const newTask = $("#task-field").val(),
       finish = buttons.finish_task.get(0).outerHTML,
       remove = buttons.remove_task.get(0).outerHTML;
     if (newTask !== "") {
-      $("#pending-list ul").append(`<li>${newTask}${finish}${remove}</li>`);
+      pending_list.appendTo("#task-list");
+      let taskItem = $("#pending-list ul").append(
+        `<li data-task-id="${counter}">${newTask}${finish}${remove}</li>`
+      );
       $("#task-field").val("");
-      
-        $(".remove-task").click(function () {
-          $(this).parent().remove();
-        });
+      counter++;
+
+      taskItem.find(".remove-task").click(function () {
+        const taskIdToRemove = $(this).closest("li").attr("data-task-id");
+        $(`[data-task-id="${taskIdToRemove}"]`).remove();
+
+        if (!taskItem.find(".remove-task").length) {
+          $("#pending-list").remove();
+          counter = 0;
+        }
+      });
     }
   });
 });
