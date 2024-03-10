@@ -30,7 +30,7 @@ $(() => {
       remove = button.remove.get(0).outerHTML;
     if (newTask !== "") {
       pendingList.appendTo("#task-list");
-      let taskItem = $("#pending-list ul").append(
+      let taskItem = $("#pending-list ul").html(
         `<li data-task-id="${counter}">${newTask}${finish}${remove}</li>`
       );
       $("#task-field").val("");
@@ -53,6 +53,9 @@ $(document).ready(() => {
   let timer;
   let timeLeft = 25 * 60; // 25 minutes in seconds
   let isPaused = true;
+  const POMODORO = 25;
+  const SHORT_BREAK = 5;
+  const LONG_BREAK = 15;
 
   function formatTime(seconds) {
     let minutes = Math.floor(seconds / 60);
@@ -86,21 +89,21 @@ $(document).ready(() => {
   };
 
   $("#short-break-btn").click(() => {
-    resetInterval(5);
+    resetInterval(SHORT_BREAK);
   });
 
   $("#long-break-btn").click(() => {
-    resetInterval(15);
+    resetInterval(LONG_BREAK);
   });
 
   $("#pomodoro-btn").click(() => {
-    resetInterval(25);
+    resetInterval(POMODORO);
   });
 
   $("#start").click(() => toggleTimer());
 
   $("#reset").click(() => {
-    resetInterval(25);
+    resetInterval(POMODORO);
   });
 
   updateTimer();
