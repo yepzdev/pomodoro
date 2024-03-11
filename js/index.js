@@ -1,4 +1,4 @@
-"use strict";
+// "use strict";
 
 import * as button from "./buttons.js";
 
@@ -22,30 +22,40 @@ let completeList = $("<div>")
   })
   .html("<h3>complete list</h3><ul></ul>");
 
-$(() => {
-  let counter = 0;
-  $("#add-task").click(() => {
+class TaskManager {
+  constructor() {
+    this.taskId = 0;
+  }
+
+  addTask() {
     const newTask = $("#task-field").val(),
       finish = button.finish.get(0).outerHTML,
       remove = button.remove.get(0).outerHTML;
     if (newTask !== "") {
       pendingList.appendTo("#task-list");
-      let taskItem = $("#pending-list ul").html(
-        `<li data-task-id="${counter}">${newTask}${finish}${remove}</li>`
+      let taskItem = $("#pending-list ul").append(
+        `<li data-task-id="${this.taskId}">${newTask}${finish}${remove}</li>`
       );
       $("#task-field").val("");
-      counter++;
+      this.taskId++;
 
       taskItem.find(".remove-task").click(function () {
         const taskIdToRemove = $(this).closest("li").attr("data-task-id");
         $(`[data-task-id="${taskIdToRemove}"]`).remove();
-
+        
         if (!taskItem.find(".remove-task").length) {
           $("#pending-list").remove();
-          counter = 0;
+          this.taskId = 0;
         }
       });
     }
+  }
+}
+
+$(document).ready(function () {
+  const taskManager = new TaskManager();
+  $("#add-task").click(function () {
+    taskManager.addTask();
   });
 });
 
