@@ -25,31 +25,31 @@ let finishList = $("<div>")
 class TaskManager {
   constructor() {
     this.taskId = 0;
-    this.finish = button.finish.get(0).outerHTML;
-    this.remove = button.remove.get(0).outerHTML;
-    this.undo = button.undo.get(0).outerHTML;
+    this.finishButton = button.finish.get(0).outerHTML;
+    this.removeButton = button.remove.get(0).outerHTML;
+    this.undoButton = button.undo.get(0).outerHTML;
   }
 
   isEmptyTask(name) {
     return name !== "";
   }
 
-  addTask(name = null) {
+  add(name = null) {
     let task = name || $("#task-field").val();
     if (this.isEmptyTask(name)) {
       pendingList.appendTo("#task-list");
       let taskItem = $("#pending-list ul").append(
-        `<li data-task-id="${this.taskId}">${task}${this.finish}${this.remove}</li>`
+        `<li data-task-id="${this.taskId}">${task}${this.finishButton}${this.removeButton}</li>`
       );
       $("#task-field").val("");
       this.taskId++;
-      this.removeTask(taskItem);
-      this.finishTask(taskItem);
+      this.remove(taskItem);
+      this.finish(taskItem);
     }
   }
 
   // dynamically generates the remove and finish button
-  removeTask(item) {
+  remove(item) {
     item.find(".remove-task").click(function () {
       const taskIdToRemove = $(this).closest("li").attr("data-task-id");
       $(`[data-task-id="${taskIdToRemove}"]`).remove();
@@ -62,7 +62,7 @@ class TaskManager {
     });
   }
 
-  finishTask(item) {
+  finish(item) {
     let self = this;
     item.find(".finish-task").click(function () {
       finishList.appendTo("#task-list");
@@ -72,28 +72,28 @@ class TaskManager {
       let ul = finishList.find("ul").append(liTaskItem);
       finishList.find("button").remove();
       // attach the undo button
-      ul.find("li").append(`${self.undo}`);
-      self.undoTask(self);
+      ul.find("li").append(`${self.undoButton}`);
+      self.undo(self);
     });
   }
 
-  undoTask(self) {
+  undo(self) {
     $("#finish-list")
       .find(".undo-button")
       .click(function () {
         let liTaskItem = $(this).parent();
         liTaskItem.find("button").remove();
         let name = liTaskItem.text();
-        self.addTask(name);
+        self.add(name);
         liTaskItem.remove();
       });
   }
 }
 
 $(document).ready(function () {
-  const taskManager = new TaskManager();
+  const task = new TaskManager();
   $("#add-task").click(function () {
-    taskManager.addTask();
+    task.add();
   });
 });
 
