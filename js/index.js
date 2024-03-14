@@ -31,12 +31,15 @@ class TaskManager {
     this.undo   = button.undo.get(0).outerHTML;
   }
 
-  addTask(undoTask = null) {
-    let newTask = undoTask || $("#task-field").val();
+  isEmptyTask(name) {
+    return name !== "";
+  }
 
-    if (newTask !== "") {
+  addTask(name = null) {
+    let task = name || $("#task-field").val();
+    if (this.isEmptyTask(name)) {
       pendingList.appendTo("#task-list");
-      let taskItem = $("#pending-list ul").append(`<li data-task-id="${this.taskId}">${newTask}${this.finish}${this.remove}</li>`) ;
+      let taskItem = $("#pending-list ul").append(`<li data-task-id="${this.taskId}">${task}${this.finish}${this.remove}</li>`) ;
       $("#task-field").val("");
       this.taskId++;
       this.removeTask(taskItem);
@@ -61,18 +64,21 @@ class TaskManager {
   finishTask(item) {
     let self = this;
     item.find(".finish-task").click(function () {
-      let finishTask = $(this).parent();
       finishList.appendTo("#task-list");
-      let finishUl = finishList.find("ul").append(finishTask);
+      // gets the task item
+      let liTaskItem = $(this).parent();
+      // attached to unordered list
+      let ul = finishList.find("ul").append(liTaskItem);
       finishList.find("button").remove();
-      finishUl.find("li").append(`${self.undo}`);
+      // attach the undo button
+      ul.find("li").append(`${self.undo}`);
 
       $("#finish-list").find(".undo-button").click( function () { 
-       let undoTask = $(this).parent();
-       undoTask.find("button").remove();
-       let undoText = undoTask.text();
-       self.addTask(undoText);
-       undoTask.remove();
+       let liTaskItem = $(this).parent();
+       liTaskItem.find("button").remove();
+       let name = liTaskItem.text();
+       self.addTask(name);
+       liTaskItem.remove();
       })
     });
   }
