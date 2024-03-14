@@ -23,12 +23,11 @@ let finishList = $("<div>")
   .html("<h3>complete list</h3><ul></ul>");
 
 class TaskManager {
-    
   constructor() {
     this.taskId = 0;
     this.finish = button.finish.get(0).outerHTML;
     this.remove = button.remove.get(0).outerHTML;
-    this.undo   = button.undo.get(0).outerHTML;
+    this.undo = button.undo.get(0).outerHTML;
   }
 
   isEmptyTask(name) {
@@ -39,7 +38,9 @@ class TaskManager {
     let task = name || $("#task-field").val();
     if (this.isEmptyTask(name)) {
       pendingList.appendTo("#task-list");
-      let taskItem = $("#pending-list ul").append(`<li data-task-id="${this.taskId}">${task}${this.finish}${this.remove}</li>`) ;
+      let taskItem = $("#pending-list ul").append(
+        `<li data-task-id="${this.taskId}">${task}${this.finish}${this.remove}</li>`
+      );
       $("#task-field").val("");
       this.taskId++;
       this.removeTask(taskItem);
@@ -52,7 +53,7 @@ class TaskManager {
     item.find(".remove-task").click(function () {
       const taskIdToRemove = $(this).closest("li").attr("data-task-id");
       $(`[data-task-id="${taskIdToRemove}"]`).remove();
-      
+
       // remove unordered list if there are no tasks
       if (!item.find(".remove-task").length) {
         $("#pending-list").remove();
@@ -72,17 +73,21 @@ class TaskManager {
       finishList.find("button").remove();
       // attach the undo button
       ul.find("li").append(`${self.undo}`);
-
-      $("#finish-list").find(".undo-button").click( function () { 
-       let liTaskItem = $(this).parent();
-       liTaskItem.find("button").remove();
-       let name = liTaskItem.text();
-       self.addTask(name);
-       liTaskItem.remove();
-      })
+      self.undoTask(self);
     });
   }
-  
+
+  undoTask(self) {
+    $("#finish-list")
+      .find(".undo-button")
+      .click(function () {
+        let liTaskItem = $(this).parent();
+        liTaskItem.find("button").remove();
+        let name = liTaskItem.text();
+        self.addTask(name);
+        liTaskItem.remove();
+      });
+  }
 }
 
 $(document).ready(function () {
