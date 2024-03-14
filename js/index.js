@@ -15,41 +15,68 @@ let pendingList = $("<div>")
   .html("<h3>Pending list</h3><ul></ul>");
 
 // complete list container
-let completeList = $("<div>")
+let finishList = $("<div>")
   .attr({
-    id: "complete-list",
-    class: "complete-list-container",
+    id: "finish-list",
+    class: "finish-list-container",
   })
   .html("<h3>complete list</h3><ul></ul>");
 
 class TaskManager {
+    
   constructor() {
     this.taskId = 0;
+    this.finish = button.finish.get(0).outerHTML;
+    this.remove = button.remove.get(0).outerHTML;
+    this.undo   = button.undo.get(0).outerHTML;
   }
 
-  addTask() {
-    const newTask = $("#task-field").val(),
-      finish = button.finish.get(0).outerHTML,
-      remove = button.remove.get(0).outerHTML;
+  addTask(undoTask = null) {
+    let newTask = undoTask || $("#task-field").val();
+
     if (newTask !== "") {
       pendingList.appendTo("#task-list");
-      let taskItem = $("#pending-list ul").append(
-        `<li data-task-id="${this.taskId}">${newTask}${finish}${remove}</li>`
-      );
+      let taskItem = $("#pending-list ul").append(`<li data-task-id="${this.taskId}">${newTask}${this.finish}${this.remove}</li>`) ;
       $("#task-field").val("");
       this.taskId++;
-
-      taskItem.find(".remove-task").click(function () {
-        const taskIdToRemove = $(this).closest("li").attr("data-task-id");
-        $(`[data-task-id="${taskIdToRemove}"]`).remove();
-        
-        if (!taskItem.find(".remove-task").length) {
-          $("#pending-list").remove();
-          this.taskId = 0;
-        }
-      });
+      this.removeTask(taskItem);
+      this.finishTask(taskItem);
     }
   }
+
+  // dynamically generates the remove and finish button
+  removeTask(item) {
+    item.find(".remove-task").click(function () {
+      const taskIdToRemove = $(this).closest("li").attr("data-task-id");
+      $(`[data-task-id="${taskIdToRemove}"]`).remove();
+      
+      // remove unordered list if there are no tasks
+      if (!item.find(".remove-task").length) {
+        $("#pending-list").remove();
+        this.taskId = 0;
+      }
+    });
+  }
+
+  finishTask(item) {
+    let self = this;
+    item.find(".finish-task").click(function () {
+      let finishTask = $(this).parent();
+      finishList.appendTo("#task-list");
+      let finishUl = finishList.find("ul").append(finishTask);
+      finishList.find("button").remove();
+      finishUl.find("li").append(`${button.undo.get(0).outerHTML}`);
+
+      $("#finish-list").find(".undo-button").click( function () { 
+       let undoTask = $(this).parent();
+       undoTask.find("button").remove();
+       let undoText = undoTask.text();
+       self.addTask(undoText);
+       undoTask.remove();
+      })
+    });
+  }
+  
 }
 
 $(document).ready(function () {

@@ -49,7 +49,7 @@ $(button)
 // finish
 export let finish = $(button)
 .clone()
-.addClass("check-task")
+.addClass("finish-task")
 .text("finish");
 
 // remove
@@ -57,3 +57,9 @@ export let remove = $(button)
 .clone()
 .addClass("remove-task")
 .text("remove");
+
+// undo
+export let undo = $(button)
+.clone()
+.addClass("undo-button")
+.text("undo");
