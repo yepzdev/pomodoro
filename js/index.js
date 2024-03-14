@@ -65,14 +65,17 @@ class TaskManager {
   finish(item) {
     let self = this;
     item.find(".finish-task").click(function () {
-      finishList.appendTo("#task-list");
-      // gets the task item
+      finishList.appendTo("#task-list");      
       let liTaskItem = $(this).parent();
-      // attached to unordered list
-      let ul = finishList.find("ul").append(liTaskItem);
-      finishList.find("button").remove();
-      // attach the undo button
-      ul.find("li").append(`${self.undoButton}`);
+      // detach ul item and add li item
+      let ul = finishList.find("ul").detach().append(liTaskItem);
+      // remove buttons 
+      ul.find("button").remove();
+      // add undo button
+      ul.find("li").append(`${self.undoButton}`)
+      // attached to the finish list
+      finishList.append(ul);
+      // set undo event
       self.undo(self);
     });
   }
