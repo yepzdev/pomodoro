@@ -65,7 +65,7 @@ class TaskManager {
       finishList.appendTo("#task-list");
       let finishUl = finishList.find("ul").append(finishTask);
       finishList.find("button").remove();
-      finishUl.find("li").append(`${button.undo.get(0).outerHTML}`);
+      finishUl.find("li").append(`${self.undo}`);
 
       $("#finish-list").find(".undo-button").click( function () { 
        let undoTask = $(this).parent();
