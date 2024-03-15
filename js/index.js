@@ -30,13 +30,13 @@ class TaskManager {
     this.undoButton = button.undo.get(0).outerHTML;
   }
 
-  isEmptyTask(name) {
-    return name !== "";
+  isEmpty(task) {
+    return task.trim() !== "";
   }
 
   add(name = null) {
     let task = name || $("#task-field").val();
-    if (this.isEmptyTask(name)) {
+    if (this.isEmpty(task)) {
       pendingList.prependTo("#task-list");
       let taskItem = $("#pending-list ul").append(
         `<li data-task-id="${this.taskId}">${task}${this.finishButton}${this.removeButton}</li>`
