@@ -4,7 +4,7 @@ import * as button from "./buttons.js";
 
 // task list field
 let addTaskField = $("<input>");
-addTaskField.clone().attr("id", "task-field").appendTo(".task-container");
+addTaskField.clone().attr("id", "task-field").appendTo(".add-task-field");
 
 // pending list container
 let pendingList = $("<div>")
@@ -37,7 +37,7 @@ class TaskManager {
   add(name = null) {
     let task = name || $("#task-field").val();
     if (this.isEmptyTask(name)) {
-      pendingList.appendTo("#task-list");
+      pendingList.prependTo("#task-list");
       let taskItem = $("#pending-list ul").append(
         `<li data-task-id="${this.taskId}">${task}${this.finishButton}${this.removeButton}</li>`
       );
@@ -92,12 +92,13 @@ class TaskManager {
       .find(".undo-button")
       .click(function () {
         let liTaskItem = $(this).parent();
+        // remove undo button
         liTaskItem.find("button").remove();
         let name = liTaskItem.text();
         self.add(name);
         liTaskItem.remove();
 
-        // remove unordered list if there are no tasks
+        // undo unordered list if there are no tasks
         if (!$("#finish-list").find(".undo-button").length) {
           $("#finish-list").remove();
         }

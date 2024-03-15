@@ -44,7 +44,7 @@ $(button)
 .clone()
 .attr("id", "add-task")
 .text("Add task")
-.appendTo(".task-container");
+.appendTo(".add-task-field");
 
 // finish
 export let finish = $(button)
