@@ -65,18 +65,25 @@ class TaskManager {
   finish(item) {
     let self = this;
     item.find(".finish-task").click(function () {
-      finishList.appendTo("#task-list");      
       let liTaskItem = $(this).parent();
-      // detach ul item and add li item
+      // detach ul item and add liTaskItem
       let ul = finishList.find("ul").detach().append(liTaskItem);
-      // remove buttons 
+      // remove finish and remove buttons
       ul.find("button").remove();
       // add undo button
-      ul.find("li").append(`${self.undoButton}`)
+      ul.find("li").append(`${self.undoButton}`);
       // attached to the finish list
       finishList.append(ul);
+      // insert into the task list
+      finishList.appendTo("#task-list");
       // set undo event
       self.undo(self);
+
+      // remove unordered list if there are no tasks
+      if (!item.find(".finish-task").length) {
+        $("#pending-list").remove();
+        this.taskId = 0;
+      }
     });
   }
 
@@ -89,6 +96,11 @@ class TaskManager {
         let name = liTaskItem.text();
         self.add(name);
         liTaskItem.remove();
+
+        // remove unordered list if there are no tasks
+        if (!$("#finish-list").find(".undo-button").length) {
+          $("#finish-list").remove();
+        }
       });
   }
 }
