@@ -17,7 +17,7 @@ $(document).ready(() => {
   let timer;
   let timeLeft = 25 * 60; // 25 minutes in seconds
   let isPaused = true;
-  const POMODORO = 25;
+  const POMODORO = (1/20);
   const SHORT_BREAK = 5;
   const LONG_BREAK = 15;
 
@@ -27,6 +27,10 @@ $(document).ready(() => {
     return `${minutes < 10 ? "0" : ""}${minutes}:${
       remainingSeconds < 10 ? "0" : ""
     }${remainingSeconds}`;
+  }
+
+  function playAudioButton(id) {
+    return $(`${id}`)[0].play();
   }
 
   const updateTimer = () => {
@@ -64,10 +68,14 @@ $(document).ready(() => {
     resetInterval(POMODORO);
   });
 
-  $("#start").click(() => toggleTimer());
+  $("#start").click(() => {
+    toggleTimer();
+    playAudioButton("#audio-pomodoro");
+  });
 
   $("#reset").click(() => {
     resetInterval(POMODORO);
+    playAudioButton("#audio-pomodoro");
   });
 
   updateTimer();
