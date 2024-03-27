@@ -17,6 +17,7 @@ $(document).ready(() => {
   let timer;
   let timeLeft = 25 * 60; // 25 minutes in seconds
   let isPaused = true;
+  let pomodoroCounter = 0;
   const POMODORO = (1/20);
   const SHORT_BREAK = 5;
   const LONG_BREAK = 15;
@@ -37,6 +38,10 @@ $(document).ready(() => {
     $("#timer").text(formatTime(timeLeft));
   };
 
+  const updatePomodoroCounter = (number) => {
+    $("#pomodoro-counter").text(`#${number}`);
+  }
+
   const toggleTimer = () => {
     if (isPaused) {
       timer = setInterval(() => {
@@ -44,6 +49,8 @@ $(document).ready(() => {
         updateTimer();
         if (timeLeft === 0) {
           clearInterval(timer);
+          pomodoroCounter++;
+          updatePomodoroCounter(pomodoroCounter);
           alert("¡Tiempo terminado!");
         }
       }, 1000);
