@@ -17,10 +17,16 @@ $(document).ready(() => {
   let timer;
   let timeLeft = 25 * 60; // 25 minutes in seconds
   let isPaused = true;
-  let pomodoroCounter = 0;
-  const POMODORO = (1/20);
-  const SHORT_BREAK = 5;
-  const LONG_BREAK = 15;
+  let pomodoroCounter = 1;
+  let heHadBreaks = false;
+
+  // const POMODORO = 25;
+  // const SHORT_BREAK = 5;
+  // const LONG_BREAK = 15;
+
+  const POMODORO = 1/10; // 6s
+  const SHORT_BREAK = 1/30 // 2s
+  const LONG_BREAK = 1/20; // 3s
 
   function formatTime(seconds) {
     let minutes = Math.floor(seconds / 60);
@@ -49,8 +55,41 @@ $(document).ready(() => {
         updateTimer();
         if (timeLeft === 0) {
           clearInterval(timer);
-          pomodoroCounter++;
+          // pomodoroCounter++;
           updatePomodoroCounter(pomodoroCounter);
+          $("#start").text("Start");
+          
+          // comprueba los tres ciclos del pomodoro para
+          // establecer descanso largo, de lo contrario establece un
+          // descanso corto.
+          if ((pomodoroCounter % 3) === 0) {
+            // long break
+            
+            // nos aseguramos de que el usuario no tuvo
+            // descansos en el ciclo anterior y asi poder establecer el 
+            // pomodoro nuevamente
+            if (heHadBreaks) {
+              resetInterval(POMODORO);
+              pomodoroCounter++;
+              heHadBreaks = false;  
+            } else {
+              resetInterval(LONG_BREAK);
+              heHadBreaks = true;
+            }      
+          } else {
+            // short break
+            if (heHadBreaks) {
+              resetInterval(POMODORO);
+              pomodoroCounter++;
+              heHadBreaks = false;
+            } else {
+              resetInterval(SHORT_BREAK);
+              heHadBreaks = true;
+            }
+
+          }
+          
+          // must be removing in the future
           alert("¡Tiempo terminado!");
         }
       }, 1000);
@@ -64,14 +103,17 @@ $(document).ready(() => {
   };
 
   $("#short-break-btn").click(() => {
+    heHadBreaks = true;
     resetInterval(SHORT_BREAK);
   });
 
   $("#long-break-btn").click(() => {
+    heHadBreaks = true;
     resetInterval(LONG_BREAK);
   });
 
   $("#pomodoro-btn").click(() => {
+    heHadBreaks = false;
     resetInterval(POMODORO);
   });
 
