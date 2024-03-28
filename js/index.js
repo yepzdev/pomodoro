@@ -42,6 +42,7 @@ $(document).ready(() => {
 
   const updateTimer = () => {
     $("#timer").text(formatTime(timeLeft));
+    updatePomodoroCounter(pomodoroCounter);
   };
 
   const updatePomodoroCounter = (number) => {
@@ -56,7 +57,7 @@ $(document).ready(() => {
         if (timeLeft === 0) {
           clearInterval(timer);
           // pomodoroCounter++;
-          updatePomodoroCounter(pomodoroCounter);
+          // updatePomodoroCounter(pomodoroCounter);
           $("#start").text("Start");
           
           // comprueba los tres ciclos del pomodoro para
@@ -71,6 +72,7 @@ $(document).ready(() => {
             if (heHadBreaks) {
               resetInterval(POMODORO);
               pomodoroCounter++;
+              updatePomodoroCounter(pomodoroCounter);
               heHadBreaks = false;  
             } else {
               resetInterval(LONG_BREAK);
@@ -81,6 +83,7 @@ $(document).ready(() => {
             if (heHadBreaks) {
               resetInterval(POMODORO);
               pomodoroCounter++;
+              updatePomodoroCounter(pomodoroCounter);
               heHadBreaks = false;
             } else {
               resetInterval(SHORT_BREAK);
@@ -122,6 +125,7 @@ $(document).ready(() => {
     playAudioButton("#audio-pomodoro");
   });
 
+  // maybe this button doesn't make sense
   $("#reset").click(() => {
     resetInterval(POMODORO);
     playAudioButton("#audio-pomodoro");
