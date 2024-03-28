@@ -17,16 +17,17 @@ $(document).ready(() => {
   let timer;
   let timeLeft = 25 * 60; // 25 minutes in seconds
   let isPaused = true;
-  let pomodoroCounter = 1;
+  let counter = 1;
   let heHadBreaks = false;
 
   // const POMODORO = 25;
   // const SHORT_BREAK = 5;
   // const LONG_BREAK = 15;
 
-  const POMODORO = 1/10; // 6s
-  const SHORT_BREAK = 1/30 // 2s
-  const LONG_BREAK = 1/20; // 3s
+  const POMODORO = 1 / 10; // 6s
+  const SHORT_BREAK = 1 / 30; // 2s
+  const LONG_BREAK = 1 / 20; // 3s
+  const CYCLES = 3;
 
   function formatTime(seconds) {
     let minutes = Math.floor(seconds / 60);
@@ -36,108 +37,115 @@ $(document).ready(() => {
     }${remainingSeconds}`;
   }
 
-  function playAudioButton(id) {
+  function playAudio(id) {
     return $(`${id}`)[0].play();
   }
 
-  const updateTimer = () => {
+  const updateTimerHtml = () => {
     $("#timer").text(formatTime(timeLeft));
-    updatePomodoroCounter(pomodoroCounter);
   };
 
-  const updatePomodoroCounter = (number) => {
-    $("#pomodoro-counter").text(`#${number}`);
-  }
+  const updateTimerCycle = (counter) => {
+    $("#pomodoro-counter").text(`#${counter}`);
+  };
 
-  const toggleTimer = () => {
+  const isTimeExpired = () => {
+    return timeLeft === 0;
+  };
+
+  // devuelve verdadero si se cumple el numero de ciclos
+  const isEqualToNumberOf = (cycles) => {
+    return counter % cycles === 0;
+  };
+
+  // nos aseguramos de que el usuario no tuvo
+  // descansos en el ciclo anterior y asi poder establecer el
+  // pomodoro nuevamente
+  const breakHandler = (time) => {
+    if (heHadBreaks) {
+      setTimeInterval(POMODORO);
+      counter++;
+      updateTimerCycle(counter);
+      heHadBreaks = false;
+      return;
+    }
+    setTimeInterval(time);
+    heHadBreaks = true;
+  };
+
+  // comprueba los X ciclos del pomodoro para
+  // establecer descanso largo, de lo contrario establece un
+  // descanso corto.
+  const checkCycles = () => {
+    if (isEqualToNumberOf(CYCLES)) {
+      // long break
+      return breakHandler(LONG_BREAK);
+    }
+    // short break
+    breakHandler(SHORT_BREAK);
+  };
+
+  const checkPausedTimer = () => {
     if (isPaused) {
       timer = setInterval(() => {
         timeLeft--;
-        updateTimer();
-        if (timeLeft === 0) {
+        updateTimerHtml();
+        if (isTimeExpired()) {
           clearInterval(timer);
-          // pomodoroCounter++;
-          // updatePomodoroCounter(pomodoroCounter);
           $("#start").text("Start");
-          
-          // comprueba los tres ciclos del pomodoro para
-          // establecer descanso largo, de lo contrario establece un
-          // descanso corto.
-          if ((pomodoroCounter % 3) === 0) {
-            // long break
-            
-            // nos aseguramos de que el usuario no tuvo
-            // descansos en el ciclo anterior y asi poder establecer el 
-            // pomodoro nuevamente
-            if (heHadBreaks) {
-              resetInterval(POMODORO);
-              pomodoroCounter++;
-              updatePomodoroCounter(pomodoroCounter);
-              heHadBreaks = false;  
-            } else {
-              resetInterval(LONG_BREAK);
-              heHadBreaks = true;
-            }      
-          } else {
-            // short break
-            if (heHadBreaks) {
-              resetInterval(POMODORO);
-              pomodoroCounter++;
-              updatePomodoroCounter(pomodoroCounter);
-              heHadBreaks = false;
-            } else {
-              resetInterval(SHORT_BREAK);
-              heHadBreaks = true;
-            }
-
-          }
-          
+          checkCycles();
           // must be removing in the future
           alert("¡Tiempo terminado!");
         }
       }, 1000);
+
       isPaused = false;
-      $("#start").text("Pause");
-    } else {
-      clearInterval(timer);
-      isPaused = true;
-      $("#start").text("Start");
+      return $("#start").text("Pause");
     }
+
+    clearInterval(timer);
+    isPaused = true;
+    $("#start").text("Start");
+  };
+
+  const toggleTimer = () => {
+    checkPausedTimer();
   };
 
   $("#short-break-btn").click(() => {
     heHadBreaks = true;
-    resetInterval(SHORT_BREAK);
+    setTimeInterval(SHORT_BREAK);
   });
 
   $("#long-break-btn").click(() => {
     heHadBreaks = true;
-    resetInterval(LONG_BREAK);
+    setTimeInterval(LONG_BREAK);
   });
 
   $("#pomodoro-btn").click(() => {
     heHadBreaks = false;
-    resetInterval(POMODORO);
+    setTimeInterval(POMODORO);
   });
 
   $("#start").click(() => {
     toggleTimer();
-    playAudioButton("#audio-pomodoro");
+    playAudio("#audio-pomodoro");
   });
 
   // maybe this button doesn't make sense
   $("#reset").click(() => {
-    resetInterval(POMODORO);
-    playAudioButton("#audio-pomodoro");
+    setTimeInterval(POMODORO);
+    playAudio("#audio-pomodoro");
   });
 
-  updateTimer();
-
-  const resetInterval = (time) => {
+  const setTimeInterval = (time) => {
     timeLeft = time * 60;
     clearInterval(timer);
     isPaused = true;
     $("#start").text("Start");
-    updateTimer();
+    updateTimerHtml();
   };
+
+  updateTimerHtml();
+  updateTimerCycle(counter);
 });
