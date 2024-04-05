@@ -13,11 +13,12 @@ $(document).ready(function () {
   });
 });
 
+
 $(document).ready(() => {
   let timer;
   let timeLeft = 25 * 60; // 25 minutes in seconds
   // por defecto el temporizador no esta en pausa
-  let isPaused = false;
+  let isPaused = true;
   // contador de ciclos del temporizador,
   // no confundir con la constante CYCLE que establece
   // la cantidad de ciclos 
@@ -120,7 +121,7 @@ $(document).ready(() => {
   // comprueba la pausa del temporizador
   const checkPausedTimer = () => {
     
-    if (!isPaused) {
+    if (isPaused) {
       // continua con el intervalo de tiempo
       timer = setInterval(() => {
         timeLeft--;
@@ -137,14 +138,14 @@ $(document).ready(() => {
         }
       }, 1000);
 
-      console.log('start');
-      isPaused = true;
+      // console.log('start');
+      isPaused = false;
       return $("#start").text("Pause");
     }
     
-    console.log('stop');
+    // console.log('stop');
     clearInterval(timer);
-    isPaused = false;
+    isPaused = true;
     $("#start").text("Start");
   };
 
