@@ -13,17 +13,14 @@ $(document).ready(function () {
   });
 });
 
-
 $(document).ready(() => {
   let timer;
   let timeLeft = 25 * 60; // 25 minutes in seconds
-  // por defecto el temporizador no esta en pausa
-  let isPaused = true;
-  // contador de ciclos del temporizador,
-  // no confundir con la constante CYCLE que establece
-  // la cantidad de ciclos 
 
-  // counter es igual a un ciclo, un ciclo igual a  pomodoro + short/long_break
+  // py default the timer is paused
+  let isPaused = true;
+
+  // pomodoros counter
   let counter = 1;
   let heHadBreaks = false;
 
@@ -34,10 +31,12 @@ $(document).ready(() => {
   const POMODORO = 1 / 10; // 6s
   const SHORT_BREAK = 1 / 30; // 2s
   const LONG_BREAK = 1 / 20; // 3s
-  // establece la cantidad de ciclos necesarios para tener descansos largos y cortos
+
+  // establishes the number of cycles necessary to apply long rests or short rests
+  // For example, if you want to apply long breaks after 3 pomodoros or more, change the value of the constant.
   const CYCLES = 3;
 
-  // da formato al tiempo para que sea legible para humanos 
+  // This method formats the timer to be human readable.
   function formatTime(seconds) {
     let minutes = Math.floor(seconds / 60);
     let remainingSeconds = seconds % 60;
@@ -50,107 +49,80 @@ $(document).ready(() => {
     return $(`${id}`)[0].play();
   }
 
-  // muestra el temporizador en el HTML
-  // showTimer()
-  const updateTimerHtml = () => {
+  // This method shows the remaining time in the HTML
+  const showTimer = () => {
     $("#timer").text(formatTime(timeLeft));
   };
 
-  // muestra la cantidad de ciclos ( pomodoros ) completados en el HTML
-  // tal vez sea mejor renombrar este metodo a 
-  // showNumberCycles()
-  const updateTimerCycle = (counter) => {
+  // Shows the number of pomodoros in the HTML #1, 2, 3...
+  const showNumberOfPomodoros = (counter) => {
     $("#pomodoro-counter").text(`#${counter}`);
   };
-  
-  const isTimeExpired = () => {
+
+  const isTimerExpired = () => {
     return timeLeft === 0;
   };
-  
-  // este metodo sirve para establecer la cantidad de ciclos
-  // necesarios para aplicar descansos largos/cortos
 
-  // devuelve verdadero si se cumple el numero de ciclos
-  // counter - contador de ciclos
-  // CYCLE - establecedor de ciclos
+  // This method is important because it is what will allow us to know the number of 
+  // pomodoros (cycles) completed based on the counter (pomodoro counter) and thus be able to apply long or short rest.
   const isEqualToNumberOf = (cycles) => {
     return counter % cycles === 0;
   };
 
-  // nos aseguramos de que el usuario no tuvo
-  // descansos en el ciclo anterior y asi poder establecer el
-  // pomodoro nuevamente
-
-  // note que el contador de ciclos no aumenta cuando hay descanso
+  // This method handles the rest timer and pomodoro timer.
+  // It is what allows us to assign rest timers or pomodoros
   const breakHandler = (breakTime) => {
-
-    // entonces si es que el usuario ya tuvo un descanso, entonces se 
-    // vuelve a establecer el pomodoro/ 25 mins
+    // If you already had a rest timer then set the pomodoro timer
     if (heHadBreaks) {
       setTimeInterval(POMODORO);
-      // aumenta el contador de ciclos pomodoro
+      // pomodoro counter
       counter++;
-      // muestra el incrementoo del ciclo en el html
-      updateTimerCycle(counter);
-      // ya no estamos descansando
+      showNumberOfPomodoros(counter);
       heHadBreaks = false;
       return;
     }
 
-    // de lo contrario, establece un descanso
+    // set shift break timer
     setTimeInterval(breakTime);
-    // por lo tanto, a partir de este momento el usuario
-    // tuvo un descanso.
     heHadBreaks = true;
   };
 
-  // comprueba los X ciclos del pomodoro para
-  // establecer descanso largo, de lo contrario establece un
-  // descanso corto.
+  // This method checks the number of cycles of a pomodoro
+  // one cycle is a pomodoro + short/long rest
+  // Based on these numbers of cycles, short or long rest will be applied.
   const checkCycles = () => {
-    if (isEqualToNumberOf(CYCLES)) {
-    
-      // long break
-      return breakHandler(LONG_BREAK);
-    }
-
-    // short break
-    breakHandler(SHORT_BREAK);
+    isEqualToNumberOf(CYCLES)
+      ? breakHandler(LONG_BREAK)
+      : breakHandler(SHORT_BREAK);
   };
 
-  // comprueba la pausa del temporizador
-  const checkPausedTimer = () => {
-    
-    if (isPaused) {
-      // continua con el intervalo de tiempo
-      timer = setInterval(() => {
-        timeLeft--;
-        updateTimerHtml();
-        // comprueba que el tiempo ha terminado
-        if (isTimeExpired()) {
-          clearInterval(timer);
-          $("#start").text("Start");
-          // como el tiempo ha expirado, comprobamos 
-          // los ciclos para establecer tiempo de descanso
-          checkCycles();
-          // must be removing in the future
-          alert("¡Tiempo terminado!");
-        }
-      }, 1000);
+  // This method starts the time or resumes it
+  function startTimer() {
+    timer = setInterval(() => {
+      timeLeft--;
+      showTimer();
+      // we check that the timer has ended
+      if (isTimerExpired()) {
+        clearInterval(timer);
+        $("#start").text("Start");
+        checkCycles();
+      }
+    }, 1000);
 
-      // console.log('start');
-      isPaused = false;
-      return $("#start").text("Pause");
+    isPaused = false;
+    $("#start").text("Pause");
+  }
+
+  // This method starts/pauses the timer
+  const toggleTimer = () => {
+    // check the timer status
+    if (isPaused) {
+      return startTimer(timeLeft);
     }
     
-    // console.log('stop');
     clearInterval(timer);
     isPaused = true;
     $("#start").text("Start");
-  };
-
-  const toggleTimer = () => {
-    checkPausedTimer();
   };
 
   $("#short-break-btn").click(() => {
@@ -184,9 +156,9 @@ $(document).ready(() => {
     clearInterval(timer);
     isPaused = true;
     $("#start").text("Start");
-    updateTimerHtml();
+    showTimer();
   };
 
-  updateTimerHtml();
-  updateTimerCycle(counter);
+  showTimer();
+  showNumberOfPomodoros(counter);
 });
