@@ -64,6 +64,8 @@ export default class TaskManager {
         let ul = finishList.find("ul").detach().append(liTaskItem);
         // remove finish and remove buttons
         ul.find("button").remove();
+        // puts the class for text decoration
+        ul.find("li").addClass("line-style")
         // add undo button
         ul.find("li").append(`${self.undoButton}`);
         // attached to the finish list
