@@ -6,9 +6,15 @@ import taskManager from "./task_manager.js";
 let addTaskField = $("<input>");
 addTaskField.clone().attr("id", "task-field").appendTo(".add-task-field");
 
+let pomo = {
+  counter: null
+}
+
+const task = new taskManager();
 $(document).ready(function () {
-  const task = new taskManager();
   $("#add-task").click(function () {
+    let pomos = pomo.counter;
+    task.setNumberOfPomos(pomos)
     task.add();
   });
 });
@@ -21,7 +27,7 @@ $(document).ready(() => {
   let isPaused = true;
 
   // pomodoros counter
-  let counter = 1;
+  pomo.counter = 1;
   let heHadBreaks = false;
 
   // const POMODORO = 25;
@@ -55,8 +61,8 @@ $(document).ready(() => {
   };
 
   // Shows the number of pomodoros in the HTML #1, 2, 3...
-  const showNumberOfPomodoros = (counter) => {
-    $("#pomodoro-counter").text(`#${counter}`);
+  const showNumberOfPomodoros = () => {
+    $("#pomodoro-counter").text(`#${pomo.counter}`);
   };
 
   const isTimerExpired = () => {
@@ -66,7 +72,7 @@ $(document).ready(() => {
   // This method is important because it is what will allow us to know the number of 
   // pomodoros (cycles) completed based on the counter (pomodoro counter) and thus be able to apply long or short rest.
   const isEqualToNumberOf = (cycles) => {
-    return counter % cycles === 0;
+    return pomo.counter % cycles === 0;
   };
 
   // This method handles the rest timer and pomodoro timer.
@@ -76,8 +82,8 @@ $(document).ready(() => {
     if (heHadBreaks) {
       setTimeInterval(POMODORO);
       // pomodoro counter
-      counter++;
-      showNumberOfPomodoros(counter);
+      pomo.counter++;
+      showNumberOfPomodoros();
       heHadBreaks = false;
       return;
     }
@@ -160,5 +166,5 @@ $(document).ready(() => {
   };
 
   showTimer();
-  showNumberOfPomodoros(counter);
+  showNumberOfPomodoros();
 });

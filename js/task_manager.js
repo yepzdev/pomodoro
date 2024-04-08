@@ -22,19 +22,41 @@ export default class TaskManager {
       this.finishButton = button.finish.get(0).outerHTML;
       this.removeButton = button.remove.get(0).outerHTML;
       this.undoButton = button.undo.get(0).outerHTML;
+      this.taskName = null;
+    }
+
+    setNumberOfPomos(pomos) {
+      this.pomos = pomos;
+    }
+
+    getNumberOfPomos() {
+      return this.pomos;
     }
   
     isEmpty(task) {
       return task.trim() !== "";
     }
-  
-    add(name = null) {
-      let task = name || $("#task-field").val();
+    
+    add(taskName) {
+      let task = taskName || $("#task-field").val();
       if (this.isEmpty(task)) {
         pendingList.prependTo("#task-list");
-        let taskItem = $("#pending-list ul").append(
-          `<li data-task-id="${this.taskId}">${task}${this.finishButton}${this.removeButton}</li>`
-        );
+
+        // create li
+        let li = $(`<li data-task-id="${this.taskId}"><p> ${task}</p></li>`);
+        // add display inline
+        li.find("p").addClass("inline");
+        // create span
+        let span = $(`<span> 1/${this.getNumberOfPomos()} </span>`);
+        // create buttons 
+        let buttons = $(`${this.finishButton}${this.removeButton}`);
+        // we add buttons to the li element
+        li.append(buttons);
+        // add span pomos score
+        li.prepend(span);
+        // add to unordered list
+        let taskItem = $("#pending-list ul").append(li);
+  
         $("#task-field").val("");
         this.taskId++;
         this.remove(taskItem);
@@ -65,7 +87,8 @@ export default class TaskManager {
         // remove finish and remove buttons
         ul.find("button").remove();
         // puts the class for text decoration
-        ul.find("li").addClass("line-style")
+        ul.find("p").addClass("text-decoration-line");
+        // ul.find("span").addClass("text-decoration-none");
         // add undo button
         ul.find("li").append(`${self.undoButton}`);
         // attached to the finish list
@@ -90,8 +113,13 @@ export default class TaskManager {
           let liTaskItem = $(this).parent();
           // remove undo button
           liTaskItem.find("button").remove();
-          let name = liTaskItem.text();
-          self.add(name);
+          //remove span item
+          liTaskItem.find("span").remove();
+          // take task name with score
+          let task = liTaskItem.text();
+          // undo task
+          self.add(task)
+          // removes item from completed task list
           liTaskItem.remove();
   
           // undo unordered list if there are no tasks
