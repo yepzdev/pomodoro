@@ -36,6 +36,33 @@ export default class TaskManager {
     isEmpty(task) {
       return task.trim() !== "";
     }
+
+    updatePendingTasks = () => {
+      // span elements contain the score of pomos
+      let pomoScore = $("#pending-list").find('span');
+    
+      if (pomoScore.length) {
+        let ul = $("ul");
+        let ulDetached = $("#pending-list ul").detach();
+        // remove old scores 
+        ulDetached.find("span").remove();
+        // make new score
+        console.log(this.getNumberOfPomos());
+        let span = $(`<span> 1/${this.getNumberOfPomos()} </span>`);
+        // let span = $(`<span> 1/${score} </span>`);
+        // set scores on each task
+        ulDetached.find("li").prepend(span);
+        
+        ul.append(ulDetached);
+        // set items in the pending list
+        $("#pending-list").append(ul);
+        
+      }
+  
+  
+      //console.log(pomoScore);
+      
+    }
     
     add(taskName) {
       let task = taskName || $("#task-field").val();

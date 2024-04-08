@@ -82,7 +82,9 @@ $(document).ready(() => {
     if (heHadBreaks) {
       setTimeInterval(POMODORO);
       // pomodoro counter
-      pomo.counter++;
+      let score = pomo.counter++;
+      task.setNumberOfPomos(score);
+      task.updatePendingTasks();
       showNumberOfPomodoros();
       heHadBreaks = false;
       return;
