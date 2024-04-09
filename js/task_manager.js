@@ -25,12 +25,12 @@ export default class TaskManager {
       this.taskName = null;
     }
 
-    setNumberOfPomos(pomos) {
-      this.pomos = pomos;
+    setNumberOfPomos(score) {
+      this.score = score;
     }
 
     getNumberOfPomos() {
-      return this.pomos;
+      return this.score;
     }
   
     isEmpty(task) {
@@ -43,25 +43,19 @@ export default class TaskManager {
     
       if (pomoScore.length) {
         let ul = $("ul");
-        let ulDetached = $("#pending-list ul").detach();
+        let liCollection = $("#pending-list ul").detach();
         // remove old scores 
-        ulDetached.find("span").remove();
+        liCollection.find("span").remove();
         // make new score
-        console.log(this.getNumberOfPomos());
         let span = $(`<span> 1/${this.getNumberOfPomos()} </span>`);
-        // let span = $(`<span> 1/${score} </span>`);
         // set scores on each task
-        ulDetached.find("li").prepend(span);
+        liCollection.find("li").prepend(span);
         
-        ul.append(ulDetached);
+        ul.append(liCollection);
         // set items in the pending list
         $("#pending-list").append(ul);
         
       }
-  
-  
-      //console.log(pomoScore);
-      
     }
     
     add(taskName) {

@@ -7,14 +7,13 @@ let addTaskField = $("<input>");
 addTaskField.clone().attr("id", "task-field").appendTo(".add-task-field");
 
 let pomo = {
-  counter: null
-}
+  score: 0,
+};
 
 const task = new taskManager();
 $(document).ready(function () {
   $("#add-task").click(function () {
-    let pomos = pomo.counter;
-    task.setNumberOfPomos(pomos)
+    task.setNumberOfPomos(pomo.score);
     task.add();
   });
 });
@@ -22,12 +21,10 @@ $(document).ready(function () {
 $(document).ready(() => {
   let timer;
   let timeLeft = 25 * 60; // 25 minutes in seconds
+  let pomosCounter = 1;
 
-  // py default the timer is paused
+  // by default the timer is paused
   let isPaused = true;
-
-  // pomodoros counter
-  pomo.counter = 1;
   let heHadBreaks = false;
 
   // const POMODORO = 25;
@@ -62,17 +59,17 @@ $(document).ready(() => {
 
   // Shows the number of pomodoros in the HTML #1, 2, 3...
   const showNumberOfPomodoros = () => {
-    $("#pomodoro-counter").text(`#${pomo.counter}`);
+    $("#pomodoro-counter").text(`#${pomosCounter}`);
   };
 
   const isTimerExpired = () => {
     return timeLeft === 0;
   };
 
-  // This method is important because it is what will allow us to know the number of 
+  // This method is important because it is what will allow us to know the number of
   // pomodoros (cycles) completed based on the counter (pomodoro counter) and thus be able to apply long or short rest.
   const isEqualToNumberOf = (cycles) => {
-    return pomo.counter % cycles === 0;
+    return pomosCounter % cycles === 0;
   };
 
   // This method handles the rest timer and pomodoro timer.
@@ -82,8 +79,9 @@ $(document).ready(() => {
     if (heHadBreaks) {
       setTimeInterval(POMODORO);
       // pomodoro counter
-      let score = pomo.counter++;
-      task.setNumberOfPomos(score);
+      pomosCounter++;
+      pomo.score++;
+      task.setNumberOfPomos(pomo.score);
       task.updatePendingTasks();
       showNumberOfPomodoros();
       heHadBreaks = false;
@@ -127,7 +125,7 @@ $(document).ready(() => {
     if (isPaused) {
       return startTimer(timeLeft);
     }
-    
+
     clearInterval(timer);
     isPaused = true;
     $("#start").text("Start");
