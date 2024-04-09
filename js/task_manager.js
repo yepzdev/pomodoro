@@ -43,7 +43,6 @@ export default class TaskManager {
       let pomoScore = $("#pending-list").find('span');
     
       if (pomoScore.length) {
-        let ul = $("ul");
         let liCollection = $("#pending-list ul").detach();
         // remove old scores 
         liCollection.find("span").remove();
@@ -51,10 +50,8 @@ export default class TaskManager {
         let span = $(`<span> 1/${this.getCurrentPomoScore()} </span>`);
         // set scores on each task
         liCollection.find("li").prepend(span);
-        
-        ul.append(liCollection);
         // set items in the pending list
-        $("#pending-list").append(ul);
+        $("#pending-list").append(liCollection);
         
       }
     }
