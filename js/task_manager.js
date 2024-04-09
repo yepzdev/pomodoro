@@ -25,11 +25,12 @@ export default class TaskManager {
       this.taskName = null;
     }
 
-    setNumberOfPomos(score) {
+    setPomoScore(score) {
       this.score = score;
     }
 
-    getNumberOfPomos() {
+    // gets the number of current pomodoros score
+    getCurrentPomoScore() {
       return this.score;
     }
   
@@ -37,7 +38,7 @@ export default class TaskManager {
       return task.trim() !== "";
     }
 
-    updatePendingTasks = () => {
+    updateTaskScore = () => {
       // span elements contain the score of pomos
       let pomoScore = $("#pending-list").find('span');
     
@@ -47,7 +48,7 @@ export default class TaskManager {
         // remove old scores 
         liCollection.find("span").remove();
         // make new score
-        let span = $(`<span> 1/${this.getNumberOfPomos()} </span>`);
+        let span = $(`<span> 1/${this.getCurrentPomoScore()} </span>`);
         // set scores on each task
         liCollection.find("li").prepend(span);
         
@@ -68,7 +69,7 @@ export default class TaskManager {
         // add display inline
         li.find("p").addClass("inline");
         // create span
-        let span = $(`<span> 1/${this.getNumberOfPomos()} </span>`);
+        let span = $(`<span> 1/${this.getCurrentPomoScore()} </span>`);
         // create buttons 
         let buttons = $(`${this.finishButton}${this.removeButton}`);
         // we add buttons to the li element

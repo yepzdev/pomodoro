@@ -13,7 +13,7 @@ let pomo = {
 const task = new taskManager();
 $(document).ready(function () {
   $("#add-task").click(function () {
-    task.setNumberOfPomos(pomo.score);
+    task.setPomoScore(pomo.score);
     task.add();
   });
 });
@@ -81,8 +81,8 @@ $(document).ready(() => {
       // pomodoro counter
       pomosCounter++;
       pomo.score++;
-      task.setNumberOfPomos(pomo.score);
-      task.updatePendingTasks();
+      task.setPomoScore(pomo.score);
+      task.updateTaskScore();
       showNumberOfPomodoros();
       heHadBreaks = false;
       return;
