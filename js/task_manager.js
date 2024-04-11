@@ -107,7 +107,6 @@ export default class TaskManager {
         ul.find("button").remove();
         // puts the class for text decoration
         ul.find("p").addClass("text-decoration-line");
-        // ul.find("span").addClass("text-decoration-none");
         // add undo button
         ul.find("li").append(`${self.undoButton}`);
         // attached to the finish list
