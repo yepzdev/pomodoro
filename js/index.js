@@ -16,6 +16,14 @@ $(document).ready(function () {
     task.setPomoScore(pomo.score);
     task.add();
   });
+
+  // Event for the enter key, allows us to create tasks more easily.
+  $("#task-field").keypress(function (event) {
+    if (event.which === 13) {
+      task.setPomoScore(pomo.score);
+      task.add();
+    }
+  });
 });
 
 $(document).ready(() => {
