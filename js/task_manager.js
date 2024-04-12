@@ -42,6 +42,7 @@ export default class TaskManager {
     // allows us to set the current pomodoro score.
     updateTaskScore = () => {
       // span elements contain the score of pomos
+      // The span tag is where we show the score
       let pomoScore = $("#pending-list").find('span');
     
       if (pomoScore.length) {
