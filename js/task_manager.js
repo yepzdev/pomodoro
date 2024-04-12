@@ -38,6 +38,8 @@ export default class TaskManager {
       return task.trim() !== "";
     }
 
+    // This method updates the "li" element of the list, this
+    // allows us to set the current pomodoro score.
     updateTaskScore = () => {
       // span elements contain the score of pomos
       let pomoScore = $("#pending-list").find('span');
@@ -46,7 +48,7 @@ export default class TaskManager {
         let liCollection = $("#pending-list ul").detach();
         // remove old scores 
         liCollection.find("span").remove();
-        // make new score
+        // set score
         let span = $(`<span> 1/${this.getCurrentPomoScore()} </span>`);
         // set scores on each task
         liCollection.find("li").prepend(span);
