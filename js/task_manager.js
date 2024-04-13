@@ -16,14 +16,14 @@ let finishList = $("<div>")
   })
   .html("<h3>Complete list</h3><ul></ul>");
 
-export default class TaskManager {
-    constructor() {
-      this.taskId = 0;
-      this.finishButton = button.finish.get(0).outerHTML;
-      this.removeButton = button.remove.get(0).outerHTML;
-      this.undoButton = button.undo.get(0).outerHTML;
-      this.taskName = null;
-    }
+class TaskManager {
+  constructor() {
+    this.taskId = 0;
+    this.finishButton = button.finish.get(0).outerHTML;
+    this.removeButton = button.remove.get(0).outerHTML;
+    this.undoButton = button.undo.get(0).outerHTML;
+    this.taskName = null;
+  }
 
     setPomoScore(score) {
       this.score = score;
@@ -58,11 +58,29 @@ export default class TaskManager {
         
       }
     }
-    
-    add(taskName) {
-      let task = taskName || $("#task-field").val();
-      if (this.isEmpty(task)) {
-        pendingList.prependTo("#task-list");
+  };
+
+  add(taskName) {
+    let task = taskName || $("#task-field").val();
+    if (this.isNotEmpty(task)) {
+      // build task in object format
+      // and then save it to local storage
+      // ===========================================
+      let data = {
+        id: this.taskId,
+        task,
+        score: {
+          expected: 1,
+          actual: this.getCurrentPomoScore(),
+        },
+        highlight: false
+      };
+
+      let storage = new Storage();
+      storage.setStorage("global_storage", data);
+      // ===========================================
+
+      pendingList.prependTo("#task-list");
 
         // create li
         let li = $(`<li data-task-id="${this.taskId}"><p> ${task}</p></li>`);
