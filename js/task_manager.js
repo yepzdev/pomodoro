@@ -58,7 +58,6 @@ class TaskManager {
         
       }
     }
-  };
 
   add(taskName) {
     let task = taskName || $("#task-field").val();
@@ -74,7 +73,7 @@ class TaskManager {
           actual: this.getCurrentPomoScore(),
         },
         highlight: false
-      };
+       }
 
       let storage = new Storage();
       storage.setStorage("global_storage", data);
