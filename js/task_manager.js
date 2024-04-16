@@ -16,7 +16,7 @@ let finishList = $("<div>")
   })
   .html("<h3>Complete list</h3><ul></ul>");
 
-class TaskManager {
+export default class TaskManager {
   constructor() {
     this.taskId = 0;
     this.finishButton = button.finish.get(0).outerHTML;
@@ -34,7 +34,7 @@ class TaskManager {
       return this.score;
     }
   
-    isEmpty(task) {
+    isNotEmpty(task) {
       return task.trim() !== "";
     }
 
@@ -74,9 +74,6 @@ class TaskManager {
         },
         highlight: false
        }
-
-      let storage = new Storage();
-      storage.setStorage("global_storage", data);
       // ===========================================
 
       pendingList.prependTo("#task-list");
