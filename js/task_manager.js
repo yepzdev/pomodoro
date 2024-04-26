@@ -30,6 +30,7 @@ export default class TaskManager {
 
   // This method obtains all the task data.
   async getData() {
+    let self = this;
     try {
       const response = await fetch(GET_ALL_TASKS_URL);
 
@@ -51,7 +52,7 @@ export default class TaskManager {
           // create span
           let span = $(`<span> ${task.spected}/${task.current} </span>`);
           // create buttons
-          let buttons = $(`${this.finishButton}${this.removeButton}`);
+          let buttons = $(`${self.finishButton}${self.removeButton}`);
           // we add buttons to the li element
           li.append(buttons);
           // add span pomos score
@@ -66,7 +67,8 @@ export default class TaskManager {
           // this.remove(item);
           // this.finish(item);
 
-          pendingList.find("ul").append();
+          // pendingList.find("ul").append();
+          
         } else {
         }
       });
