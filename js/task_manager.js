@@ -26,8 +26,6 @@ export default class TaskManager {
     this.taskName = null;
   }
 
-  render;
-
   // This method obtains all the task data.
   async getData() {
     let self = this;
@@ -46,7 +44,9 @@ export default class TaskManager {
       $.each(data, function (index, task) {
         if (task.status) {
           // create li
-          let li = $(`<li data-task-id="${task.id}"><p>${task.description}</p></li>`);
+          let li = $(
+            `<li data-task-id="${task.id}"><p>${task.description}</p></li>`
+          );
           // add display inline
           li.find("p").addClass("inline");
           // create span
@@ -57,19 +57,18 @@ export default class TaskManager {
           li.append(buttons);
           // add span pomos score
           li.prepend(span);
-          // add to unordered list
+          // save pending tasks
           pendingTasks.push(li);
           // clear task field
           $("#task-field").val("");
 
-          // this.taskId++;
-
-          // this.remove(item);
-          // this.finish(item);
-          
+          self.remove(li, task.id);
+          // self.finish(item);
         } else {
           // create li
-          let li = $(`<li data-task-id="${task.id}"><p>${task.description}</p></li>`);
+          let li = $(
+            `<li data-task-id="${task.id}"><p>${task.description}</p></li>`
+          );
           // add display inline
           li.find("p").addClass("inline");
           // create span
@@ -90,16 +89,16 @@ export default class TaskManager {
         }
       });
 
-      // clear the task list
-      $("#task-list").empty();
-
       // append all pending tasks to the corresponding list.
       pendingList.find("ul").append(pendingTasks);
       pendingList.prependTo("#task-list");
+      // remove unordered list if there are no tasks
+      if (!pendingList.find(".remove-task").length) {
+        $("#pending-list").remove();
+      }
       // append all finish tasks
       finishList.find("ul").append(finishTasks);
-      finishList.prependTo("#task-list");
-
+      finishList.appendTo("#task-list");
     } catch (error) {
       console.error("There was a problem with your fetch operation:", error);
     }
@@ -140,6 +139,8 @@ export default class TaskManager {
 
   add(taskName) {
     let task = taskName || $("#task-field").val();
+
+    return;
     if (this.isNotEmpty(task)) {
       // build task in object format
       // and then save it to local storage
@@ -180,44 +181,72 @@ export default class TaskManager {
   }
 
   // dynamically generates the remove and finish button
-  remove(item) {
+  remove(item, id) {
+    let self = this;
     item.find(".remove-task").click(function () {
       const taskIdToRemove = $(this).closest("li").attr("data-task-id");
-      $(`[data-task-id="${taskIdToRemove}"]`).remove();
 
-      // remove unordered list if there are no tasks
-      if (!item.find(".remove-task").length) {
-        $("#pending-list").remove();
-        this.taskId = 0;
+      if (parseInt(taskIdToRemove) === id) {
+        fetch(GET_ALL_TASKS_URL, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: id }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Acceder a la propiedad 'value' del objeto 'data'
+            console.log(data);
+          })
+          .catch((error) => {
+            console.error(
+              "There was a problem with your fetch operation:",
+              error
+            );
+          });
+
+        $(`[data-task-id="${taskIdToRemove}"]`).remove();
+
+        let pendingList = $("#pending-list ul");
+        // remove unordered list if there are no tasks
+        if (!pendingList.find(".remove-task").length) {
+          $("#pending-list").remove();
+        }
       }
     });
   }
 
   finish(item) {
     let self = this;
-    item.find(".finish-task").click(function () {
-      let liTaskItem = $(this).parent();
-      // detach ul item and add liTaskItem
-      let ul = finishList.find("ul").detach().append(liTaskItem);
-      // remove finish and remove buttons
-      ul.find("button").remove();
-      // puts the class for text decoration
-      ul.find("p").addClass("text-decoration-line");
-      // add undo button
-      ul.find("li").append(`${self.undoButton}`);
-      // attached to the finish list
-      finishList.append(ul);
-      // insert into the task list
-      finishList.appendTo("#task-list");
-      // set undo event
-      self.undo(self);
+    // item.find(".finish-task").click(function () {
+    //   let liTaskItem = $(this).parent();
+    //   // detach ul item and add liTaskItem
+    //   let ul = finishList.find("ul").detach().append(liTaskItem);
+    //   // remove finish and remove buttons
+    //   ul.find("button").remove();
+    //   // puts the class for text decoration
+    //   ul.find("p").addClass("text-decoration-line");
+    //   // add undo button
+    //   ul.find("li").append(`${self.undoButton}`);
+    //   // attached to the finish list
+    //   finishList.append(ul);
+    //   // insert into the task list
+    //   finishList.appendTo("#task-list");
+    //   // set undo event
+    //   self.undo(self);
 
-      // remove unordered list if there are no tasks
-      if (!item.find(".finish-task").length) {
-        $("#pending-list").remove();
-        this.taskId = 0;
-      }
-    });
+    //   // remove unordered list if there are no tasks
+    //   if (!item.find(".finish-task").length) {
+    //     $("#pending-list").remove();
+    //     this.taskId = 0;
+    //   }
+    // });
   }
 
   undo(self) {
