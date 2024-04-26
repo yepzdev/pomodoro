@@ -26,62 +26,40 @@ export default class TaskManager {
     this.taskName = null;
   }
 
+  // This method builds a list of elements
+  createItemList(task) {
+    return `<li data-task-id="${task.id}">
+      <span>${task.spected} / ${task.current}</span>
+      <p class="inline">${task.description}</p>
+      ${this.finishButton}${this.removeButton}
+    </li>`;
+  }
+
   // This method obtains all the task data.
   async getData() {
+
     let self = this;
+    
     try {
       const response = await fetch(GET_ALL_TASKS_URL);
-
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
 
       const data = await response.json();
 
-      let pendingTasks = [];
-      let finishTasks = [];
+      let pendingTasks = [], finishTasks = [];
 
       $.each(data, function (index, task) {
         if (task.status) {
-          // create li
-          let li = $(
-            `<li data-task-id="${task.id}"><p>${task.description}</p></li>`
-          );
-          // add display inline
-          li.find("p").addClass("inline");
-          // create span
-          let span = $(`<span> ${task.spected}/${task.current} </span>`);
-          // create buttons
-          let buttons = $(`${self.finishButton}${self.removeButton}`);
-          // we add buttons to the li element
-          li.append(buttons);
-          // add span pomos score
-          li.prepend(span);
-          // save pending tasks
+          let li = $(self.createItemList(task));
           pendingTasks.push(li);
-          // clear task field
           $("#task-field").val("");
-
           self.remove(li, task.id);
           // self.finish(item);
         } else {
-          // create li
-          let li = $(
-            `<li data-task-id="${task.id}"><p>${task.description}</p></li>`
-          );
-          // add display inline
-          li.find("p").addClass("inline");
-          // create span
-          let span = $(`<span> ${task.spected}/${task.current} </span>`);
-          // create buttons
-          let buttons = $(`${self.finishButton}${self.removeButton}`);
-          // we add buttons to the li element
-          li.append(buttons);
-          // add span pomos score
-          li.prepend(span);
-          // add to unordered list
+          let li = $(self.createItemList(task));
           finishTasks.push(li);
-          // clear task field
           $("#task-field").val("");
 
           // this.remove(item);
