@@ -1,5 +1,5 @@
 import * as button from "./buttons.js";
-import {GET_ALL_TASKS_URL} from "./endpoints.js";
+import { GET_ALL_TASKS_URL } from "./endpoints.js";
 
 // pending list container
 let pendingList = $("<div>")
@@ -26,19 +26,60 @@ export default class TaskManager {
     this.taskName = null;
   }
 
-  async getAll() {
+  render;
+
+  // This method obtains all the task data.
+  async getData() {
     try {
       const response = await fetch(GET_ALL_TASKS_URL);
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
-      
+
       const data = await response.json();
 
-      console.log(data);
+      let pendingTasks = [];
+      let finishTasks = [];
+
+      $.each(data, function (index, task) {
+        if (task.status) {
+          // create li
+          let li = $(`<li data-task-id="${task.id}"><p>${task.description}</p></li>`);
+          // add display inline
+          li.find("p").addClass("inline");
+          // create span
+          let span = $(`<span> ${task.spected}/${task.current} </span>`);
+          // create buttons
+          let buttons = $(`${this.finishButton}${this.removeButton}`);
+          // we add buttons to the li element
+          li.append(buttons);
+          // add span pomos score
+          li.prepend(span);
+          // add to unordered list
+          pendingTasks.push(li);
+          // clear task field
+          $("#task-field").val("");
+
+          this.taskId++;
+
+          // this.remove(item);
+          // this.finish(item);
+
+          pendingList.find("ul").append();
+        } else {
+        }
+      });
+
+      // clear the task list
+      $("#task-list").empty();
+
+      // append all pending tasks to the corresponding list.
+      pendingList.find("ul").append(pendingTasks);
+      pendingList.prependTo("#task-list");
+
     } catch (error) {
-      console.error('There was a problem with your fetch operation:', error);
+      console.error("There was a problem with your fetch operation:", error);
     }
   }
 

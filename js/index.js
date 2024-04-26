@@ -14,7 +14,7 @@ const task = new taskManager();
 $(document).ready(function () {
 
   // update tasks 
-  task.getAll();
+  task.getData();
 
   $("#add-task").click(function () {
     task.setPomoScore(pomo.score);
