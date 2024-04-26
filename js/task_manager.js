@@ -62,14 +62,31 @@ export default class TaskManager {
           // clear task field
           $("#task-field").val("");
 
-          this.taskId++;
+          // this.taskId++;
 
           // this.remove(item);
           // this.finish(item);
-
-          // pendingList.find("ul").append();
           
         } else {
+          // create li
+          let li = $(`<li data-task-id="${task.id}"><p>${task.description}</p></li>`);
+          // add display inline
+          li.find("p").addClass("inline");
+          // create span
+          let span = $(`<span> ${task.spected}/${task.current} </span>`);
+          // create buttons
+          let buttons = $(`${self.finishButton}${self.removeButton}`);
+          // we add buttons to the li element
+          li.append(buttons);
+          // add span pomos score
+          li.prepend(span);
+          // add to unordered list
+          finishTasks.push(li);
+          // clear task field
+          $("#task-field").val("");
+
+          // this.remove(item);
+          // this.finish(item);
         }
       });
 
@@ -79,6 +96,9 @@ export default class TaskManager {
       // append all pending tasks to the corresponding list.
       pendingList.find("ul").append(pendingTasks);
       pendingList.prependTo("#task-list");
+      // append all finish tasks
+      finishList.find("ul").append(finishTasks);
+      finishList.prependTo("#task-list");
 
     } catch (error) {
       console.error("There was a problem with your fetch operation:", error);
