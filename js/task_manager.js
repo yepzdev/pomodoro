@@ -86,6 +86,10 @@ export default class TaskManager {
         }
       });
 
+      // we empty the lists before adding the elements
+      pendingList.find("ul").empty();
+      finishList.find("ul").empty();
+
       // append all pending tasks to the corresponding list.
       pendingList.find("ul").append(pendingElementStorage);
       pendingList.prependTo("#task-list");
@@ -93,9 +97,10 @@ export default class TaskManager {
       if (!pendingList.find(".remove-task").length) {
         $("#pending-list").remove();
       }
-      // append all finish tasks
+      // // append all finish tasks
       finishList.find("ul").append(completedElementStorage);
       finishList.appendTo("#task-list");
+
     } catch (error) {
       console.error("There was a problem with your fetch operation:", error);
     }
@@ -160,11 +165,12 @@ export default class TaskManager {
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
+
         return response.json();
       })
       .then((data) => {
-        // Acceder a la propiedad 'value' del objeto 'data'
-        console.log(data.value);
+        console.warn(data);
+        this.getData();
       })
       .catch((error) => {
         console.error("There was a problem with your fetch operation:", error);
@@ -222,7 +228,7 @@ export default class TaskManager {
         })
         .then((data) => {
           // Acceder a la propiedad 'value' del objeto 'data'
-          console.log(data);
+          // console.log(data);
         })
         .catch((error) => {
           console.error(
