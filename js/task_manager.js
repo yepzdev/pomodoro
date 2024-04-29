@@ -51,23 +51,34 @@ export default class TaskManager {
       // returns null when we don't receive
       // an empty array.
       if (data.length === 0) {
-        console.log('no hay registros de tareas');
+        console.log("no hay registros de tareas");
         return null;
       }
 
-      let pendingTasks = [],
-        finishTasks = [];
+      let pendingElementStorage = [],
+        completedElementStorage = [];
 
+      // We separate the  tasks by their status
+      // ( pending / completed )
       $.each(data, function (index, task) {
+        // we filter by status
         if (task.status) {
+          // wrap the item list in a jquery object
           let li = $(self.createItemList(task));
-          pendingTasks.push(li);
+
+          // save item list
+          pendingElementStorage.push(li);
+
+          // clean field to add task
           $("#task-field").val("");
+
+          // assing the click event to the remove button
           self.remove(li, task.id);
+
           // self.finish(item);
         } else {
           let li = $(self.createItemList(task));
-          finishTasks.push(li);
+          completedElementStorage.push(li);
           $("#task-field").val("");
 
           // this.remove(item);
@@ -76,14 +87,14 @@ export default class TaskManager {
       });
 
       // append all pending tasks to the corresponding list.
-      pendingList.find("ul").append(pendingTasks);
+      pendingList.find("ul").append(pendingElementStorage);
       pendingList.prependTo("#task-list");
       // remove unordered list if there are no tasks
       if (!pendingList.find(".remove-task").length) {
         $("#pending-list").remove();
       }
       // append all finish tasks
-      finishList.find("ul").append(finishTasks);
+      finishList.find("ul").append(completedElementStorage);
       finishList.appendTo("#task-list");
     } catch (error) {
       console.error("There was a problem with your fetch operation:", error);
@@ -99,8 +110,8 @@ export default class TaskManager {
     return this.score;
   }
 
-  isNotEmpty(task) {
-    return task.trim() !== "";
+  isEmpty(task) {
+    return task.trim() == "";
   }
 
   // This method updates the "li" element of the list, this
@@ -126,19 +137,83 @@ export default class TaskManager {
   add(task) {
     let description = task || $("#task-field").val();
 
-    if (this.isNotEmpty(description)) {
+    // we check that the task is not an empty string
+    if (this.isEmpty(description)) {
+      console.error("Empty tasks cannot be created.");
+      return null;
+    }
+
+    fetch(GET_ALL_TASKS_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        description,
+        status: 1,
+        spected: 1,
+        current: 0,
+        completed: 0,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // Acceder a la propiedad 'value' del objeto 'data'
+        console.log(data.value);
+      })
+      .catch((error) => {
+        console.error("There was a problem with your fetch operation:", error);
+      });
+
+    // pendingList.prependTo("#task-list");
+
+    // // create li
+    // let li = $(`<li data-task-id="${this.taskId}"><p> ${task}</p></li>`);
+    // // add display inline
+    // li.find("p").addClass("inline");
+    // // create span
+    // let span = $(`<span> 1/${this.getCurrentPomoScore()} </span>`);
+    // // create buttons
+    // let buttons = $(`${this.finishButton}${this.removeButton}`);
+    // // we add buttons to the li element
+    // li.append(buttons);
+    // // add span pomos score
+    // li.prepend(span);
+    // // add to unordered list
+    // let taskItem = $("#pending-list ul").append(li);
+
+    // $("#task-field").val("");
+    // this.taskId++;
+    // this.remove(taskItem);
+    // this.finish(taskItem);
+  }
+
+  // This method does not create the remove button,
+  // instead, what it does is assign the click
+  // event to the remove button
+  remove(item, id) {
+    let self = this;
+    // assign click event to all buttons to delete tasks
+    item.find(".remove-task").click(function () {
+      const removeIdButon = $(this).closest("li").attr("data-task-id");
+      // const removeIdButon = $(this).closest("li").attr("data-task-id");
+
+      if (parseInt(removeIdButon) !== id) {
+        console.log("error al eliminar el elemento");
+        return null;
+      }
+
       fetch(GET_ALL_TASKS_URL, {
-        method: "POST",
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          description,
-          status: 1,
-          spected: 1,
-          current: 0,
-          completed: 0,
-        }),
+        body: JSON.stringify({ id: id }),
       })
         .then((response) => {
           if (!response.ok) {
@@ -148,7 +223,7 @@ export default class TaskManager {
         })
         .then((data) => {
           // Acceder a la propiedad 'value' del objeto 'data'
-          console.log(data.value);
+          console.log(data);
         })
         .catch((error) => {
           console.error(
@@ -157,69 +232,14 @@ export default class TaskManager {
           );
         });
 
-      // pendingList.prependTo("#task-list");
+      $(`[data-task-id="${removeIdButon}"]`).remove();
 
-      // // create li
-      // let li = $(`<li data-task-id="${this.taskId}"><p> ${task}</p></li>`);
-      // // add display inline
-      // li.find("p").addClass("inline");
-      // // create span
-      // let span = $(`<span> 1/${this.getCurrentPomoScore()} </span>`);
-      // // create buttons
-      // let buttons = $(`${this.finishButton}${this.removeButton}`);
-      // // we add buttons to the li element
-      // li.append(buttons);
-      // // add span pomos score
-      // li.prepend(span);
-      // // add to unordered list
-      // let taskItem = $("#pending-list ul").append(li);
-
-      // $("#task-field").val("");
-      // this.taskId++;
-      // this.remove(taskItem);
-      // this.finish(taskItem);
-    }
-  }
-
-  // dynamically generates the remove and finish button
-  remove(item, id) {
-    let self = this;
-    item.find(".remove-task").click(function () {
-      const taskIdToRemove = $(this).closest("li").attr("data-task-id");
-
-      if (parseInt(taskIdToRemove) === id) {
-        fetch(GET_ALL_TASKS_URL, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ id: id }),
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Network response was not ok");
-            }
-            return response.json();
-          })
-          .then((data) => {
-            // Acceder a la propiedad 'value' del objeto 'data'
-            console.log(data);
-          })
-          .catch((error) => {
-            console.error(
-              "There was a problem with your fetch operation:",
-              error
-            );
-          });
-
-        $(`[data-task-id="${taskIdToRemove}"]`).remove();
-
-        let pendingList = $("#pending-list ul");
-        // remove unordered list if there are no tasks
-        if (!pendingList.find(".remove-task").length) {
-          $("#pending-list").remove();
-        }
+      let pendingList = $("#pending-list ul");
+      // remove unordered list if there are no tasks
+      if (!pendingList.find(".remove-task").length) {
+        $("#pending-list").remove();
       }
+      // }
     });
   }
 
