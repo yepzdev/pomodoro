@@ -26,7 +26,7 @@ export default class TaskManager {
     this.taskName = null;
   }
 
-  // This method builds a list of elements
+  // This method builds an elements list template
   createItemList(task) {
     return `<li data-task-id="${task.id}">
       <span>${task.spected} / ${task.current}</span>
