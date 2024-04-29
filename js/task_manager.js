@@ -201,7 +201,6 @@ export default class TaskManager {
     // assign click event to all buttons to delete tasks
     item.find(".remove-task").click(function () {
       const removeIdButon = $(this).closest("li").attr("data-task-id");
-      // const removeIdButon = $(this).closest("li").attr("data-task-id");
 
       if (parseInt(removeIdButon) !== id) {
         console.log("error al eliminar el elemento");
@@ -239,7 +238,6 @@ export default class TaskManager {
       if (!pendingList.find(".remove-task").length) {
         $("#pending-list").remove();
       }
-      // }
     });
   }
 
