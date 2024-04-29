@@ -37,9 +37,8 @@ export default class TaskManager {
 
   // This method obtains all the task data.
   async getData() {
-
     let self = this;
-    
+
     try {
       const response = await fetch(GET_ALL_TASKS_URL);
       if (!response.ok) {
@@ -48,7 +47,16 @@ export default class TaskManager {
 
       const data = await response.json();
 
-      let pendingTasks = [], finishTasks = [];
+      // we check that the data function
+      // returns null when we don't receive
+      // an empty array.
+      if (data.length === 0) {
+        console.log('no hay registros de tareas');
+        return null;
+      }
+
+      let pendingTasks = [],
+        finishTasks = [];
 
       $.each(data, function (index, task) {
         if (task.status) {
@@ -115,46 +123,61 @@ export default class TaskManager {
     }
   };
 
-  add(taskName) {
-    let task = taskName || $("#task-field").val();
+  add(task) {
+    let description = task || $("#task-field").val();
 
-    return;
-    if (this.isNotEmpty(task)) {
-      // build task in object format
-      // and then save it to local storage
-      // ===========================================
-      let data = {
-        id: this.taskId,
-        task,
-        score: {
-          expected: 1,
-          actual: this.getCurrentPomoScore(),
+    if (this.isNotEmpty(description)) {
+      fetch(GET_ALL_TASKS_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        highlight: false,
-      };
-      // ===========================================
+        body: JSON.stringify({
+          description,
+          status: 1,
+          spected: 1,
+          current: 0,
+          completed: 0,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          // Acceder a la propiedad 'value' del objeto 'data'
+          console.log(data.value);
+        })
+        .catch((error) => {
+          console.error(
+            "There was a problem with your fetch operation:",
+            error
+          );
+        });
 
-      pendingList.prependTo("#task-list");
+      // pendingList.prependTo("#task-list");
 
-      // create li
-      let li = $(`<li data-task-id="${this.taskId}"><p> ${task}</p></li>`);
-      // add display inline
-      li.find("p").addClass("inline");
-      // create span
-      let span = $(`<span> 1/${this.getCurrentPomoScore()} </span>`);
-      // create buttons
-      let buttons = $(`${this.finishButton}${this.removeButton}`);
-      // we add buttons to the li element
-      li.append(buttons);
-      // add span pomos score
-      li.prepend(span);
-      // add to unordered list
-      let taskItem = $("#pending-list ul").append(li);
+      // // create li
+      // let li = $(`<li data-task-id="${this.taskId}"><p> ${task}</p></li>`);
+      // // add display inline
+      // li.find("p").addClass("inline");
+      // // create span
+      // let span = $(`<span> 1/${this.getCurrentPomoScore()} </span>`);
+      // // create buttons
+      // let buttons = $(`${this.finishButton}${this.removeButton}`);
+      // // we add buttons to the li element
+      // li.append(buttons);
+      // // add span pomos score
+      // li.prepend(span);
+      // // add to unordered list
+      // let taskItem = $("#pending-list ul").append(li);
 
-      $("#task-field").val("");
-      this.taskId++;
-      this.remove(taskItem);
-      this.finish(taskItem);
+      // $("#task-field").val("");
+      // this.taskId++;
+      // this.remove(taskItem);
+      // this.finish(taskItem);
     }
   }
 
