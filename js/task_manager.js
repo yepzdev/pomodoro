@@ -205,8 +205,8 @@ export default class TaskManager {
           return response.json();
         })
         .then((data) => {
-          // Acceder a la propiedad 'value' del objeto 'data'
           // console.log(data);
+          self.getData();
         })
         .catch((error) => {
           console.error(
@@ -215,13 +215,13 @@ export default class TaskManager {
           );
         });
 
-      $(`[data-task-id="${removeIdButon}"]`).remove();
+      // $(`[data-task-id="${removeIdButon}"]`).remove();
 
-      let pendingList = $("#pending-list ul");
+      // let pendingList = $("#pending-list ul");
       // remove unordered list if there are no tasks
-      if (!pendingList.find(".remove-task").length) {
-        $("#pending-list").remove();
-      }
+      // if (!pendingList.find(".remove-task").length) {
+      //   $("#pending-list").remove();
+      // }
     });
   }
 
