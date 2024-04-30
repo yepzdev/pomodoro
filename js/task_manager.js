@@ -187,7 +187,7 @@ export default class TaskManager {
       const removeIdButon = $(this).closest("li").attr("data-task-id");
 
       if (parseInt(removeIdButon) !== id) {
-        console.log("error al eliminar el elemento");
+        console.log("error when removing task");
         return null;
       }
 
@@ -204,8 +204,7 @@ export default class TaskManager {
           }
           return response.json();
         })
-        .then((data) => {
-          // console.log(data);
+        .then(() => {
           self.getData();
         })
         .catch((error) => {
