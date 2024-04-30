@@ -97,7 +97,7 @@ export default class TaskManager {
       if (!pendingList.find(".remove-task").length) {
         $("#pending-list").remove();
       }
-      // // append all finish tasks
+      // append all finish tasks
       finishList.find("ul").append(completedElementStorage);
       finishList.appendTo("#task-list");
 
@@ -175,28 +175,6 @@ export default class TaskManager {
       .catch((error) => {
         console.error("There was a problem with your fetch operation:", error);
       });
-
-    // pendingList.prependTo("#task-list");
-
-    // // create li
-    // let li = $(`<li data-task-id="${this.taskId}"><p> ${task}</p></li>`);
-    // // add display inline
-    // li.find("p").addClass("inline");
-    // // create span
-    // let span = $(`<span> 1/${this.getCurrentPomoScore()} </span>`);
-    // // create buttons
-    // let buttons = $(`${this.finishButton}${this.removeButton}`);
-    // // we add buttons to the li element
-    // li.append(buttons);
-    // // add span pomos score
-    // li.prepend(span);
-    // // add to unordered list
-    // let taskItem = $("#pending-list ul").append(li);
-
-    // $("#task-field").val("");
-    // this.taskId++;
-    // this.remove(taskItem);
-    // this.finish(taskItem);
   }
 
   // This method does not create the remove button,
