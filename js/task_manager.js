@@ -228,7 +228,8 @@ export default class TaskManager {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: id,
+          id,
+          status: 0
         }),
       })
         .then((response) => {
@@ -240,7 +241,7 @@ export default class TaskManager {
         })
         .then((data) => {
           console.warn(data);
-          this.getData();
+          self.getData();
         })
         .catch((error) => {
           console.error(
