@@ -27,11 +27,26 @@ export default class TaskManager {
   }
 
   // This method builds an elements list template
-  createItemList(task) {
+  // puede devolver dos elementos diferentes
+  // por ejemplo
+  // para una tarea pendiente devolvera
+  // un elemento de lista con los botones "finish" y "remove"
+  // para una tarea completada devolvera un elemento de lista
+  // con el boton "undo"
+
+  createItemList(task, status) {
+    if (status) {
+      return `<li data-task-id="${task.id}">
+        <span>${task.spected} / ${task.current}</span>
+        <p class="inline">${task.description}</p>
+        ${this.finishButton}${this.removeButton}
+      </li>`;
+    }
+
     return `<li data-task-id="${task.id}">
       <span>${task.spected} / ${task.current}</span>
       <p class="inline">${task.description}</p>
-      ${this.finishButton}${this.removeButton}
+      ${this.undoButton}
     </li>`;
   }
 
@@ -68,7 +83,7 @@ export default class TaskManager {
         // we filter by status
         if (task.status) {
           // wrap the item list in a jquery object
-          let li = $(self.createItemList(task));
+          let li = $(self.createItemList(task, task.status));
 
           // save item list
           pendingElementStorage.push(li);
@@ -79,7 +94,7 @@ export default class TaskManager {
           self.remove(li, task.id);
           self.finish(li, task.id);
         } else {
-          let li = $(self.createItemList(task));
+          let li = $(self.createItemList(task, task.status));
           completedElementStorage.push(li);
           $("#task-field").val("");
 
@@ -229,7 +244,7 @@ export default class TaskManager {
         },
         body: JSON.stringify({
           id,
-          status: 0
+          status: 0,
         }),
       })
         .then((response) => {
