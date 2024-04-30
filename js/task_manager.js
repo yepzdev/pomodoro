@@ -93,14 +93,14 @@ export default class TaskManager {
       // append all pending tasks to the corresponding list.
       pendingList.find("ul").append(pendingElementStorage);
       pendingList.prependTo("#task-list");
-      // remove unordered list if there are no tasks
-      if (!pendingList.find(".remove-task").length) {
-        $("#pending-list").remove();
-      }
-      // append all finish tasks
+
       finishList.find("ul").append(completedElementStorage);
       finishList.appendTo("#task-list");
 
+      // remove unordered list if there are no pending tasks
+      if (pendingElementStorage.length == 0) {
+        pendingList.remove();
+      }
     } catch (error) {
       console.error("There was a problem with your fetch operation:", error);
     }
@@ -214,14 +214,6 @@ export default class TaskManager {
             error
           );
         });
-
-      // $(`[data-task-id="${removeIdButon}"]`).remove();
-
-      // let pendingList = $("#pending-list ul");
-      // remove unordered list if there are no tasks
-      // if (!pendingList.find(".remove-task").length) {
-      //   $("#pending-list").remove();
-      // }
     });
   }
 
