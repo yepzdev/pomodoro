@@ -51,7 +51,11 @@ export default class TaskManager {
       // returns null when we don't receive
       // an empty array.
       if (data.length === 0) {
-        console.log("no hay registros de tareas");
+        console.warn("There is no task log.");
+
+        pendingList.find("ul").empty();
+        finishList.find("ul").empty();
+
         return null;
       }
 
@@ -72,17 +76,14 @@ export default class TaskManager {
           // clean field to add task
           $("#task-field").val("");
 
-          // assing the click event to the remove button
           self.remove(li, task.id);
-
-          // self.finish(item);
+          self.finish(li, task.id);
         } else {
           let li = $(self.createItemList(task));
           completedElementStorage.push(li);
           $("#task-field").val("");
 
-          // this.remove(item);
-          // this.finish(item);
+          // this.undo(item);
         }
       });
 
@@ -158,7 +159,7 @@ export default class TaskManager {
         status: 1,
         spected: 1,
         current: 0,
-        completed: 0,
+        highlighted: 0,
       }),
     })
       .then((response) => {
@@ -169,7 +170,7 @@ export default class TaskManager {
         return response.json();
       })
       .then((data) => {
-        console.warn(data);
+        console.info(data);
         this.getData();
       })
       .catch((error) => {
@@ -204,7 +205,8 @@ export default class TaskManager {
           }
           return response.json();
         })
-        .then(() => {
+        .then((data) => {
+          console.info(data);
           self.getData();
         })
         .catch((error) => {
@@ -216,31 +218,43 @@ export default class TaskManager {
     });
   }
 
-  finish(item) {
+  finish(item, id) {
     let self = this;
-    // item.find(".finish-task").click(function () {
-    //   let liTaskItem = $(this).parent();
-    //   // detach ul item and add liTaskItem
-    //   let ul = finishList.find("ul").detach().append(liTaskItem);
-    //   // remove finish and remove buttons
-    //   ul.find("button").remove();
-    //   // puts the class for text decoration
-    //   ul.find("p").addClass("text-decoration-line");
-    //   // add undo button
-    //   ul.find("li").append(`${self.undoButton}`);
-    //   // attached to the finish list
-    //   finishList.append(ul);
-    //   // insert into the task list
-    //   finishList.appendTo("#task-list");
-    //   // set undo event
-    //   self.undo(self);
 
-    //   // remove unordered list if there are no tasks
-    //   if (!item.find(".finish-task").length) {
-    //     $("#pending-list").remove();
-    //     this.taskId = 0;
-    //   }
-    // });
+    item.find(".finish-task").click(function () {
+      fetch(GET_ALL_TASKS_URL, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: id,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+
+          return response.json();
+        })
+        .then((data) => {
+          console.warn(data);
+          this.getData();
+        })
+        .catch((error) => {
+          console.error(
+            "There was a problem with your fetch operation:",
+            error
+          );
+        });
+
+      // remove unordered list if there are no tasks
+      //   if (!item.find(".finish-task").length) {
+      //     $("#pending-list").remove();
+      //     this.taskId = 0;
+      //   }
+    });
   }
 
   undo(self) {
