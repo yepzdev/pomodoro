@@ -12,8 +12,7 @@ let pomo = {
 
 const task = new taskManager();
 $(document).ready(function () {
-
-  // update tasks 
+  // update tasks
   task.getData();
 
   $("#add-task").click(function () {
@@ -171,17 +170,21 @@ $(document).ready(() => {
 
   // Events needed to change the styles of each list item when clicked
   $("#task-list").on("click", "li", function () {
-    $("#task-list #pending-list li").removeClass("higlighted");
-    $("#pending-list li").removeClass("highlighted");
-    $(this).addClass("highlighted");
+    if (!$(e.target).is("button")) {
+      $("#task-list #pending-list li").removeClass("higlighted");
+      $("#pending-list li").removeClass("highlighted");
+      $(this).addClass("highlighted");
+    }
   });
 
   // This event is also necessary because it allows us to apply styles to
   // elements that are dynamically introduced into the DOM.
   $("#task-list").on("click", "li span, li p", function (e) {
     e.stopPropagation();
-    $("#pending-list li").removeClass("highlighted");
-    $(this).closest("li").addClass("highlighted");
+    if (!$(e.target).is("button")) {
+      $("#pending-list li").removeClass("highlighted");
+      $(this).closest("li").addClass("highlighted");
+    }
   });
 
   const setTimeInterval = (time) => {
