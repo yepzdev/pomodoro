@@ -98,7 +98,7 @@ export default class TaskManager {
           completedElementStorage.push(li);
           $("#task-field").val("");
 
-          // this.undo(item);
+          self.undo(li, task.id);
         }
       });
 
@@ -273,26 +273,63 @@ export default class TaskManager {
     });
   }
 
-  undo(self) {
-    $("#finish-list")
-      .find(".undo-button")
-      .click(function () {
-        let liTaskItem = $(this).parent();
-        // remove undo button
-        liTaskItem.find("button").remove();
-        //remove span item
-        liTaskItem.find("span").remove();
-        // take task name with score
-        let task = liTaskItem.text();
-        // undo task
-        self.add(task);
-        // removes item from completed task list
-        liTaskItem.remove();
+  undo(item, id) {
+    self = this;
+    item.find(".undo-button").click(function () {
 
-        // undo unordered list if there are no tasks
-        if (!$("#finish-list").find(".undo-button").length) {
-          $("#finish-list").remove();
-        }
-      });
+      fetch(GET_ALL_TASKS_URL, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id,
+          status: 1,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+
+          return response.json();
+        })
+        .then((data) => {
+          console.warn(data);
+          self.getData();
+        })
+        .catch((error) => {
+          console.error(
+            "There was a problem with your fetch operation:",
+            error
+          );
+        });
+
+      // remove unordered list if there are no tasks
+      //   if (!item.find(".finish-task").length) {
+      //     $("#pending-list").remove();
+      //     this.taskId = 0;
+      //   }
+    });
+    // $("#finish-list")
+    //   .find(".undo-button")
+    //   .click(function () {
+    //     let liTaskItem = $(this).parent();
+    //     // remove undo button
+    //     liTaskItem.find("button").remove();
+    //     //remove span item
+    //     liTaskItem.find("span").remove();
+    //     // take task name with score
+    //     let task = liTaskItem.text();
+    //     // undo task
+    //     self.add(task);
+    //     // removes item from completed task list
+    //     liTaskItem.remove();
+
+    //     // undo unordered list if there are no tasks
+    //     if (!$("#finish-list").find(".undo-button").length) {
+    //       $("#finish-list").remove();
+    //     }
+    //   });
   }
 }
