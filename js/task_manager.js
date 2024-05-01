@@ -311,20 +311,6 @@ export default class TaskManager {
       //     this.taskId = 0;
       //   }
     });
-    // $("#finish-list")
-    //   .find(".undo-button")
-    //   .click(function () {
-    //     let liTaskItem = $(this).parent();
-    //     // remove undo button
-    //     liTaskItem.find("button").remove();
-    //     //remove span item
-    //     liTaskItem.find("span").remove();
-    //     // take task name with score
-    //     let task = liTaskItem.text();
-    //     // undo task
-    //     self.add(task);
-    //     // removes item from completed task list
-    //     liTaskItem.remove();
 
     //     // undo unordered list if there are no tasks
     //     if (!$("#finish-list").find(".undo-button").length) {
