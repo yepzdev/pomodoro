@@ -1,3 +1,5 @@
+'use strict';
+
 import * as button from "./buttons.js";
 import { GET_ALL_TASKS_URL } from "./endpoints.js";
 
