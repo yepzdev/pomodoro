@@ -5,7 +5,6 @@ $(function () {
   // Events needed to change the styles of each list item when clicked
   $("#task-list").on("click", "li", function (e) {
     if (!$(e.target).is("button")) {
-      $("#task-list #pending-list li").removeClass("higlighted");
       $("#pending-list li").removeClass("highlighted");
       $(this).addClass("highlighted");
     }
