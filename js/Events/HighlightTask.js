@@ -21,9 +21,9 @@ $(function () {
     $("#pending-list li").removeClass("highlighted");
     // highlight task target
     $(this).closest("li").addClass("highlighted");
-    // save id element
+    // save id li item
     let taskId = $(this).closest("li").attr("data-task-id");
-
+    // new task instance to be able to update the tasks.
     const task = new taskManager();
 
     fetch(GET_ALL_TASKS_URL + '/highlighted.php', {
