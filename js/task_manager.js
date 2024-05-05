@@ -58,6 +58,7 @@ export default class TaskManager {
 
     try {
       const response = await fetch(GET_ALL_TASKS_URL);
+
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
