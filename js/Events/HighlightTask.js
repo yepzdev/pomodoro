@@ -21,7 +21,7 @@ $(function () {
     $("#pending-list li").removeClass("highlighted");
     // highlight task target
     $(this).closest("li").addClass("highlighted");
-
+    // save id element
     let taskId = $(this).closest("li").attr("data-task-id");
 
     const task = new taskManager();

@@ -88,6 +88,10 @@ export default class TaskManager {
           // wrap the item list in a jquery object
           let li = $(self.createItemList(task, task.status));
 
+          if (task.highlighted) {
+            li.addClass("highlighted");
+          }
+
           // save item list
           pendingElementStorage.push(li);
 
