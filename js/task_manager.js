@@ -28,14 +28,13 @@ export default class TaskManager {
     this.taskName = null;
   }
 
-  // This method builds an elements list template
-  // puede devolver dos elementos diferentes
-  // por ejemplo
-  // para una tarea pendiente devolvera
-  // un elemento de lista con los botones "finish" y "remove"
-  // para una tarea completada devolvera un elemento de lista
-  // con el boton "undo"
-
+  /**
+   * This method builds an elements list item template
+   * 
+   * @param {Object} task - he task object containing id, spected, current, and description properties
+   * @param {int} status - The status indicating if the task is finished or not
+   * @returns {string} - The HTML template for the list item
+   */
   createItemList(task, status) {
     if (status) {
       return `<li data-task-id="${task.id}">
@@ -45,11 +44,13 @@ export default class TaskManager {
       </li>`;
     }
 
-    return `<li data-task-id="${task.id}">
-      <span>${task.spected} / ${task.current}</span>
-      <p class="inline">${task.description}</p>
-      ${this.undoButton}
-    </li>`;
+    return (
+      `<li data-task-id="${task.id}">
+        <span>${task.spected} / ${task.current}</span>
+        <p class="inline">${task.description}</p>
+        ${this.undoButton}
+      </li>`
+    );
   }
 
   // This method obtains all the task data.
