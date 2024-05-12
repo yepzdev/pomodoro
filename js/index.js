@@ -2,6 +2,7 @@
 
 import taskManager from "./task_manager.js";
 import "./Events/HighlightTask.js";
+import { GET_ALL_TASKS_URL } from "./endpoints.js";
 
 // task list field
 let addTaskField = $("<input>");
@@ -97,19 +98,45 @@ $(document).ready(() => {
 
       // Check that the pending task is highlighted
       if ($("ul").find("li.highlighted").length) {
-        
         let id = $("ul").find("li.highlighted").attr("data-task-id");
+
+        // increases the number of times the pomodoro was completed for this task
+        fetch(GET_ALL_TASKS_URL + "highlighted_current.php", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id,
+          }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+
+            return response.json();
+          })
+          .then((data) => {
+            console.info(data);
+            this.getData();
+          })
+          .catch((error) => {
+            console.error(
+              "There was a problem with your fetch operation:",
+              error
+            );
+          });
       }
-      
+
       task.updateTaskScore();
       showNumberOfPomodoros();
       heHadBreaks = false;
-      return;
+    } else {
+      // set short break timer
+      setTimeInterval(breakTime);
+      heHadBreaks = true;
     }
-
-    // set short break timer
-    setTimeInterval(breakTime);
-    heHadBreaks = true;
   };
 
   // This method checks the number of cycles of a pomodoro
