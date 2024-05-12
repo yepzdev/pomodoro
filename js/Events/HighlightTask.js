@@ -6,7 +6,7 @@ import { GET_ALL_TASKS_URL } from "./../endpoints.js";
 $(function () {
   // Events needed to change the styles of each list item when clicked
   $("#task-list").on("click", "li, li span, li p", function (e) {
-    // to not highlight a task when we press finish/remove button
+    // to not highlight a task when we click the finish/delete button
     if ($(e.target).is("button")) {
       return ;
     }

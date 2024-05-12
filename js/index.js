@@ -94,13 +94,20 @@ $(document).ready(() => {
       pomosCounter++;
       pomo.score++;
       task.setPomoScore(pomo.score);
+
+      // Check that the pending task is highlighted
+      if ($("ul").find("li.highlighted").length) {
+        
+        let id = $("ul").find("li.highlighted").attr("data-task-id");
+      }
+      
       task.updateTaskScore();
       showNumberOfPomodoros();
       heHadBreaks = false;
       return;
     }
 
-    // set shift break timer
+    // set short break timer
     setTimeInterval(breakTime);
     heHadBreaks = true;
   };
