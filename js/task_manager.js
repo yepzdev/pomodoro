@@ -38,7 +38,7 @@ export default class TaskManager {
   createItemList(task, status) {
     if (status) {
       return `<li data-task-id="${task.id}">
-        <span>${task.spected} / ${task.current}</span>
+        <span>${task.expected} / ${task.current}</span>
         <p class="inline">${task.description}</p>
         ${this.finishButton}${this.removeButton}
       </li>`;
@@ -46,7 +46,7 @@ export default class TaskManager {
 
     return (
       `<li data-task-id="${task.id}">
-        <span>${task.spected} / ${task.current}</span>
+        <span>${task.expected} / ${task.current}</span>
         <p class="inline">${task.description}</p>
         ${this.undoButton}
       </li>`
@@ -180,7 +180,7 @@ export default class TaskManager {
       body: JSON.stringify({
         description,
         status: 1,
-        spected: 1,
+        expected: 1,
         current: 0,
         highlighted: 0,
       }),
