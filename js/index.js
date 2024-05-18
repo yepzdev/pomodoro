@@ -87,7 +87,7 @@ $(document).ready(() => {
 
   // This method handles the rest timer and pomodoro timer.
   // It is what allows us to assign rest timers or pomodoros
-  const breakHandler = (breakTime) => {
+  const breakHandler = function(breakTime) {
     // If you already had a rest timer then set the pomodoro timer
     if (heHadBreaks) {
       setTimeInterval(POMODORO);
@@ -99,7 +99,7 @@ $(document).ready(() => {
       // Check that the pending task is highlighted
       if ($("ul").find("li.highlighted").length) {
         let id = $("ul").find("li.highlighted").attr("data-task-id");
-
+  
         // increases the number of times the pomodoro was completed for this task
         fetch(GET_ALL_TASKS_URL + "highlighted_current.php", {
           method: "PUT",
@@ -118,8 +118,9 @@ $(document).ready(() => {
             return response.json();
           })
           .then((data) => {
-            console.info(data);
-            this.getData();
+            console.log(data);
+            // task.pomodorosTraking(data) 
+            task.getData();
           })
           .catch((error) => {
             console.error(
@@ -127,8 +128,10 @@ $(document).ready(() => {
               error
             );
           });
+        
+        // console.log(taskData);
+        // task.pomodorosTraking(id);
       }
-
       task.updateTaskScore();
       showNumberOfPomodoros();
       heHadBreaks = false;

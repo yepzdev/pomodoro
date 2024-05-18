@@ -143,10 +143,25 @@ export default class TaskManager {
     return task.trim() == "";
   }
 
+  // This method establishes the number of current
+  // and estimated pomodoros to keep track of the task.
+  pomodorosTraking(task_data) {
+    let {task_id, current, expected } = task_data;
+    // we get the task element
+    let task = $("#pending-list").find(`[data-task-id=${task_id}]`);
+    // build element with updated quantity
+    let span = $(`<span> ${expected}/${current} </span>`);
+    // replace with updated element
+    task.find("span").replaceWith(span);
+    // task.find("li").prepend(span);
+    $("#pending-list ul").append(task);
+
+  }
+
   // This method updates the "li" element of the list, this
-  // allows us to set the current pomodoro score.
+  // allows us to set the current pomodoro.
   updateTaskScore = () => {
-    // span elements contain the score of pomos
+    // span elements contain the cuantity of pomodoros
     // The span tag is where we show the score
     let pomoScore = $("#pending-list").find("span");
 
