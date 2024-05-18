@@ -118,8 +118,6 @@ $(document).ready(() => {
             return response.json();
           })
           .then((data) => {
-            console.log(data);
-            // task.pomodorosTraking(data) 
             task.getData();
           })
           .catch((error) => {
@@ -128,11 +126,8 @@ $(document).ready(() => {
               error
             );
           });
-        
-        // console.log(taskData);
-        // task.pomodorosTraking(id);
       }
-      task.updateTaskScore();
+    
       showNumberOfPomodoros();
       heHadBreaks = false;
     } else {
