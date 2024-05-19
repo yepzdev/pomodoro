@@ -130,15 +130,6 @@ export default class TaskManager {
     }
   }
 
-  setPomoScore(score) {
-    this.score = score;
-  }
-
-  // gets the number of current pomodoros score
-  getCurrentPomoScore() {
-    return this.score;
-  }
-
   isEmpty(task) {
     return task.trim() == "";
   }

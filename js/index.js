@@ -89,7 +89,6 @@ $(document).ready(() => {
       setTimeInterval(POMODORO);
       // pomodoro counter
       pomosCounter++;
-      task.setPomoScore(pomo.score);
 
       // Check that the pending task is highlighted
       if ($("ul").find("li.highlighted").length) {
