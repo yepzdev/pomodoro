@@ -8,10 +8,6 @@ import { GET_ALL_TASKS_URL } from "./endpoints.js";
 let addTaskField = $("<input>");
 addTaskField.clone().attr("id", "task-field").appendTo(".add-task-field");
 
-let pomo = {
-  score: 0,
-};
-
 const task = new taskManager();
 $(document).ready(function () {
   // update tasks
@@ -93,7 +89,6 @@ $(document).ready(() => {
       setTimeInterval(POMODORO);
       // pomodoro counter
       pomosCounter++;
-      pomo.score++;
       task.setPomoScore(pomo.score);
 
       // Check that the pending task is highlighted
