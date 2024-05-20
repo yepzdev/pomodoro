@@ -30,7 +30,8 @@ $(document).ready(function () {
 $(document).ready(() => {
   let timer;
   let timeLeft = 25 * 60; // 25 minutes in seconds
-  let pomosCounter = 1;
+  // save the pomodoro cycles
+  let pomodoroCycles = 1;
 
   // by default the timer is paused
   let isPaused = true;
@@ -68,7 +69,7 @@ $(document).ready(() => {
 
   // Shows the number of pomodoros in the HTML #1, 2, 3...
   const showNumberOfPomodoros = () => {
-    $("#pomodoro-counter").text(`#${pomosCounter}`);
+    $("#pomodoro-counter").text(`#${pomodoroCycles}`);
   };
 
   const isTimerExpired = () => {
@@ -78,7 +79,7 @@ $(document).ready(() => {
   // This method is important because it is what will allow us to know the number of
   // pomodoros (cycles) completed based on the counter (pomodoro counter) and thus be able to apply long or short rest.
   const isEqualToNumberOf = (cycles) => {
-    return pomosCounter % cycles === 0;
+    return pomodoroCycles % cycles === 0;
   };
 
   // This method handles the rest timer and pomodoro timer.
@@ -87,8 +88,7 @@ $(document).ready(() => {
     // If you already had a rest timer then set the pomodoro timer
     if (heHadBreaks) {
       setTimeInterval(POMODORO);
-      // pomodoro counter
-      pomosCounter++;
+      pomodoroCycles++;
 
       // Check that the pending task is highlighted
       if ($("ul").find("li.highlighted").length) {
