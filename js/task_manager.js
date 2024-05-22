@@ -243,12 +243,6 @@ export default class TaskManager {
             error
           );
         });
-
-      // remove unordered list if there are no tasks
-      //   if (!item.find(".finish-task").length) {
-      //     $("#pending-list").remove();
-      //     this.taskId = 0;
-      //   }
     });
   }
 
@@ -283,18 +277,6 @@ export default class TaskManager {
             error
           );
         });
-
-      // remove unordered list if there are no tasks
-      //   if (!item.find(".finish-task").length) {
-      //     $("#pending-list").remove();
-      //     this.taskId = 0;
-      //   }
     });
-
-    //     // undo unordered list if there are no tasks
-    //     if (!$("#finish-list").find(".undo-button").length) {
-    //       $("#finish-list").remove();
-    //     }
-    //   });
   }
 }
