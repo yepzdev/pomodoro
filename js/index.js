@@ -93,7 +93,7 @@ $(document).ready(() => {
         let id = $("ul").find("li.highlighted").attr("data-task-id");
   
         // increases the number of times the pomodoro was completed for this task
-        fetch(GET_ALL_TASKS_URL + "highlighted_current.php", {
+        fetch(GET_ALL_TASKS_URL + "increase_highlighted_task.php", {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
