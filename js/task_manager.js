@@ -1,7 +1,7 @@
 'use strict';
 
 import * as button from "./buttons.js";
-import { GET_ALL_TASKS_URL } from "./endpoints.js";
+import { POMOTASK_URL } from "./endpoints.js";
 
 // pending list container
 let pendingList = $("<div>")
@@ -143,7 +143,7 @@ export default class TaskManager {
       return null;
     }
 
-    fetch(GET_ALL_TASKS_URL, {
+    fetch(POMOTASK_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -186,7 +186,7 @@ export default class TaskManager {
         return null;
       }
 
-      fetch(GET_ALL_TASKS_URL, {
+      fetch(POMOTASK_URL, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -216,7 +216,7 @@ export default class TaskManager {
     let self = this;
 
     item.find(".finish-task").click(function () {
-      fetch(GET_ALL_TASKS_URL, {
+      fetch(POMOTASK_URL, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -250,7 +250,7 @@ export default class TaskManager {
     self = this;
     item.find(".undo-button").click(function () {
 
-      fetch(GET_ALL_TASKS_URL, {
+      fetch(POMOTASK_URL, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

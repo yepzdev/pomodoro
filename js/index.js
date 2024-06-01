@@ -2,7 +2,7 @@
 
 import taskManager from "./task_manager.js";
 import "./Events/HighlightTask.js";
-import { GET_ALL_TASKS_URL } from "./endpoints.js";
+import { POMOTASK_URL } from "./endpoints.js";
 
 // task list field
 let addTaskField = $("<input>");
@@ -93,7 +93,7 @@ $(document).ready(() => {
         let id = $("ul").find("li.highlighted").attr("data-task-id");
   
         // increases the number of times the pomodoro was completed for this task
-        fetch(GET_ALL_TASKS_URL + "increase_highlighted_task.php", {
+        fetch(POMOTASK_URL + "increase_highlighted_task.php", {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

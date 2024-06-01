@@ -1,7 +1,7 @@
 "use strict";
 
 import taskManager from "./../task_manager.js";
-import { GET_ALL_TASKS_URL } from "./../endpoints.js";
+import { POMOTASK_URL } from "./../endpoints.js";
 
 $(function () {
   // Events needed to change the styles of each list item when clicked
@@ -26,7 +26,7 @@ $(function () {
     // new task instance to be able to update the tasks.
     const task = new taskManager();
 
-    fetch(GET_ALL_TASKS_URL + '/highlighted.php', {
+    fetch(POMOTASK_URL + '/highlighted.php', {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
