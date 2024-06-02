@@ -58,7 +58,7 @@ export default class TaskManager {
     let self = this;
 
     try {
-      const response = await fetch(GET_ALL_TASKS_URL);
+      const response = await fetch(POMOTASK_URL);
 
       if (!response.ok) {
         throw new Error("Network response was not ok");
