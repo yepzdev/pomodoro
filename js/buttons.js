@@ -40,11 +40,10 @@ $(button)
 // ======================== task list elements ==============================
 
 // add task
-$(button)
+export let addTask = $(button)
 .clone()
 .attr("id", "add-task")
-.text("Add task")
-.appendTo(".add-task-field");
+.text("add task");
 
 // finish
 export let finish = $(button)

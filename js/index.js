@@ -3,6 +3,14 @@
 import taskManager from "./task_manager.js";
 import "./Events/HighlightTask.js";
 import { POMOTASK_URL } from "./endpoints.js";
+import * as button from "./buttons.js";
+
+// start - add task compoment element
+
+// append button into add task wrapper
+button.addTask.appendTo(".add-task-field-wrapper");
+
+// finish - add task compoment element
 
 const task = new taskManager();
 $(document).ready(function () {
