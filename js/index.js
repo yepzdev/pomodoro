@@ -7,8 +7,13 @@ import * as button from "./buttons.js";
 
 // start - add task compoment element
 
+let addTaskButton = button.addTask;
 // append button into add task wrapper
-button.addTask.appendTo(".add-task-field-wrapper");
+addTaskButton.appendTo(".add-task-field-wrapper");
+
+$(addTaskButton).on("click", function () {
+  console.log("its works");
+})
 
 // finish - add task compoment element
 
@@ -17,14 +22,14 @@ $(document).ready(function () {
   // update tasks
   task.getData();
 
-  $("#add-task").click(function () {
-    task.add();
+  $(addTaskButton).click(function () {
+    // task.add();
   });
 
   // Event for the enter key, allows us to create tasks more easily.
   $("#task-field").keypress(function (event) {
     if (event.which === 13) {
-      task.add();
+      // task.add();
     }
   });
 });
