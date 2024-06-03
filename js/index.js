@@ -12,8 +12,25 @@ let addTaskButton = button.addTask;
 addTaskButton.appendTo(".add-task-field-wrapper");
 
 $(addTaskButton).on("click", function () {
-  console.log("its works");
-})
+  // container template
+  let template = `
+<div class="add-task-container">
+  <textarea class="add-task-textarea"> textarea test</textarea>
+  <div class="input-numer-container">
+    <input type="number" name="0" id="add-task-input" />
+    <button id="btn-increase-estimated">up</button>
+    <button id="btn-decrements-estimated">down</button>
+  </div>
+  <button id="add-task-btn btn-save">save</button>
+  <button id="add-task-btn btn-cancel">cancel</button>
+</div>`;
+
+  $(this).replaceWith(template);
+});
+
+// start cancel event 
+
+// finish cancel event 
 
 // finish - add task compoment element
 
@@ -91,7 +108,7 @@ $(document).ready(() => {
 
   // This method handles the rest timer and pomodoro timer.
   // It is what allows us to assign rest timers or pomodoros
-  const breakHandler = function(breakTime) {
+  const breakHandler = function (breakTime) {
     // If you already had a rest timer then set the pomodoro timer
     if (heHadBreaks) {
       setTimeInterval(POMODORO);
@@ -100,7 +117,7 @@ $(document).ready(() => {
       // Check that the pending task is highlighted
       if ($("ul").find("li.highlighted").length) {
         let id = $("ul").find("li.highlighted").attr("data-task-id");
-  
+
         // increases the number of times the pomodoro was completed for this task
         fetch(POMOTASK_URL + "increase_highlighted_task.php", {
           method: "PUT",
@@ -128,7 +145,7 @@ $(document).ready(() => {
             );
           });
       }
-    
+
       showNumberOfPomodoros();
       heHadBreaks = false;
     } else {
