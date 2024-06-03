@@ -4,10 +4,6 @@ import taskManager from "./task_manager.js";
 import "./Events/HighlightTask.js";
 import { POMOTASK_URL } from "./endpoints.js";
 
-// task list field
-let addTaskField = $("<input>");
-addTaskField.clone().attr("id", "task-field").appendTo(".add-task-field");
-
 const task = new taskManager();
 $(document).ready(function () {
   // update tasks
