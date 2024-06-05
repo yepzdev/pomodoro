@@ -5,34 +5,42 @@ import "./Events/HighlightTask.js";
 import { POMOTASK_URL } from "./endpoints.js";
 import * as button from "./buttons.js";
 
-// start - add task compoment element
-
 let addTaskButton = button.addTask;
-// append button into add task wrapper
-addTaskButton.appendTo(".add-task-field-wrapper");
 
-$(addTaskButton).on("click", function () {
-  // container template
-  let template = `
+$(function () {
+  // start - add task compoment element
+
+  // append button into add task wrapper
+  // addTaskButton.appendTo(".add-task-wrapper");
+
+  // template
+  function getTemplate() {
+    return `
 <div class="add-task-container">
-  <textarea class="add-task-textarea"> textarea test</textarea>
+  <textarea class="add-task-textarea" placeholder="What are you working on ?"></textarea>
   <div class="input-numer-container">
     <input type="number" name="0" id="add-task-input" />
     <button id="btn-increase-estimated">up</button>
     <button id="btn-decrements-estimated">down</button>
   </div>
-  <button id="add-task-btn btn-save">save</button>
-  <button id="add-task-btn btn-cancel">cancel</button>
+  <button id="btn-save">save</button>
+  <button id="btn-cancel">cancel</button>
 </div>`;
+  }
 
-  $(this).replaceWith(template);
+  $(document).on("click", `#${addTaskButton.attr("id")}`, function () {
+    // container template
+    $(".add-task-container").empty().append(getTemplate());
+  });
+
+  // start cancel event
+  $(document).on("click", "#btn-cancel", function () {
+    $(".add-task-container").empty().append(addTaskButton);
+  });
+  // finish cancel event
+
+  // finish - add task compoment element
 });
-
-// start cancel event 
-
-// finish cancel event 
-
-// finish - add task compoment element
 
 const task = new taskManager();
 $(document).ready(function () {

@@ -42,7 +42,7 @@ $(button)
 // add task
 export let addTask = $(button)
 .clone()
-.attr("id", "add-task")
+.attr("id", "add-task-btn")
 .text("add task");
 
 // finish
