@@ -9,9 +9,8 @@ let addTaskButton = button.addTask;
 
 $(function () {
   // start - add task compoment element
-
-  // append button into add task wrapper
-  // addTaskButton.appendTo(".add-task-wrapper");
+  
+  let addTaskButton = $("#add-task-btn");
 
   // template
   function getTemplate() {

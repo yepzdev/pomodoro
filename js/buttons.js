@@ -39,12 +39,6 @@ $(button)
 
 // ======================== task list elements ==============================
 
-// add task
-export let addTask = $(button)
-.clone()
-.attr("id", "add-task-btn")
-.text("add task");
-
 // finish
 export let finish = $(button)
 .clone()
