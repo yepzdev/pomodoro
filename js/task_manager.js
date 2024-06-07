@@ -1,7 +1,8 @@
-'use strict';
+"use strict";
 
 import * as button from "./buttons.js";
 import { POMOTASK_URL } from "./endpoints.js";
+import fetchData from "./Api/Fetch.js";
 
 // pending list container
 let pendingList = $("<div>")
@@ -30,7 +31,7 @@ export default class TaskManager {
 
   /**
    * This method builds an elements list item template
-   * 
+   *
    * @param {Object} task - he task object containing id, spected, current, and description properties
    * @param {int} status - The status indicating if the task is finished or not
    * @returns {string} - The HTML template for the list item
@@ -44,13 +45,11 @@ export default class TaskManager {
       </li>`;
     }
 
-    return (
-      `<li data-task-id="${task.id}">
+    return `<li data-task-id="${task.id}">
         <span>${task.expected} / ${task.current}</span>
         <p class="inline">${task.description}</p>
         ${this.undoButton}
-      </li>`
-    );
+      </li>`;
   }
 
   // This method obtains all the task data.
@@ -135,43 +134,38 @@ export default class TaskManager {
   }
 
   add(data) {
-
     let { taskDescription, estimatedPomodoro } = data;
 
     // parse to integer
     estimatedPomodoro = parseInt(estimatedPomodoro);
 
-    // validations 
+    // validations
+    // check that it is not empty text
     if (this.isEmpty(taskDescription)) {
       return console.error("La tarea debe tener una descripcion");
     }
-
+    // check that it is an integer
     if (!Number.isInteger(estimatedPomodoro)) {
       return console.error("debe ser un numero entero");
     }
 
-    fetch(POMOTASK_URL, {
+    // prepare data for fetch API
+    let taskData = {
+      url: POMOTASK_URL,
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+      body: {
         description: taskDescription,
         status: 1,
         expected: estimatedPomodoro,
         current: 0,
         highlighted: 0,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
+      },
+    };
 
-        return response.json();
-      })
+    fetchData(taskData)
       .then((data) => {
         console.info(data);
+        // update task list
         this.getData();
       })
       .catch((error) => {
@@ -256,7 +250,6 @@ export default class TaskManager {
   undo(item, id) {
     self = this;
     item.find(".undo-button").click(function () {
-
       fetch(POMOTASK_URL, {
         method: "PUT",
         headers: {
