@@ -17,17 +17,6 @@ $(document).ready(function () {
   
   // update tasks
   task.getData();
-
-  $(addTaskButton).click(function () {
-    // task.add();
-  });
-
-  // Event for the enter key, allows us to create tasks more easily.
-  $("#task-field").keypress(function (event) {
-    if (event.which === 13) {
-      // task.add();
-    }
-  });
 });
 
 $(document).ready(() => {

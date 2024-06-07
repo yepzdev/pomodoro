@@ -1,13 +1,39 @@
 export function addTaskEvents(addTaskButton, getTemplate) {
-
   $(document).on("click", `#${addTaskButton.attr("id")}`, function () {
     // container template
     $(".add-task-container").empty().append(getTemplate());
   });
 
-  // start cancel event
+  // cancel event
   $(document).on("click", "#btn-cancel", function () {
     $(".add-task-container").empty().append(addTaskButton);
+  });
+
+  // This event will allow us to save the task data
+  $(document).on("click", "#btn-save", function () {
+    let taskDescription = $(".add-task-container")
+      .find(".add-task-textarea")
+      .val();
+    let estimatedPomodoro = $(".input-number-container")
+      .find("#add-task-input")
+      .val();
+
+    /**
+     * @TODO TERMINAR !!
+     */
+
+    // task.add();
+  });
+
+  // Event for the enter key, allows us to create tasks more easily.
+  $("#task-field").keypress(function (event) {
+    if (event.which === 13) {
+      /**
+       * @TODO TERMINAR !!!
+       */
+      
+      // task.add();
+    }
   });
 
   // Validate input to accept only numbers from 1 to 20
