@@ -5,10 +5,10 @@ import "./Events/HighlightTask.js";
 import { POMOTASK_URL } from "./endpoints.js";
 import { addTaskComponent } from "./Components/addTaskComponent.js";
 import { addTaskEvents } from "./Events/addTaskEvents.js";
+import fetchData from "./Api/Fetch.js";
 
 const task = new TaskManager();
 $(document).ready(function () {
-
   let addTaskButton = $("#add-task-btn");
   // get the template to add task
   const template = addTaskComponent();
@@ -86,22 +86,15 @@ $(document).ready(() => {
         let id = $("ul").find("li.highlighted").attr("data-task-id");
 
         // increases the number of times the pomodoro was completed for this task
-        fetch(POMOTASK_URL + "increase_highlighted_task.php", {
+        let taskData = {
+          url: POMOTASK_URL + "increase_highlighted_task.php",
           method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
+          body: {
             id,
-          }),
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Network response was not ok");
-            }
+          },
+        };
 
-            return response.json();
-          })
+        fetchData(taskData)
           .then((data) => {
             task.getData();
           })

@@ -187,19 +187,16 @@ export default class TaskManager {
         return null;
       }
 
-      fetch(POMOTASK_URL, {
+      let taskData = {
+        url: POMOTASK_URL,
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: id }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
+        body: { id: id },
+      };
+
+      fetchData(taskData)
         .then((data) => {
           console.info(data);
           self.getData();
@@ -217,23 +214,16 @@ export default class TaskManager {
     let self = this;
 
     item.find(".finish-task").click(function () {
-      fetch(POMOTASK_URL, {
+      let taskData = {
+        url: POMOTASK_URL,
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+        body: {
           id,
           status: 0,
-        }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
+        },
+      };
 
-          return response.json();
-        })
+      fetchData(taskData)
         .then((data) => {
           console.warn(data);
           self.getData();
@@ -250,24 +240,17 @@ export default class TaskManager {
   undo(item, id) {
     self = this;
     item.find(".undo-button").click(function () {
-      fetch(POMOTASK_URL, {
+      
+      let taskData = {
+        url: POMOTASK_URL,
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+        body: {
           id,
           status: 1,
-        }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
+        },
+      };
 
-          return response.json();
-        })
-        .then((data) => {
+      fetchData(taskData).then((data) => {
           console.warn(data);
           self.getData();
         })
