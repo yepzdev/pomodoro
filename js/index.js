@@ -6,21 +6,21 @@ import { POMOTASK_URL } from "./endpoints.js";
 import { addTaskComponent } from "./Components/addTaskComponent.js";
 import { addTaskEvents } from "./Events/addTaskEvents.js";
 
-$(function () {
-  // get the template to add task
-  const { addTaskButton, getTemplate } = addTaskComponent();
-  // assigns the events necessary for the template to work
-  addTaskEvents(addTaskButton, getTemplate);
-});
-
 const task = new taskManager();
 $(document).ready(function () {
+
+  let addTaskButton = $("#add-task-btn");
+  // get the template to add task
+  const template = addTaskComponent();
+  // assigns the events necessary for the template to work
+  addTaskEvents(addTaskButton, template);
+  
   // update tasks
   task.getData();
 
-  // $(addTaskButton).click(function () {
-  //   // task.add();
-  // });
+  $(addTaskButton).click(function () {
+    // task.add();
+  });
 
   // Event for the enter key, allows us to create tasks more easily.
   $("#task-field").keypress(function (event) {

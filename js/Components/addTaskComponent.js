@@ -1,6 +1,4 @@
 export function addTaskComponent() {
-  let addTaskButton = $("#add-task-btn");
-  // template
   function getTemplate() {
     return `
         <div class="add-task-container">
@@ -16,5 +14,5 @@ export function addTaskComponent() {
   }
 
   // Return the button element for further use in event handlers
-  return {addTaskButton, getTemplate};
+  return getTemplate;
 }
