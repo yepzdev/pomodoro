@@ -13,34 +13,37 @@ export function addTaskEvents(addTaskButton, getTemplate) {
 
   // This event will allow us to save the task data
   $(document).on("click", "#btn-save", function () {
+    
+    // get all task data
     let taskDescription = $(".add-task-container")
       .find(".add-task-textarea")
       .val();
+
     let estimatedPomodoro = $(".input-number-container")
       .find("#add-task-input")
       .val();
 
     let task = new TaskManager();
-
-    let taskData = {
-      taskDescription,
-      estimatedPomodoro
-    }
-
-    task.add(taskData);
-
-    // replace with the "add task" button
+    task.add({ taskDescription, estimatedPomodoro });
+    // replace with the "add task" button after saving the task
     $(".add-task-container").empty().append(addTaskButton);
   });
 
   // Event for the enter key, allows us to create tasks more easily.
-  $("#task-field").keypress(function (event) {
-    if (event.which === 13) {
-      /**
-       * @TODO TERMINAR !!!
-       */
+  $(".add-task-container").on("keypress", function (e) {
+    if (e.which === 13) {
       
-      // task.add();
+      let taskDescription = $(".add-task-container")
+        .find(".add-task-textarea")
+        .val();
+      
+        let estimatedPomodoro = $(".input-number-container")
+        .find("#add-task-input")
+        .val();
+
+      let task = new TaskManager();
+      task.add({ taskDescription, estimatedPomodoro });
+      $(".add-task-container").empty().append(addTaskButton);
     }
   });
 

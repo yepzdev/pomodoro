@@ -136,10 +136,12 @@ export default class TaskManager {
 
   add(data) {
 
-    console.log(data);
+    let { taskDescription, estimatedPomodoro } = data;
+
+    console.log(taskDescription, estimatedPomodoro);
     // let description = task || $("#task-field").val();
 
-    // // we check that the task is not an empty string
+    // we check that the task is not an empty string
     // if (this.isEmpty(description)) {
     //   console.error("Empty tasks cannot be created.");
     //   return null;
