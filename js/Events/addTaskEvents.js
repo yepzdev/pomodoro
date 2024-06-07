@@ -1,3 +1,5 @@
+import TaskManager from "./../task_manager.js";
+
 export function addTaskEvents(addTaskButton, getTemplate) {
   $(document).on("click", `#${addTaskButton.attr("id")}`, function () {
     // container template
@@ -18,11 +20,14 @@ export function addTaskEvents(addTaskButton, getTemplate) {
       .find("#add-task-input")
       .val();
 
-    /**
-     * @TODO TERMINAR !!
-     */
+    let task = new TaskManager();
 
-    // task.add();
+    let taskData = {
+      taskDescription,
+      estimatedPomodoro
+    }
+
+    task.add(taskData);
   });
 
   // Event for the enter key, allows us to create tasks more easily.

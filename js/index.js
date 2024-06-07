@@ -1,12 +1,12 @@
 "use strict";
 
-import taskManager from "./task_manager.js";
+import TaskManager from "./task_manager.js";
 import "./Events/HighlightTask.js";
 import { POMOTASK_URL } from "./endpoints.js";
 import { addTaskComponent } from "./Components/addTaskComponent.js";
 import { addTaskEvents } from "./Events/addTaskEvents.js";
 
-const task = new taskManager();
+const task = new TaskManager();
 $(document).ready(function () {
 
   let addTaskButton = $("#add-task-btn");
@@ -14,7 +14,6 @@ $(document).ready(function () {
   const template = addTaskComponent();
   // assigns the events necessary for the template to work
   addTaskEvents(addTaskButton, template);
-  
   // update tasks
   task.getData();
 });

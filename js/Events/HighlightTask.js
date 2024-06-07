@@ -1,6 +1,6 @@
 "use strict";
 
-import taskManager from "./../task_manager.js";
+import TaskManager from "./../task_manager.js";
 import { POMOTASK_URL } from "./../endpoints.js";
 
 $(function () {
@@ -24,7 +24,7 @@ $(function () {
     // save id li item
     let taskId = $(this).closest("li").attr("data-task-id");
     // new task instance to be able to update the tasks.
-    const task = new taskManager();
+    const task = new TaskManager();
 
     fetch(POMOTASK_URL + '/highlighted.php', {
       method: "PUT",

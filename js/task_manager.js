@@ -134,42 +134,44 @@ export default class TaskManager {
     return task.trim() == "";
   }
 
-  add(task) {
-    let description = task || $("#task-field").val();
+  add(data) {
 
-    // we check that the task is not an empty string
-    if (this.isEmpty(description)) {
-      console.error("Empty tasks cannot be created.");
-      return null;
-    }
+    console.log(data);
+    // let description = task || $("#task-field").val();
 
-    fetch(POMOTASK_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        description,
-        status: 1,
-        expected: 1,
-        current: 0,
-        highlighted: 0,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
+    // // we check that the task is not an empty string
+    // if (this.isEmpty(description)) {
+    //   console.error("Empty tasks cannot be created.");
+    //   return null;
+    // }
 
-        return response.json();
-      })
-      .then((data) => {
-        console.info(data);
-        this.getData();
-      })
-      .catch((error) => {
-        console.error("There was a problem with your fetch operation:", error);
-      });
+    // fetch(POMOTASK_URL, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     description,
+    //     status: 1,
+    //     expected: 1,
+    //     current: 0,
+    //     highlighted: 0,
+    //   }),
+    // })
+    //   .then((response) => {
+    //     if (!response.ok) {
+    //       throw new Error("Network response was not ok");
+    //     }
+
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    //     console.info(data);
+    //     this.getData();
+    //   })
+    //   .catch((error) => {
+    //     console.error("There was a problem with your fetch operation:", error);
+    //   });
   }
 
   // This method does not create the remove button,
