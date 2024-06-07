@@ -28,6 +28,9 @@ export function addTaskEvents(addTaskButton, getTemplate) {
     }
 
     task.add(taskData);
+
+    // replace with the "add task" button
+    $(".add-task-container").empty().append(addTaskButton);
   });
 
   // Event for the enter key, allows us to create tasks more easily.
