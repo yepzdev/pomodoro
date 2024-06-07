@@ -3,60 +3,14 @@
 import taskManager from "./task_manager.js";
 import "./Events/HighlightTask.js";
 import { POMOTASK_URL } from "./endpoints.js";
-import * as button from "./buttons.js";
-
-let addTaskButton = button.addTask;
+import { addTaskComponent } from "./Components/addTaskComponent.js";
+import { addTaskEvents } from "./Events/addTaskEvents.js";
 
 $(function () {
-  // start - add task compoment element
-  
-  let addTaskButton = $("#add-task-btn");
-
-  // template
-  function getTemplate() {
-    return `
-<div class="add-task-container">
-  <textarea class="add-task-textarea" placeholder="What are you working on ?"></textarea>
-  <div class="input-numer-container">
-    <input type="number" name="0" id="add-task-input"  min="1" max="20" />
-    <button id="btn-increase-estimated">up</button>
-    <button id="btn-decrements-estimated">down</button>
-  </div>
-  <button id="btn-save">save</button>
-  <button id="btn-cancel">cancel</button>
-</div>`;
-  }
-
-  $(document).on("click", `#${addTaskButton.attr("id")}`, function () {
-    // container template
-    $(".add-task-container").empty().append(getTemplate());
-  });
-
-  // start cancel event
-  $(document).on("click", "#btn-cancel", function () {
-    $(".add-task-container").empty().append(addTaskButton);
-  });
-
-  // Validate input to accept only numbers from 1 to 20
-  $(document).on("input", "#add-task-input", function () {
-    var value = parseInt($(this).val(), 10);
-    if (value < 1 || value > 20) {
-      $(this).val("");
-      alert("Please enter a number between 1 and 20");
-    }
-  });
-
-  // Prevent non-numeric input
-  $(document).on("keypress", "#add-task-input", function (e) {
-    var charCode = e.which ? e.which : e.keyCode;
-    if (charCode < 48 || charCode > 57) {
-      e.preventDefault();
-    }
-  });
-
-  // finish cancel event
-
-  // finish - add task compoment element
+  // get the template to add task
+  const { addTaskButton, getTemplate } = addTaskComponent();
+  // assigns the events necessary for the template to work
+  addTaskEvents(addTaskButton, getTemplate);
 });
 
 const task = new taskManager();
@@ -64,9 +18,9 @@ $(document).ready(function () {
   // update tasks
   task.getData();
 
-  $(addTaskButton).click(function () {
-    // task.add();
-  });
+  // $(addTaskButton).click(function () {
+  //   // task.add();
+  // });
 
   // Event for the enter key, allows us to create tasks more easily.
   $("#task-field").keypress(function (event) {
