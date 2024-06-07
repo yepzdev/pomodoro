@@ -2,49 +2,13 @@ import TaskManager from "./../task_manager.js";
 
 export function addTaskEvents(addTaskButton, getTemplate) {
   $(document).on("click", `#${addTaskButton.attr("id")}`, function () {
-    // container template
+    // set component template
     $(".add-task-container").empty().append(getTemplate());
   });
 
   // cancel event
   $(document).on("click", "#btn-cancel", function () {
     $(".add-task-container").empty().append(addTaskButton);
-  });
-
-  // This event will allow us to save the task data
-  $(document).on("click", "#btn-save", function () {
-    
-    // get all task data
-    let taskDescription = $(".add-task-container")
-      .find(".add-task-textarea")
-      .val();
-
-    let estimatedPomodoro = $(".input-number-container")
-      .find("#add-task-input")
-      .val();
-
-    let task = new TaskManager();
-    task.add({ taskDescription, estimatedPomodoro });
-    // replace with the "add task" button after saving the task
-    $(".add-task-container").empty().append(addTaskButton);
-  });
-
-  // Event for the enter key, allows us to create tasks more easily.
-  $(".add-task-container").on("keypress", function (e) {
-    if (e.which === 13) {
-      
-      let taskDescription = $(".add-task-container")
-        .find(".add-task-textarea")
-        .val();
-      
-        let estimatedPomodoro = $(".input-number-container")
-        .find("#add-task-input")
-        .val();
-
-      let task = new TaskManager();
-      task.add({ taskDescription, estimatedPomodoro });
-      $(".add-task-container").empty().append(addTaskButton);
-    }
   });
 
   // Validate input to accept only numbers from 1 to 20
@@ -63,4 +27,42 @@ export function addTaskEvents(addTaskButton, getTemplate) {
       e.preventDefault();
     }
   });
+
+  // ============== These events allow us to save tasks ==============
+
+  // This event will allow us to save the task data
+  $(document).on("click", "#btn-save", function () {
+    // get all task data
+    let taskDescription = $(".add-task-container")
+      .find(".add-task-textarea")
+      .val();
+
+    let estimatedPomodoro = $(".input-number-container")
+      .find("#add-task-input")
+      .val();
+
+    let task = new TaskManager();
+    task.add({ taskDescription, estimatedPomodoro });
+    // replace with the "add task" button after saving the task
+    $(".add-task-container").empty().append(addTaskButton);
+  });
+
+  // Event for the enter key, allows us to create tasks more easily.
+  $(".add-task-container").on("keypress", function (e) {
+    if (e.which === 13) {
+      let taskDescription = $(".add-task-container")
+        .find(".add-task-textarea")
+        .val();
+
+      let estimatedPomodoro = $(".input-number-container")
+        .find("#add-task-input")
+        .val();
+
+      let task = new TaskManager();
+      task.add({ taskDescription, estimatedPomodoro });
+      $(".add-task-container").empty().append(addTaskButton);
+    }
+  });
+
+  // =================================================================
 }
