@@ -138,42 +138,45 @@ export default class TaskManager {
 
     let { taskDescription, estimatedPomodoro } = data;
 
-    console.log(taskDescription, estimatedPomodoro);
-    // let description = task || $("#task-field").val();
+    // parse to integer
+    estimatedPomodoro = parseInt(estimatedPomodoro);
 
-    // we check that the task is not an empty string
-    // if (this.isEmpty(description)) {
-    //   console.error("Empty tasks cannot be created.");
-    //   return null;
-    // }
+    // validations 
+    if (this.isEmpty(taskDescription)) {
+      return console.error("La tarea debe tener una descripcion");
+    }
 
-    // fetch(POMOTASK_URL, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     description,
-    //     status: 1,
-    //     expected: 1,
-    //     current: 0,
-    //     highlighted: 0,
-    //   }),
-    // })
-    //   .then((response) => {
-    //     if (!response.ok) {
-    //       throw new Error("Network response was not ok");
-    //     }
+    if (!Number.isInteger(estimatedPomodoro)) {
+      return console.error("debe ser un numero entero");
+    }
 
-    //     return response.json();
-    //   })
-    //   .then((data) => {
-    //     console.info(data);
-    //     this.getData();
-    //   })
-    //   .catch((error) => {
-    //     console.error("There was a problem with your fetch operation:", error);
-    //   });
+    fetch(POMOTASK_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        description: taskDescription,
+        status: 1,
+        expected: estimatedPomodoro,
+        current: 0,
+        highlighted: 0,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        return response.json();
+      })
+      .then((data) => {
+        console.info(data);
+        this.getData();
+      })
+      .catch((error) => {
+        console.error("There was a problem with your fetch operation:", error);
+      });
   }
 
   // This method does not create the remove button,
