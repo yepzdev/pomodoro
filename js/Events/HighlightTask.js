@@ -14,7 +14,6 @@ $(function () {
 
     // highlighted only once
     if ($(e.target).hasClass("highlighted")) {
-      // console.log("ya esta resaltado");
       return;
     }
 

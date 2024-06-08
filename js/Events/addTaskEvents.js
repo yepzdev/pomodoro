@@ -1,5 +1,8 @@
 import TaskManager from "./../task_manager.js";
 
+const MAX_ESTIMATED_POMOS = "20";
+const MIN_ESTIMATED_POMOS = "1";
+
 export function addTaskEvents(addTaskButton, getTemplate) {
   $(document).on("click", `#${addTaskButton.attr("id")}`, function () {
     // set component template
@@ -9,6 +12,28 @@ export function addTaskEvents(addTaskButton, getTemplate) {
   // cancel event
   $(document).on("click", "#btn-cancel", function () {
     $(".add-task-container").empty().append(addTaskButton);
+  });
+
+  // increases the number of estimated pomodoros
+  $(document).on("click", "#btn-increase-estimated", function () {
+    // estimated input element
+    let estimatedIpunt = $("#add-task-input"),
+      inputValue = estimatedIpunt.val();
+
+    inputValue !== MAX_ESTIMATED_POMOS
+      ? estimatedIpunt.val(++inputValue)
+      : null;
+  });
+
+  // decrease the number of estimated pomodoros
+  $(document).on("click", "#btn-decrements-estimated", function () {
+    // estimated input element
+    let estimatedIpunt = $("#add-task-input"),
+      inputValue = estimatedIpunt.val();
+
+    inputValue !== MIN_ESTIMATED_POMOS
+      ? estimatedIpunt.val(--inputValue)
+      : null;
   });
 
   // Validate input to accept only numbers from 1 to 20
