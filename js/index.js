@@ -10,12 +10,11 @@ import fetchData from "./Api/Fetch.js";
 const task = new TaskManager();
 $(document).ready(function () {
   let addTaskButton = $("#add-task-btn");
-  // get the template to add task
+  // get template to add task
   const template = addTaskComponent();
   // assigns the events necessary for the template to work
   addTaskEvents(addTaskButton, template);
-  // update tasks
-  task.getData();
+  task.update();
 });
 
 $(document).ready(() => {
@@ -96,7 +95,7 @@ $(document).ready(() => {
 
         fetchData(taskData)
           .then((data) => {
-            task.getData();
+            task.update();
           })
           .catch((error) => {
             console.error(

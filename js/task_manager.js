@@ -32,7 +32,7 @@ export default class TaskManager {
   /**
    * This method builds an elements list item template
    *
-   * @param {Object} task - he task object containing id, spected, current, and description properties
+   * @param {Object} task - he task object containing id, spected, current and description properties
    * @param {int} status - The status indicating if the task is finished or not
    * @returns {string} - The HTML template for the list item
    */
@@ -52,8 +52,8 @@ export default class TaskManager {
       </li>`;
   }
 
-  // This method obtains all the task data.
-  async getData() {
+  // This method updates the entire task list.
+  async update() {
     let self = this;
 
     try {
@@ -165,8 +165,8 @@ export default class TaskManager {
     fetchData(taskData)
       .then((data) => {
         console.info(data);
-        // update task list
-        this.getData();
+        // update task
+        this.update();
       })
       .catch((error) => {
         console.error("There was a problem with your fetch operation:", error);
@@ -199,7 +199,8 @@ export default class TaskManager {
       fetchData(taskData)
         .then((data) => {
           console.info(data);
-          self.getData();
+          // update tasks
+          self.update();
         })
         .catch((error) => {
           console.error(
@@ -226,7 +227,8 @@ export default class TaskManager {
       fetchData(taskData)
         .then((data) => {
           console.warn(data);
-          self.getData();
+          // update tasks
+          self.update();
         })
         .catch((error) => {
           console.error(
@@ -252,7 +254,8 @@ export default class TaskManager {
 
       fetchData(taskData).then((data) => {
           console.warn(data);
-          self.getData();
+          // update tasks
+          self.update();
         })
         .catch((error) => {
           console.error(

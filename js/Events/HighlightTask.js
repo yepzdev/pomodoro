@@ -41,7 +41,7 @@ $(function () {
     fetchData(taskData)
       .then((data) => {
         console.warn(data);
-        task.getData();
+        task.update();
       })
       .catch((error) => {
         console.error("There was a problem with your fetch operation:", error);
