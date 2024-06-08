@@ -136,19 +136,6 @@ export default class TaskManager {
   add(data) {
     let { taskDescription, estimatedPomodoro } = data;
 
-    // parse to integer
-    estimatedPomodoro = parseInt(estimatedPomodoro);
-
-    // validations
-    // check that it is not empty text
-    if (this.isEmpty(taskDescription)) {
-      return console.error("La tarea debe tener una descripcion");
-    }
-    // check that it is an integer
-    if (!Number.isInteger(estimatedPomodoro)) {
-      return console.error("debe ser un numero entero");
-    }
-
     // prepare data for fetch API
     let taskData = {
       url: POMOTASK_URL,

@@ -67,6 +67,19 @@ export function addTaskEvents(addTaskButton, getTemplate) {
       .val();
 
     let task = new TaskManager();
+    // parse to integer
+    estimatedPomodoro = parseInt(estimatedPomodoro);
+
+    // validations
+    // check that it is not empty text
+    if (task.isEmpty(taskDescription)) {
+      return console.error("La tarea debe tener una descripcion");
+    }
+    // check that it is an integer
+    if (!Number.isInteger(estimatedPomodoro)) {
+      return console.error("debe ser un numero entero");
+    }
+
     task.add({ taskDescription, estimatedPomodoro });
     // replace with the "add task" button after saving the task
     $(".add-task-container").empty().append(addTaskButton);
@@ -84,6 +97,18 @@ export function addTaskEvents(addTaskButton, getTemplate) {
         .val();
 
       let task = new TaskManager();
+      estimatedPomodoro = parseInt(estimatedPomodoro);
+
+      // validations
+      // check that it is not empty text
+      if (task.isEmpty(taskDescription)) {
+        return console.error("La tarea debe tener una descripcion");
+      }
+      // check that it is an integer
+      if (!Number.isInteger(estimatedPomodoro)) {
+        return console.error("debe ser un numero entero");
+      }
+      
       task.add({ taskDescription, estimatedPomodoro });
       $(".add-task-container").empty().append(addTaskButton);
     }
