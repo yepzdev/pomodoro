@@ -6,14 +6,17 @@ import fetchData from "../Api/Fetch.js";
 
 $(function () {
   // Events needed to change the styles of each list item when clicked
-  $("#task-list").on("click", "li, li span, li p", function (e) {
-    // to not highlight a task when we click the finish/delete button
-    if ($(e.target).is("button")) {
+  $(document).on("click", "#pending-list li, #pending-list li span, #pending-list li p", function (e) {
+
+    let $target = $(e.target);
+
+    // Do nothing if highlighted
+    if ($target.is("button")) {
       return;
     }
 
-    // highlighted only once
-    if ($(e.target).hasClass("highlighted")) {
+    // Do nothing if it's a button
+    if ($target.hasClass("highlighted")) {
       return;
     }
 
