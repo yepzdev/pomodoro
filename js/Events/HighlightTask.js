@@ -10,12 +10,12 @@ $(function () {
 
     let $target = $(e.target);
 
-    // Do nothing if highlighted
+    // do nothing if highlighted
     if ($target.is("button")) {
       return;
     }
 
-    // Do nothing if it's a button
+    // do nothing if it's a button
     if ($target.hasClass("highlighted")) {
       return;
     }

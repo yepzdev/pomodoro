@@ -88,6 +88,7 @@ export default class TaskManager {
           // wrap the item list in a jquery object
           let li = $(self.createItemList(task, task.status));
 
+          // apply highlight styles
           if (task.highlighted) {
             li.addClass("highlighted");
           }
@@ -102,6 +103,10 @@ export default class TaskManager {
           self.finish(li, task.id);
         } else {
           let li = $(self.createItemList(task, task.status));
+
+          // line-through
+          li.addClass("text-decoration-line");
+          // applies styles to the completed task
           completedElementStorage.push(li);
           $("#task-field").val("");
 
