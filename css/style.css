@@ -1,6 +1,7 @@
 @import 'title.css'; 
 @import 'taskList.css';
 @import 'buttons.css';
+@import 'timer.css';
 
 * {
   margin: 0;
