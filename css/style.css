@@ -1,3 +1,6 @@
+@import 'title.css'; 
+@import 'taskList.css';
+
 * {
   margin: 0;
   padding: 0;
@@ -16,24 +19,6 @@ body {
   color: #242422;
 }
 
-.text-decoration-line {
-  text-decoration: line-through;
-}
-
-span.text-decoration-none {
-  text-decoration: none;
-}
-
-.inline {
-  display: inline;
-}
-
-.highlighted {
-  border-style: solid;
-  border-width: 1px;
-  padding: 2px;
-}
-
 .components-container {
   display: flex;
   flex-direction: column;
@@ -46,14 +31,4 @@ span.text-decoration-none {
 .add-task-wrapper,
 .task-container {
   width: 50%;
-}
-
-.pomodoro-container {
-  margin-top: 1.5rem;
-
-  h1 {
-    text-align: center;
-    margin-bottom: 1.5rem;
-    padding: 10px;
-  }
 }

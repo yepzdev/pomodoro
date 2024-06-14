@@ -1,0 +1,17 @@
+.text-decoration-line {
+    text-decoration: line-through;
+  }
+  
+  span.text-decoration-none {
+    text-decoration: none;
+  }
+  
+  .inline {
+    display: inline;
+  }
+  
+  .highlighted {
+    border-style: solid;
+    border-width: 1px;
+    padding: 2px;
+  }
