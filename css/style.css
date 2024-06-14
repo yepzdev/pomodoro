@@ -15,3 +15,15 @@ span.text-decoration-none {
     border-width: 1px;
     padding: 2px;
 }
+
+.components-container {
+    display: flex;
+    flex-direction: column;
+    background-color: red;
+    align-items:center;
+}
+
+.pomodoro-container, .add-task-wrapper, .task-container {
+    width: 50%;
+    background-color: beige;
+}

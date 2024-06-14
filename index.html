@@ -8,23 +8,28 @@
   </head>
 
   <body>
-    <h1>Pomodoro</h1>
-    <div id="pomodoro" class="pomodoro-container">
-      <div class="pomodoro-button-wrapper header"></div>
-      <div class="pomodoro-button-wrapper body">
-        <h3 id="timer"></h3>
-        <h4 id="pomodoro-counter"></h4>
+    <div class="components-container">
+      <div id="pomodoro" class="pomodoro-container">
+        <h1>Pomodoro</h1>
+        <div class="pomodoro-button-wrapper header"></div>
+        <div class="pomodoro-button-wrapper body">
+          <h3 id="timer"></h3>
+          <h4 id="pomodoro-counter"></h4>
+        </div>
+        <div class="pomodoro-button-wrapper footer"></div>
+        <audio id="audio-pomodoro" src="audio/light-switch-audio.mp3"></audio>
+        <audio
+          id="audio-pomodoro-2"
+          src="audio/light-switch-2-audio.mp3"
+        ></audio>
       </div>
-      <div class="pomodoro-button-wrapper footer"></div>
-      <audio id="audio-pomodoro" src="audio/light-switch-audio.mp3"></audio>
-      <audio id="audio-pomodoro-2" src="audio/light-switch-2-audio.mp3"></audio>
-    </div>
-    <div class="add-task-wrapper">
-      <div class="add-task-container">
-        <button id="add-task-btn">add task</button>
+      <div class="add-task-wrapper">
+        <div class="add-task-container">
+          <button id="add-task-btn">add task</button>
+        </div>
       </div>
+      <div id="task-list" class="task-container"></div>
     </div>
-    <div id="task-list" class="task-container"></div>
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <!-- <script src="jquery/jquery.min.js"></script> -->
