@@ -20,6 +20,7 @@ $(button)
 $(button)
 .clone()
 .attr("id", "pomodoro-btn")
+.addClass("btn-dark")
 .text("Pomodoro")
 .appendTo(".pomodoro-button-wrapper.header");
 
@@ -27,6 +28,7 @@ $(button)
 $(button)
 .clone()
 .attr("id", "long-break-btn")
+.addClass("btn-dark")
 .text("Long Break")
 .appendTo(".pomodoro-button-wrapper.header");
 
@@ -34,6 +36,7 @@ $(button)
 $(button)
 .clone()
 .attr("id", "short-break-btn")
+.addClass("btn-dark")
 .text("Short Break")
 .appendTo(".pomodoro-button-wrapper.header");
 

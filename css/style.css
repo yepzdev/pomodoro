@@ -1,5 +1,6 @@
 @import 'title.css'; 
 @import 'taskList.css';
+@import 'buttons.css';
 
 * {
   margin: 0;
