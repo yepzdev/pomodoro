@@ -4,7 +4,7 @@ let button = $("<button>");
 $(button)
 .clone()
 .attr("id", "start")
-.addClass("start-btn")
+.addClass("start-btn btn-red")
 .text("Start")
 .appendTo(".pomodoro-button-wrapper.footer");
 
@@ -12,7 +12,7 @@ $(button)
 $(button)
 .clone()
 .attr("id", "reset")
-.addClass("reset-btn")
+.addClass("reset-btn btn-dark")
 .text("Reset")
 .appendTo(".pomodoro-button-wrapper.footer");
 
