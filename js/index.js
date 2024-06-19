@@ -18,7 +18,6 @@ $(document).ready(function () {
 });
 
 $(document).ready(() => {
-
   let timer;
   let timeLeft = 25 * 60; // 25 minutes in seconds
   // save the pomodoro cycles
@@ -39,44 +38,6 @@ $(document).ready(() => {
   // establishes the number of cycles necessary to apply long rests or short rests
   // For example, if you want to apply long breaks after 3 pomodoros or more, change the value of the constant.
   const CYCLES = 3;
-  
-  // start - build progress bar ========================================
-
-  const duration = timeLeft; // Duración en segundos
-  const progress = new ProgressBar.Circle("#progress-container", {
-    color: "#242422", // color de la barra de progreso del temporizador
-    strokeWidth: 10, // grosor de la barra progresiva
-    trailWidth: 10, // grosor del carrir de la barra progresiva
-    trailColor: "#f3f3f3", // colo de fondo del temporizador
-    duration: duration * 1000, // Convertir a milisegundos
-    easing: "linear",
-    text: {
-      value: "25:00", // valor de inicio del temporizador
-      className: "text",
-      style: {
-        fontSize: "3rem", // Tamaño de la fuente del temporizador
-        color: "#333",
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-      },
-    },
-    step: function (state, circle) {
-      const value = Math.round(circle.value() * duration); // Actualizar el texto del temporizador
-      const minutes = Math.floor((duration - value) / 60);
-      const seconds = Math.floor((duration - value) % 60);
-      circle.setText(
-        `${minutes.toString().padStart(2, "0")}:${seconds
-          .toString()
-          .padStart(2, "0")}`
-      );
-    },
-  });
-
-  progress.svg.style.strokeLinecap = "round"; // Aplicar bordes redondeados
-
-  // close - build progres bar =========================================
 
   // This method formats the timer to be human readable.
   function formatTime(seconds) {
@@ -191,22 +152,6 @@ $(document).ready(() => {
     $("#start").text("Start");
   };
 
-  // This method starts/pauses the timer
-  const toggleTimerNew = () => {
-    // check the timer status
-    if (isPaused) {
-      console.log("start...");
-      isPaused = false;
-      progress.animate(1);
-      return $("#start").text("Pause");
-    }
-
-    console.log("paused");
-    progress.stop();
-    isPaused = true;
-    $("#start").text("Start");
-  };
-
   $("#short-break-btn").click(() => {
     heHadBreaks = true;
     setTimeInterval(SHORT_BREAK);
@@ -223,8 +168,7 @@ $(document).ready(() => {
   });
 
   $("#start").click(() => {
-    // toggleTimer();
-    toggleTimerNew();
+    toggleTimer();
     playAudio("#audio-pomodoro");
   });
 
