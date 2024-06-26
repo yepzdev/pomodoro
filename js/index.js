@@ -131,13 +131,15 @@ $(document).ready(() => {
       // we check that the timer has ended
       if (isTimerExpired()) {
         clearInterval(timer);
-        $("#start").text("Start");
+        // $("#start").text("Start");
+        $("#start").html("<i class='fa-solid fa-play'></i>");
         checkCycles();
       }
     }, 1000);
 
     isPaused = false;
-    $("#start").text("Pause");
+    // $("#start").text("Pause");
+    $("#start").html("<i class='fa-solid fa-pause'></i>");
   }
 
   // This method starts/pauses the timer
@@ -149,7 +151,8 @@ $(document).ready(() => {
 
     clearInterval(timer);
     isPaused = true;
-    $("#start").text("Start");
+    // $("#start").text("Start");
+    $("#start").html("<i class='fa-solid fa-play'></i>");
   };
 
   $("#short-break-btn").click(() => {
@@ -182,7 +185,8 @@ $(document).ready(() => {
     timeLeft = time * 60;
     clearInterval(timer);
     isPaused = true;
-    $("#start").text("Start");
+    // $("#start").text("Start");
+    $("#start").html("<i class='fa-solid fa-play'></i>");
     showTimer();
   };
 

@@ -5,7 +5,7 @@ $(button)
 .clone()
 .attr("id", "start")
 .addClass("start-btn btn-red")
-.text("Start")
+.html("<i class='fa-solid fa-play'></i>")
 .appendTo(".pomodoro-button-wrapper.footer");
 
 // reset 
@@ -13,7 +13,7 @@ $(button)
 .clone()
 .attr("id", "reset")
 .addClass("reset-btn btn-dark")
-.text("Reset")
+.html("<i class='fa-solid fa-arrow-rotate-right'></i>")
 .appendTo(".pomodoro-button-wrapper.footer");
 
 // pomodoro
