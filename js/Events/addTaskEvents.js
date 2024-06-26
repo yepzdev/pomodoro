@@ -8,8 +8,8 @@ export function addTaskEvents(addTaskButton, getTemplate) {
   let containerContent = $("#add-task-container").html();
  
   $(document).on("click", `#${addTaskButton.attr("id")}`, function () {
-    // set component template
     $(".add-task-container").removeClass("dashed");
+    // set component template
     $(".add-task-container").empty().append(getTemplate());
     $(".add-task-container textarea").focus();
   });
