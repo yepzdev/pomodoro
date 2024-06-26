@@ -1,9 +1,9 @@
 .pomodoro-button-wrapper.header {
- display: flex;
- flex-direction: column;
- justify-content: space-evenly;
- align-items: center;
- margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
 .btn-dark {
@@ -32,17 +32,37 @@
 }
 
 .btn-dark:hover {
-    background: #53534e; 
+  background: #53534e;
 }
 
-/* Start / Reset buttons */
+/* Start / Reset button */
 
 .pomodoro-button-wrapper {
   display: flex;
   flex-direction: column;
 
-  button.start-btn, button.reset-btn {
+  button.start-btn,
+  button.reset-btn {
     width: 90%;
     margin: 0 auto 1.2rem auto;
+  }
+}
+
+/* add task button */
+
+.add-task-container {
+  border-style: dashed;
+  border-radius: 10px;
+  width: 90%;
+  margin: auto;
+  height: 2.8rem;
+  display: flex;
+  justify-content: center;
+
+  button#add-task-btn {
+    background-color: inherit;
+    border-style: none;
+    height: 2.8rem;
+    font-weight: 600;
   }
 }

@@ -4,14 +4,19 @@ const MAX_ESTIMATED_POMOS = "20";
 const MIN_ESTIMATED_POMOS = "1";
 
 export function addTaskEvents(addTaskButton, getTemplate) {
-  $(document).on("click", `#${addTaskButton.attr("id")}`, function () {
+
+  let containerContent = $(".add-task-container").html();
+ 
+  $(document).on("click", `.${addTaskButton.attr("class")}`, function () {
     // set component template
     $(".add-task-container").empty().append(getTemplate());
   });
 
   // cancel event
-  $(document).on("click", "#btn-cancel", function () {
-    $(".add-task-container").empty().append(addTaskButton);
+  $(document).on("click", "#btn-cancel", function (e) {
+    // to prevent propagation with the parent element
+    e.stopPropagation();
+    $(".add-task-container").empty().append(containerContent);
   });
 
   // increases the number of estimated pomodoros
