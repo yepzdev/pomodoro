@@ -5,10 +5,11 @@ const MIN_ESTIMATED_POMOS = "1";
 
 export function addTaskEvents(addTaskButton, getTemplate) {
 
-  let containerContent = $(".add-task-container").html();
+  let containerContent = $("#add-task-container").html();
  
-  $(document).on("click", `.${addTaskButton.attr("class")}`, function () {
+  $(document).on("click", `#${addTaskButton.attr("id")}`, function () {
     // set component template
+    $(".add-task-container").removeClass("dashed");
     $(".add-task-container").empty().append(getTemplate());
   });
 
@@ -16,6 +17,7 @@ export function addTaskEvents(addTaskButton, getTemplate) {
   $(document).on("click", "#btn-cancel", function (e) {
     // to prevent propagation with the parent element
     e.stopPropagation();
+    $(".add-task-container").addClass("dashed");
     $(".add-task-container").empty().append(containerContent);
   });
 

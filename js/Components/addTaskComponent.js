@@ -2,7 +2,7 @@ export function addTaskComponent() {
   function getTemplate() {
     return `
         
-        <textarea class="add-task-textarea" placeholder="What are you working on ?"></textarea>
+        <textarea rows="8" class="add-task-textarea" placeholder="What are you working on ?"></textarea>
       <div class="input-number-container">
         <input type="number" name="0" id="add-task-input" min="1" max="20" value="1" />
         <button id="btn-increase-estimated">up</button>
