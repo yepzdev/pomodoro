@@ -11,6 +11,7 @@ export function addTaskEvents(addTaskButton, getTemplate) {
     // set component template
     $(".add-task-container").removeClass("dashed");
     $(".add-task-container").empty().append(getTemplate());
+    $(".add-task-container textarea").focus();
   });
 
   // cancel event

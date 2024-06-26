@@ -80,4 +80,12 @@
     margin-top: 1rem;
   }
 
+  textarea::placeholder {
+    color: #999;
+    font-style: italic;
+    font-size: 14px;
+    padding-top: 20px;
+    line-height: 2;
+ }
+
 }
