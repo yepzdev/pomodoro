@@ -58,11 +58,9 @@
   height: 2.8rem;
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: 2.8rem;
+  font-weight:700;
+  font-size: 1.2rem;
 
-  button#add-task-btn {
-    background-color: inherit;
-    border-style: none;
-    height: 2.8rem;
-    font-weight: 600;
-  }
 }
