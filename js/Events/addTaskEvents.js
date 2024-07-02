@@ -23,7 +23,7 @@ export function addTaskEvents(addTaskButton, getTemplate) {
   });
 
   // increases the number of estimated pomodoros
-  $(document).on("click", "#btn-increase-estimated", function () {
+  $(document).on("click", "#btn-increase-estimated", function (e) {
     e.stopPropagation();
     // estimated input element
     let estimatedIpunt = $("#add-task-input"),
@@ -35,7 +35,7 @@ export function addTaskEvents(addTaskButton, getTemplate) {
   });
 
   // decrease the number of estimated pomodoros
-  $(document).on("click", "#btn-decrements-estimated", function () {
+  $(document).on("click", "#btn-decrements-estimated", function (e) {
     e.stopPropagation();
     // estimated input element
     let estimatedIpunt = $("#add-task-input"),
@@ -47,7 +47,7 @@ export function addTaskEvents(addTaskButton, getTemplate) {
   });
 
   // Validate input to accept only numbers from 1 to 20
-  $(document).on("input", "#add-task-input", function () {
+  $(document).on("input", "#add-task-input", function (e) {
     e.stopPropagation();
     var value = parseInt($(this).val(), 10);
     if (value < 1 || value > 20) {

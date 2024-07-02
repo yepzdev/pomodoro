@@ -121,7 +121,7 @@
 
     /* Eliminar flechas en Firefox para una clase específica */
     #add-task-input {
-      -moz-appearance: textfield;
+      appearance: textfield;
     }
   }
 
