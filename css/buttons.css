@@ -64,7 +64,7 @@
   justify-content: center;
   align-items: center;
   height: 2.8rem;
-  font-weight:700;
+  font-weight: 700;
   font-size: 1.2rem;
   overflow: auto;
   height: auto;
@@ -75,15 +75,54 @@
   }
 
   input.add-task-input-text {
-    outline: none; 
+    outline: none;
     width: 90%;
     border-radius: 15px;
     margin-top: 1rem;
-    padding-left: 10px; 
+    padding-left: 10px;
     border: medium;
     font-weight: 600;
     font-style: italic;
     height: 2rem;
+  }
+
+  .input-number-container {
+    width: 90%;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    margin-top: 0.8rem;
+    
+    input#add-task-input {
+      padding-left: 10px;
+    }
+    
+    #btn-increase-estimated,
+    #btn-decrements-estimated {
+      width: 40px;
+    }
+
+    input#add-task-input,
+    #btn-increase-estimated,
+    #btn-decrements-estimated {
+      margin-right: 25px;
+      border-radius: 15px;
+      border: medium;
+    }
+
+
+    /* Eliminar flechas en Chrome, Safari y Edge para una clase específica */
+    #add-task-input::-webkit-inner-spin-button,
+    #add-task-input::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Eliminar flechas en Firefox para una clase específica */
+    #add-task-input {
+      -moz-appearance: textfield;
+    }
   }
 
   /* input.add-task-input-text:focus {
@@ -98,5 +137,4 @@
     padding-top: 20px;
     line-height: 2;
  } */
-
 }

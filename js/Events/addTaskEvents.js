@@ -24,6 +24,7 @@ export function addTaskEvents(addTaskButton, getTemplate) {
 
   // increases the number of estimated pomodoros
   $(document).on("click", "#btn-increase-estimated", function () {
+    e.stopPropagation();
     // estimated input element
     let estimatedIpunt = $("#add-task-input"),
       inputValue = estimatedIpunt.val();
@@ -35,6 +36,7 @@ export function addTaskEvents(addTaskButton, getTemplate) {
 
   // decrease the number of estimated pomodoros
   $(document).on("click", "#btn-decrements-estimated", function () {
+    e.stopPropagation();
     // estimated input element
     let estimatedIpunt = $("#add-task-input"),
       inputValue = estimatedIpunt.val();
@@ -46,6 +48,7 @@ export function addTaskEvents(addTaskButton, getTemplate) {
 
   // Validate input to accept only numbers from 1 to 20
   $(document).on("input", "#add-task-input", function () {
+    e.stopPropagation();
     var value = parseInt($(this).val(), 10);
     if (value < 1 || value > 20) {
       $(this).val("");
@@ -55,6 +58,7 @@ export function addTaskEvents(addTaskButton, getTemplate) {
 
   // Prevent non-numeric input
   $(document).on("keypress", "#add-task-input", function (e) {
+    e.stopPropagation();
     var charCode = e.which ? e.which : e.keyCode;
     if (charCode < 48 || charCode > 57) {
       e.preventDefault();
@@ -64,7 +68,9 @@ export function addTaskEvents(addTaskButton, getTemplate) {
   // ============== These events allow us to save tasks ==============
 
   // This event will allow us to save the task data
-  $(document).on("click", "#btn-save", function () {
+  $(document).on("click", "#btn-save", function (e) {
+    
+    e.stopPropagation();
     // get all task data
     let taskDescription = $(".add-task-container")
       .find(".add-task-input-text")
@@ -95,6 +101,9 @@ export function addTaskEvents(addTaskButton, getTemplate) {
 
   // Event for the enter key, allows us to create tasks more easily.
   $(".add-task-container").on("keypress", function (e) {
+    
+    e.stopPropagation();
+
     if (e.which === 13) {
       let taskDescription = $(".add-task-container")
         .find(".add-task-input-text")
