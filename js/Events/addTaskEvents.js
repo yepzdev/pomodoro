@@ -26,7 +26,6 @@ export function addTaskEvents(addTaskButton, getTemplate) {
 
   // increases the number of estimated pomodoros
   $(document).on("click", "#btn-increase-estimated", function (e) {
-    e.stopPropagation();
     let estimatedIpunt = $("#add-task-input"),
       inputValue = estimatedIpunt.val();
 
@@ -37,7 +36,6 @@ export function addTaskEvents(addTaskButton, getTemplate) {
 
   // decrease the number of estimated pomodoros
   $(document).on("click", "#btn-decrements-estimated", function (e) {
-    e.stopPropagation();
     let estimatedIpunt = $("#add-task-input"),
       inputValue = estimatedIpunt.val();
 
@@ -46,7 +44,7 @@ export function addTaskEvents(addTaskButton, getTemplate) {
       : null;
   });
 
-  $(document).on("click", "#add-task-input", function () {
+  $(document).on("click", "#add-task-input", function (e) {
     e.stopPropagation();
     $("#add-task-input").focus();
   })
@@ -63,7 +61,6 @@ export function addTaskEvents(addTaskButton, getTemplate) {
 
   // Prevent non-numeric input
   $(document).on("keypress", "#add-task-input", function (e) {
-    e.stopPropagation();
     var charCode = e.which ? e.which : e.keyCode;
     if (charCode < 48 || charCode > 57) {
       e.preventDefault();
@@ -75,7 +72,6 @@ export function addTaskEvents(addTaskButton, getTemplate) {
   // This event will allow us to save the task data
   $(document).on("click", "#btn-save", function (e) {
     
-    e.stopPropagation();
     // get all task data
     let taskDescription = $(".add-task-container")
       .find(".add-task-input-text")
@@ -106,7 +102,6 @@ export function addTaskEvents(addTaskButton, getTemplate) {
   // Event for the enter key, allows us to create tasks more easily.
   $(".add-task-container").on("keypress", function (e) {
     
-    e.stopPropagation();
 
     if (e.which === 13) {
       let taskDescription = $(".add-task-container")
