@@ -74,18 +74,28 @@
     margin: 1rem;
   }
 
-  textarea {
-    width: 95%;
+  input.add-task-input-text {
+    outline: none; 
+    width: 90%;
     border-radius: 15px;
     margin-top: 1rem;
+    padding-left: 10px; 
+    border: medium;
+    font-weight: 600;
+    height: 2rem;
   }
 
-  textarea::placeholder {
+  /* input.add-task-input-text:focus {
+    border-style: none;
+    
+  } */
+
+  /* textarea::placeholder {
     color: #999;
     font-style: italic;
-    font-size: 14px;
+    font-size: 20px;
     padding-top: 20px;
     line-height: 2;
- }
+ } */
 
 }

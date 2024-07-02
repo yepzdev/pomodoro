@@ -11,7 +11,7 @@ export function addTaskEvents(addTaskButton, getTemplate) {
     $(".add-task-container").removeClass("dashed");
     // set component template
     $(".add-task-container").empty().append(getTemplate());
-    $(".add-task-container textarea").focus();
+    $(".add-task-container input[type='text']").focus(); 
   });
 
   // cancel event
@@ -67,7 +67,7 @@ export function addTaskEvents(addTaskButton, getTemplate) {
   $(document).on("click", "#btn-save", function () {
     // get all task data
     let taskDescription = $(".add-task-container")
-      .find(".add-task-textarea")
+      .find(".add-task-input-text")
       .val();
 
     let estimatedPomodoro = $(".input-number-container")
@@ -97,7 +97,7 @@ export function addTaskEvents(addTaskButton, getTemplate) {
   $(".add-task-container").on("keypress", function (e) {
     if (e.which === 13) {
       let taskDescription = $(".add-task-container")
-        .find(".add-task-textarea")
+        .find(".add-task-input-text")
         .val();
 
       let estimatedPomodoro = $(".input-number-container")

@@ -22,11 +22,11 @@ let finishList = $("<div>")
 
 export default class TaskManager {
   constructor() {
-    this.taskId = 0;
-    this.finishButton = button.finish.get(0).outerHTML;
+    this.taskId       = 0;
+    this.taskName     = null;
+    this.undoButton   = button.undo.get(0).outerHTML;
     this.removeButton = button.remove.get(0).outerHTML;
-    this.undoButton = button.undo.get(0).outerHTML;
-    this.taskName = null;
+    this.finishButton = button.finish.get(0).outerHTML;
   }
 
   /**
