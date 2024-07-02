@@ -96,6 +96,7 @@
     
     input#add-task-input {
       padding-left: 10px;
+      outline: none;
     }
     
     #btn-increase-estimated,

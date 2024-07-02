@@ -7,11 +7,13 @@ export function addTaskEvents(addTaskButton, getTemplate) {
 
   let containerContent = $("#add-task-container").html();
  
-  $(document).on("click", `#${addTaskButton.attr("id")}`, function () {
+  $(document).on("click", `#${addTaskButton.attr("id")}`, function (e) {
     $(".add-task-container").removeClass("dashed");
     // set component template
     $(".add-task-container").empty().append(getTemplate());
     $(".add-task-container input[type='text']").focus(); 
+
+    e.stopPropagation();
   });
 
   // cancel event
@@ -25,7 +27,6 @@ export function addTaskEvents(addTaskButton, getTemplate) {
   // increases the number of estimated pomodoros
   $(document).on("click", "#btn-increase-estimated", function (e) {
     e.stopPropagation();
-    // estimated input element
     let estimatedIpunt = $("#add-task-input"),
       inputValue = estimatedIpunt.val();
 
@@ -37,7 +38,6 @@ export function addTaskEvents(addTaskButton, getTemplate) {
   // decrease the number of estimated pomodoros
   $(document).on("click", "#btn-decrements-estimated", function (e) {
     e.stopPropagation();
-    // estimated input element
     let estimatedIpunt = $("#add-task-input"),
       inputValue = estimatedIpunt.val();
 
@@ -46,9 +46,14 @@ export function addTaskEvents(addTaskButton, getTemplate) {
       : null;
   });
 
+  $(document).on("click", "#add-task-input", function () {
+    e.stopPropagation();
+    $("#add-task-input").focus();
+  })
+
   // Validate input to accept only numbers from 1 to 20
   $(document).on("input", "#add-task-input", function (e) {
-    e.stopPropagation();
+
     var value = parseInt($(this).val(), 10);
     if (value < 1 || value > 20) {
       $(this).val("");
@@ -84,7 +89,6 @@ export function addTaskEvents(addTaskButton, getTemplate) {
     // parse to integer
     estimatedPomodoro = parseInt(estimatedPomodoro);
 
-    // validations
     // check that it is not empty text
     if (task.isEmpty(taskDescription)) {
       return console.error("La tarea debe tener una descripcion");
@@ -116,7 +120,6 @@ export function addTaskEvents(addTaskButton, getTemplate) {
       let task = new TaskManager();
       estimatedPomodoro = parseInt(estimatedPomodoro);
 
-      // validations
       // check that it is not empty text
       if (task.isEmpty(taskDescription)) {
         return console.error("La tarea debe tener una descripcion");
