@@ -126,6 +126,22 @@
     }
   }
 
+  /* buttons cancel/save* container */
+  div.buttons-save-cancel-container {
+    width: 90%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+
+    button#btn-save, button#btn-cancel {
+      width: 45%;
+      border-radius: 15px;
+      border: medium;
+    }
+  }
+
   /* input.add-task-input-text:focus {
     border-style: none;
     

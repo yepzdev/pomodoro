@@ -7,8 +7,10 @@ export function addTaskComponent() {
         <button id="btn-increase-estimated"> <i class="fa-solid fa-caret-up"></i></button>
         <button id="btn-decrements-estimated"><i class="fa-solid fa-caret-down"></i></button>
       </div>
-      <button id="btn-save">save</button>
-      <button id="btn-cancel">cancel</button>`;
+      <div class="buttons-save-cancel-container">
+        <button id="btn-save">save</button>
+        <button id="btn-cancel">cancel</button>
+      </div>`;
   }
 
   // Return the button element for further use in event handlers

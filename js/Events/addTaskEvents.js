@@ -44,7 +44,9 @@ export function addTaskEvents(addTaskButton, getTemplate) {
       : null;
   });
 
+  // maintains focus when the user clicks on the number field
   $(document).on("click", "#add-task-input", function (e) {
+    // We avoid the propagation of the click event for the other fields
     e.stopPropagation();
     $("#add-task-input").focus();
   })
