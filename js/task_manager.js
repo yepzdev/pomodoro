@@ -141,6 +141,8 @@ export default class TaskManager {
   add(data) {
     let { taskDescription, estimatedPomodoro } = data;
 
+    if (!taskDescription) return console.error("Empty tasks cannot be created.");
+
     // prepare data for fetch API
     let taskData = {
       url: POMOTASK_URL,

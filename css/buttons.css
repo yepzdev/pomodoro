@@ -54,7 +54,8 @@
   border-style: dashed;
 }
 
-.add-task-container {
+/* #add-task-container */
+.closed {
   border-radius: 20px;
   width: 90%;
   margin: auto;
@@ -70,9 +71,30 @@
   height: auto;
   background-color: beige;
 
+
   p {
     margin: 1rem;
   }
+
+}
+
+/* #add-task-container */
+.open {
+
+  border-radius: 20px;
+  width: 90%;
+  margin: auto;
+  height: 2.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 2.8rem;
+  font-weight: 700;
+  font-size: 1.2rem;
+  overflow: auto;
+  height: auto;
+  background-color: beige;
 
   input.add-task-input-text {
     outline: none;
@@ -93,12 +115,12 @@
     flex-direction: row;
     justify-content: start;
     margin-top: 0.8rem;
-    
+
     input#add-task-input {
       padding-left: 10px;
       outline: none;
     }
-    
+
     #btn-increase-estimated,
     #btn-decrements-estimated {
       width: 40px;
@@ -111,7 +133,6 @@
       border-radius: 15px;
       border: medium;
     }
-
 
     /* Eliminar flechas en Chrome, Safari y Edge para una clase específica */
     #add-task-input::-webkit-inner-spin-button,
@@ -135,23 +156,11 @@
     display: flex;
     justify-content: space-between;
 
-    button#btn-save, button#btn-cancel {
+    button#btn-save,
+    button#btn-cancel {
       width: 45%;
       border-radius: 15px;
       border: medium;
     }
   }
-
-  /* input.add-task-input-text:focus {
-    border-style: none;
-    
-  } */
-
-  /* textarea::placeholder {
-    color: #999;
-    font-style: italic;
-    font-size: 20px;
-    padding-top: 20px;
-    line-height: 2;
- } */
 }
