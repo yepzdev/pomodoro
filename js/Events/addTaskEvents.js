@@ -26,6 +26,9 @@ export function addTaskEvents(addTaskButton, getTemplate) {
 
   // increases the number of estimated pomodoros
   $(document).on("click", "#btn-increase-estimated", function (e) {
+
+    e.stopPropagation();
+
     let estimatedIpunt = $("#add-task-input"),
       inputValue = estimatedIpunt.val();
 
@@ -36,6 +39,9 @@ export function addTaskEvents(addTaskButton, getTemplate) {
 
   // decrease the number of estimated pomodoros
   $(document).on("click", "#btn-decrements-estimated", function (e) {
+
+    e.stopPropagation();
+    
     let estimatedIpunt = $("#add-task-input"),
       inputValue = estimatedIpunt.val();
 
@@ -87,8 +93,8 @@ export function addTaskEvents(addTaskButton, getTemplate) {
     // parse to integer
     estimatedPomodoro = parseInt(estimatedPomodoro);
 
-    // check that it is not empty text
     if (task.isEmpty(taskDescription)) {
+    // check that it is not empty text
       return console.error("La tarea debe tener una descripcion");
     }
     // check that it is an integer
