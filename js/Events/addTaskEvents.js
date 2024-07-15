@@ -7,21 +7,27 @@ export function addTaskEvents(addTaskContainer, getTemplate) {
 
   const $addTaskContainer = $("#add-task-container");
 
+  function openTaskContainer() {
+    $addTaskContainer.empty().append(getTemplate());
+    $addTaskContainer.find("input[type='text']").focus();
+    $addTaskContainer.removeClass("closed dashed").addClass("open");
+  }
+
+  function closeTaskContainer() {
+    $addTaskContainer.removeClass("open").addClass("closed dashed");
+    $addTaskContainer.empty().append(addTaskContainer);
+  }
+
   $(document).on("click", "div.closed", function (e) {
     e.stopPropagation();
-    $addTaskContainer.empty().append(getTemplate());
-    $("#add-task-container input[type='text']").focus();
-    $addTaskContainer.removeClass("closed dashed");
-    $addTaskContainer.addClass("open");
+    openTaskContainer();
   });
 
   // cancel event
   $(document).on("click", "#btn-cancel", function (e) {
     // to prevent propagation with the parent element
     e.stopPropagation();
-    $addTaskContainer.removeClass("open");
-    $addTaskContainer.addClass("closed dashed");
-    $addTaskContainer.empty().append(addTaskContainer);
+    closeTaskContainer();
   });
 
   // increases the number of estimated pomodoros
@@ -52,13 +58,13 @@ export function addTaskEvents(addTaskContainer, getTemplate) {
   $(document).on("click", "#add-task-input", function (e) {
     // We avoid the propagation of the click event for the other fields
     e.stopPropagation();
-    $("#add-task-input").focus();
+    $(this).focus();
   });
 
   // Validate input to accept only numbers from 1 to 20
   $(document).on("input", "#add-task-input", function (e) {
     var value = parseInt($(this).val(), 10);
-    if (value < 1 || value > 20) {
+    if (value < MIN_ESTIMATED_POMOS || value > MAX_ESTIMATED_POMOS) {
       $(this).val("");
       alert("Please enter a number between 1 and 20");
     }
@@ -99,10 +105,7 @@ export function addTaskEvents(addTaskContainer, getTemplate) {
     }
 
     task.add({ taskDescription, estimatedPomodoro });
-    // replace with the "add task" button after saving the task
-    $addTaskContainer.removeClass("open");
-    $addTaskContainer.addClass("closed dashed");
-    $addTaskContainer.empty().append(addTaskContainer);
+    closeTaskContainer();
   });
 
   // Event for the enter key, allows us to create tasks more easily.
@@ -129,9 +132,7 @@ export function addTaskEvents(addTaskContainer, getTemplate) {
       }
 
       task.add({ taskDescription, estimatedPomodoro });
-      $addTaskContainer.removeClass("open");
-      $addTaskContainer.addClass("closed dashed");
-      $addTaskContainer.empty().append(addTaskContainer);
+      closeTaskContainer();
     }
   });
 
