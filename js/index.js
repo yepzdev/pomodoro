@@ -9,6 +9,7 @@ import fetchData from "./Api/Fetch.js";
 
 const task = new TaskManager();
 $(document).ready(function () {
+  
   let addTaskContainer = $("#add-task-container").html();
   // get template to add tasks
   const template = addTaskComponent();

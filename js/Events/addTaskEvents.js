@@ -5,21 +5,23 @@ const MIN_ESTIMATED_POMOS = "1";
 
 export function addTaskEvents(addTaskContainer, getTemplate) {
 
+  const $addTaskContainer = $("#add-task-container");
+
   $(document).on("click", "div.closed", function (e) {
     e.stopPropagation();
-    $("#add-task-container").empty().append(getTemplate());
+    $addTaskContainer.empty().append(getTemplate());
     $("#add-task-container input[type='text']").focus();
-    $("#add-task-container").removeClass("closed dashed");
-    $("#add-task-container").addClass("open");
+    $addTaskContainer.removeClass("closed dashed");
+    $addTaskContainer.addClass("open");
   });
 
   // cancel event
   $(document).on("click", "#btn-cancel", function (e) {
     // to prevent propagation with the parent element
     e.stopPropagation();
-    $("#add-task-container").removeClass("open");
-    $("#add-task-container").addClass("closed dashed");
-    $("#add-task-container").empty().append(addTaskContainer);
+    $addTaskContainer.removeClass("open");
+    $addTaskContainer.addClass("closed dashed");
+    $addTaskContainer.empty().append(addTaskContainer);
   });
 
   // increases the number of estimated pomodoros
@@ -75,7 +77,7 @@ export function addTaskEvents(addTaskContainer, getTemplate) {
   // This event will allow us to save the task data
   $(document).on("click", "#btn-save", function (e) {
     // get all task data
-    let taskDescription = $("#add-task-container")
+    let taskDescription = $addTaskContainer
       .find(".add-task-input-text")
       .val();
 
@@ -98,15 +100,15 @@ export function addTaskEvents(addTaskContainer, getTemplate) {
 
     task.add({ taskDescription, estimatedPomodoro });
     // replace with the "add task" button after saving the task
-    $("#add-task-container").removeClass("open");
-    $("#add-task-container").addClass("closed dashed");
-    $("#add-task-container").empty().append(addTaskContainer);
+    $addTaskContainer.removeClass("open");
+    $addTaskContainer.addClass("closed dashed");
+    $addTaskContainer.empty().append(addTaskContainer);
   });
 
   // Event for the enter key, allows us to create tasks more easily.
-  $("#add-task-container").on("keypress", function (e) {
+  $addTaskContainer.on("keypress", function (e) {
     if (e.which === 13) {
-      let taskDescription = $("#add-task-container")
+      let taskDescription = $addTaskContainer
         .find(".add-task-input-text")
         .val();
 
@@ -127,9 +129,9 @@ export function addTaskEvents(addTaskContainer, getTemplate) {
       }
 
       task.add({ taskDescription, estimatedPomodoro });
-      $("#add-task-container").removeClass("open");
-      $("#add-task-container").addClass("closed dashed");
-      $("#add-task-container").empty().append(addTaskContainer);
+      $addTaskContainer.removeClass("open");
+      $addTaskContainer.addClass("closed dashed");
+      $addTaskContainer.empty().append(addTaskContainer);
     }
   });
 
