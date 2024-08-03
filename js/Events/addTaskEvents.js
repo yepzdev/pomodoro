@@ -64,7 +64,7 @@ export function addTaskEvents(addTaskContainer, getTemplate) {
   // Validate input to accept only numbers from 1 to 20
   $(document).on("input", "#add-task-input", function (e) {
     var value = parseInt($(this).val(), 10);
-    if (value < MIN_ESTIMATED_POMOS || value > MAX_ESTIMATED_POMOS) {
+    if (value < MIN_ESTIMATED_POMOS || value > MAX_ESTIMATED_POMOS ) {
       $(this).val("");
       alert("Please enter a number between 1 and 20");
     }
