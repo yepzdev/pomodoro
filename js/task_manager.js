@@ -10,7 +10,8 @@ let pendingList = $("<div>")
     id: "pending-list",
     class: "pending-list-container",
   })
-  .html("<h3>Pending list</h3><ul></ul>");
+  .append("<ul></ul>");
+  // .html("<h3>Pending list</h3><ul></ul>");
 
 // complete list container
 let finishList = $("<div>")
@@ -18,7 +19,8 @@ let finishList = $("<div>")
     id: "finish-list",
     class: "finish-list-container",
   })
-  .html("<h3>Complete list</h3><ul></ul>");
+  .append("<ul></ul>");
+  // .html("<h3>Complete list</h3><ul></ul>");
 
 export default class TaskManager {
   constructor() {

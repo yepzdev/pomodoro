@@ -15,3 +15,13 @@ span.text-decoration-none {
   border-width: 1px;
   padding: 2px;
 }
+
+/* remove li styles */
+.pending-list-container, .finish-list-container {
+  width: 90%;
+  margin: auto;
+
+  ul > li {
+    list-style: none;
+  }
+}
