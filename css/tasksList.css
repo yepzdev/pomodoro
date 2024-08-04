@@ -1,5 +1,18 @@
 .text-decoration-line {
-  text-decoration: line-through;
+  position: relative;
+  color:   #909497 ;
+  /* text-decoration: line-through; */
+}
+
+.text-decoration-line::after {
+  content: '';
+  position: absolute;
+  left: 20px;
+  right:50px;
+  top: 50%;
+  height: 1.5px; /* Ajusta el grosor de la línea aquí */
+  background-color:  #909497 ; /* Color de la línea */
+  transform: translateY(-50%);
 }
 
 span.text-decoration-none {
@@ -28,6 +41,8 @@ span.text-decoration-none {
 .pending-list-container, .finish-list-container {
   width: 90%;
   margin: auto;
+  font-size: 1.2rem;
+  font-weight: 500;
 
   ul > li {
     height: 2.6rem;
@@ -38,6 +53,6 @@ span.text-decoration-none {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color:     #f2f4f4;
+    background-color:      #f4f6f6 ;
   }
 }
