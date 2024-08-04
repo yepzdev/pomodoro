@@ -52,7 +52,8 @@ export let finish = $(button)
 export let remove = $(button)
 .clone()
 .addClass("remove-task")
-.text("remove");
+.html("<i class='fa-solid fa-trash'></i>");
+// .text("remove");
 
 // undo
 export let undo = $(button)

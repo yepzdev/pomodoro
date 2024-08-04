@@ -56,3 +56,17 @@ span.text-decoration-none {
     background-color:      #f4f6f6 ;
   }
 }
+
+  /* tasks list buttons  */
+  .remove-task {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 24px;
+    color: #242422; /* Cambia el color del icono si es necesario */
+  }
+
+  .remove-task:hover {
+    color: #b44c4c ; /* Cambia el color al pasar el cursor si es necesario */
+  }

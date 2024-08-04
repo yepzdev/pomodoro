@@ -70,16 +70,13 @@
   height: auto;
   background-color: beige;
 
-
   p {
     margin: 1rem;
   }
-
 }
 
 /* #add-task-container */
 .open {
-
   border-radius: 20px;
   width: 90%;
   margin: auto;
