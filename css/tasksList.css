@@ -1,6 +1,6 @@
 .text-decoration-line {
   position: relative;
-  color:   #909497 ;
+  color: #d7dbdd;
   /* text-decoration: line-through; */
 }
 
@@ -11,7 +11,7 @@
   right:50px;
   top: 50%;
   height: 1.5px; /* Ajusta el grosor de la línea aquí */
-  background-color:  #909497 ; /* Color de la línea */
+  background-color:   #d7dbdd; /* Color de la línea */
   transform: translateY(-50%);
 }
 
@@ -58,7 +58,7 @@ span.text-decoration-none {
 }
 
   /* tasks list buttons  */
-  .remove-task {
+  .remove-task, .undo-button, .finish-task {
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -67,6 +67,6 @@ span.text-decoration-none {
     color: #242422; /* Cambia el color del icono si es necesario */
   }
 
-  .remove-task:hover {
+  .remove-task:hover, .undo-button:hover, .finish-task:hover {
     color: #b44c4c ; /* Cambia el color al pasar el cursor si es necesario */
   }

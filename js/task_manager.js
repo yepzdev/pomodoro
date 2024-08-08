@@ -41,15 +41,16 @@ export default class TaskManager {
   createItemList(task, status) {
     if (status) {
       return `<li data-task-id="${task.id}">
-        <span>${task.expected} / ${task.current}</span>
-        <p class="inline">${task.description}</p>
-        ${this.finishButton}${this.removeButton}
+      ${this.finishButton}
+      <p class="inline">${task.description}</p>
+      <span>${task.expected} / ${task.current}</span>
+      ${this.removeButton}
       </li>`;
     }
 
     return `<li data-task-id="${task.id}">
-        <span>${task.expected} / ${task.current}</span>
-        <p class="inline">${task.description}</p>
+    <span>${task.expected} / ${task.current}</span>
+    <p class="inline">${task.description}</p>
         ${this.undoButton}
       </li>`;
   }
@@ -210,7 +211,12 @@ export default class TaskManager {
   finish(item, id) {
     let self = this;
 
-    item.find(".finish-task").click(function () {
+    item.find(".finish-task").click(function (e) {
+
+      // * To prevent this event from highlighting the
+      // * task before marking it as completed
+      e.stopPropagation();
+
       let taskData = {
         url: POMOTASK_URL,
         method: "PUT",

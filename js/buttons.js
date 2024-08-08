@@ -46,17 +46,16 @@ $(button)
 export let finish = $(button)
 .clone()
 .addClass("finish-task")
-.text("finish");
+.append("<i class='fa-solid fa-circle-check'></i>");
 
 // remove
 export let remove = $(button)
 .clone()
 .addClass("remove-task")
-.html("<i class='fa-solid fa-trash'></i>");
-// .text("remove");
+.append("<i class='fa-solid fa-trash'></i>");
 
 // undo
 export let undo = $(button)
 .clone()
 .addClass("undo-button")
-.text("undo");
+.append("<i class='fa-solid fa-arrow-rotate-left'></i>");

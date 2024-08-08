@@ -10,22 +10,25 @@ $(function () {
 
     let $target = $(e.target);
 
-    // do nothing if highlighted
+    // do nothing if it's a button
     if ($target.is("button")) {
       return;
     }
-
-    // do nothing if it's a button
+    
+    // do nothing if highlighted
     if ($target.hasClass("highlighted")) {
       return;
     }
 
     // remove all highlighted tasks
     $("#pending-list li").removeClass("highlighted");
+
     // highlight task target
     $(this).closest("li").addClass("highlighted");
+
     // save id li item
     let taskId = $(this).closest("li").attr("data-task-id");
+    
     // new task instance to be able to update the tasks.
     const task = new TaskManager();
 
