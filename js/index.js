@@ -9,7 +9,6 @@ import fetchData from "./Api/Fetch.js";
 
 const task = new TaskManager();
 $(document).ready(function () {
-  
   let addTaskContainer = $("#add-task-container").html();
   // get template to add tasks
   const template = addTaskComponent();
@@ -21,8 +20,15 @@ $(document).ready(function () {
 $(document).ready(() => {
   let timer;
   let timeLeft = 25 * 60; // 25 minutes in seconds
+
   // save the pomodoro cycles
-  let pomodoroCycles = 1;
+  let pomodoroCycles = 1;  
+
+  // save pomodoro cycles in localStorage
+  if (localStorage.getItem("pomodoro_cycles") == null) {
+    
+    localStorage.setItem("pomodoro_cycles", pomodoroCycles);
+  }
 
   // by default the timer is paused
   let isPaused = true;
@@ -60,7 +66,8 @@ $(document).ready(() => {
 
   // Shows the number of pomodoros in the HTML #1, 2, 3...
   const showNumberOfPomodoros = () => {
-    $("#pomodoro-counter").text(`#${pomodoroCycles}`);
+    // $("#pomodoro-counter").text(`#${pomodoroCycles}`);
+    $("#pomodoro-counter").text(`#${localStorage.getItem('pomodoro_cycles')}`);
   };
 
   const isTimerExpired = () => {
@@ -70,7 +77,8 @@ $(document).ready(() => {
   // This method is important because it is what will allow us to know the number of
   // pomodoros (cycles) completed based on the counter (pomodoro counter) and thus be able to apply long or short rest.
   const isEqualToNumberOf = (cycles) => {
-    return pomodoroCycles % cycles === 0;
+    // return pomodoroCycles % cycles === 0;
+    return (localStorage.getItem('pomodoro_cycles')) % cycles === 0;
   };
 
   // This method handles the rest timer and pomodoro timer.
@@ -79,7 +87,14 @@ $(document).ready(() => {
     // If you already had a rest timer then set the pomodoro timer
     if (heHadBreaks) {
       setTimeInterval(POMODORO);
-      pomodoroCycles++;
+      // pomodoroCycles++;
+
+      // get number of cycle
+      let cycle  = Number.parseInt(localStorage.getItem('pomodoro_cycles'));
+      // increase a cycle
+      cycle++;
+      // save in memory cache
+      localStorage.setItem('pomodoro_cycles', cycle);
 
       // Check that the pending task is highlighted
       if ($("ul").find("li.highlighted").length) {
