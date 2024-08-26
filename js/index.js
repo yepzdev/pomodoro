@@ -50,9 +50,8 @@ $(document).ready(() => {
   function formatTime(seconds) {
     let minutes = Math.floor(seconds / 60);
     let remainingSeconds = seconds % 60;
-    return `${minutes < 10 ? "0" : ""}${minutes}:${
-      remainingSeconds < 10 ? "0" : ""
-    }${remainingSeconds}`;
+    
+    return `${minutes < 10 ? "0" : ""}${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
   }
 
   function playAudio(id) {
@@ -66,7 +65,6 @@ $(document).ready(() => {
 
   // Shows the number of pomodoros in the HTML #1, 2, 3...
   const showNumberOfPomodoros = () => {
-    // $("#pomodoro-counter").text(`#${pomodoroCycles}`);
     $("#pomodoro-counter").text(`#${localStorage.getItem('pomodoro_cycles')}`);
   };
 
@@ -77,7 +75,6 @@ $(document).ready(() => {
   // This method is important because it is what will allow us to know the number of
   // pomodoros (cycles) completed based on the counter (pomodoro counter) and thus be able to apply long or short rest.
   const isEqualToNumberOf = (cycles) => {
-    // return pomodoroCycles % cycles === 0;
     return (localStorage.getItem('pomodoro_cycles')) % cycles === 0;
   };
 
@@ -87,8 +84,6 @@ $(document).ready(() => {
     // If you already had a rest timer then set the pomodoro timer
     if (heHadBreaks) {
       setTimeInterval(POMODORO);
-      // pomodoroCycles++;
-
       // get number of cycle
       let cycle  = Number.parseInt(localStorage.getItem('pomodoro_cycles'));
       // increase a cycle
@@ -147,14 +142,12 @@ $(document).ready(() => {
       // we check that the timer has ended
       if (isTimerExpired()) {
         clearInterval(timer);
-        // $("#start").text("Start");
         $("#start").html("<i class='fa-solid fa-play'></i>");
         checkCycles();
       }
     }, 1000);
 
     isPaused = false;
-    // $("#start").text("Pause");
     $("#start").html("<i class='fa-solid fa-pause'></i>");
   }
 
@@ -167,7 +160,6 @@ $(document).ready(() => {
 
     clearInterval(timer);
     isPaused = true;
-    // $("#start").text("Start");
     $("#start").html("<i class='fa-solid fa-play'></i>");
   };
 
@@ -201,7 +193,6 @@ $(document).ready(() => {
     timeLeft = time * 60;
     clearInterval(timer);
     isPaused = true;
-    // $("#start").text("Start");
     $("#start").html("<i class='fa-solid fa-play'></i>");
     showTimer();
   };

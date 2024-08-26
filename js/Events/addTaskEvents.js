@@ -124,11 +124,11 @@ export function addTaskEvents(addTaskContainer, getTemplate) {
 
       // check that it is not empty text
       if (task.isEmpty(taskDescription)) {
-        return console.error("La tarea debe tener una descripcion");
+        return console.error("The task must have a description");
       }
       // check that it is an integer
       if (!Number.isInteger(estimatedPomodoro)) {
-        return console.error("debe ser un numero entero");
+        return console.error("Must be a integer number");
       }
 
       task.add({ taskDescription, estimatedPomodoro });

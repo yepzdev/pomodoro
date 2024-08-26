@@ -11,7 +11,6 @@ let pendingList = $("<div>")
     class: "pending-list-container",
   })
   .append("<ul></ul>");
-  // .html("<h3>Pending list</h3><ul></ul>");
 
 // complete list container
 let finishList = $("<div>")
@@ -20,13 +19,12 @@ let finishList = $("<div>")
     class: "finish-list-container",
   })
   .append("<ul></ul>");
-  // .html("<h3>Complete list</h3><ul></ul>");
 
 export default class TaskManager {
   constructor() {
-    this.taskId       = 0;
-    this.taskName     = null;
-    this.undoButton   = button.undo.get(0).outerHTML;
+    this.taskId = 0;
+    this.taskName = null;
+    this.undoButton = button.undo.get(0).outerHTML;
     this.removeButton = button.remove.get(0).outerHTML;
     this.finishButton = button.finish.get(0).outerHTML;
   }
@@ -40,19 +38,18 @@ export default class TaskManager {
    */
   createItemList(task, status) {
     if (status) {
-      return `<li data-task-id="${task.id}">
-      ${this.finishButton}
-      <p class="inline">${task.description}</p>
-      <span>${task.expected} / ${task.current}</span>
-      ${this.removeButton}
-      </li>`;
+      return `<li data-task-id="${task.id}">${this.finishButton}
+                <p class="inline">${task.description}</p>
+                <span>${task.expected} / ${task.current}</span>
+                ${this.removeButton}
+              </li>`;
     }
 
     return `<li data-task-id="${task.id}">
-    <span>${task.expected} / ${task.current}</span>
-    <p class="inline">${task.description}</p>
-        ${this.undoButton}
-      </li>`;
+              <span>${task.expected} / ${task.current}</span>
+              <p class="inline">${task.description}</p>
+              ${this.undoButton}
+            </li>`;
   }
 
   // This method updates the entire task list.
@@ -144,7 +141,8 @@ export default class TaskManager {
   add(data) {
     let { taskDescription, estimatedPomodoro } = data;
 
-    if (!taskDescription) return console.error("Empty tasks cannot be created.");
+    if (!taskDescription)
+      return console.error("Empty tasks cannot be created.");
 
     // prepare data for fetch API
     let taskData = {
@@ -212,7 +210,6 @@ export default class TaskManager {
     let self = this;
 
     item.find(".finish-task").click(function (e) {
-
       // * To prevent this event from highlighting the
       // * task before marking it as completed
       e.stopPropagation();
@@ -244,7 +241,6 @@ export default class TaskManager {
   undo(item, id) {
     self = this;
     item.find(".undo-button").click(function () {
-      
       let taskData = {
         url: POMOTASK_URL,
         method: "PUT",
@@ -254,7 +250,8 @@ export default class TaskManager {
         },
       };
 
-      fetchData(taskData).then((data) => {
+      fetchData(taskData)
+        .then((data) => {
           console.warn(data);
           // update tasks
           self.update();
