@@ -21,13 +21,13 @@ $(document).ready(() => {
   let timer;
   let timeLeft = 25 * 60; // 25 minutes in seconds
 
-  // save the pomodoro cycles
-  let pomodoroCycles = 1;  
+  // Sets the default number of cycles
+  const POMODORO_CYCLES_DEFAULT = 1;
 
-  // save pomodoro cycles in localStorage
+  // check that "pomodoro_cycles" key doesn't exist the first time.
   if (localStorage.getItem("pomodoro_cycles") == null) {
-    
-    localStorage.setItem("pomodoro_cycles", pomodoroCycles);
+    // save number of cycles
+    localStorage.setItem("pomodoro_cycles", POMODORO_CYCLES_DEFAULT);
   }
 
   // by default the timer is paused

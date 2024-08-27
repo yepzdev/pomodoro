@@ -82,6 +82,7 @@ export function addTaskEvents(addTaskContainer, getTemplate) {
 
   // This event will allow us to save the task data
   $(document).on("click", "#btn-save", function (e) {
+
     // get all task data
     let taskDescription = $addTaskContainer
       .find(".add-task-input-text")
@@ -97,11 +98,11 @@ export function addTaskEvents(addTaskContainer, getTemplate) {
 
     if (task.isEmpty(taskDescription)) {
       // check that it is not empty text
-      return console.error("La tarea debe tener una descripcion");
+      return console.error("The task must have a description");
     }
     // check that it is an integer
     if (!Number.isInteger(estimatedPomodoro)) {
-      return console.error("debe ser un numero entero");
+      return console.error("Must be  a integer number");
     }
 
     task.add({ taskDescription, estimatedPomodoro });
@@ -110,6 +111,10 @@ export function addTaskEvents(addTaskContainer, getTemplate) {
 
   // Event for the enter key, allows us to create tasks more easily.
   $addTaskContainer.on("keypress", function (e) {
+    
+    // to prevent the call off the click event (#btn-save)
+    e.preventDefault();
+
     if (e.which === 13) {
       let taskDescription = $addTaskContainer
         .find(".add-task-input-text")
