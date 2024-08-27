@@ -21,12 +21,42 @@ $(document).ready(() => {
   let timer;
   let timeLeft = 25 * 60; // 25 minutes in seconds
 
-  // Sets the default number of cycles
+  // sets the default number of cycles
   const POMODORO_CYCLES_DEFAULT = 1;
 
+  // ======================= timer cache ======================= 
+
+  // this code segment handles the cache expiration time.
+
+  // check current time
+  function checkTime() {
+    let now = new Date();
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+
+    // console.warn(now);
+  
+    // Change the hour and minutes for the test.
+    // For example, clear the cache at 00:00 AM
+    if (hours === 0 && minutes === 0) {
+      localStorage.clear();
+      console.warn("LocalStorage has been claned at 00:00 AM.");
+    } else {
+      // console.warn("The cache has not been cleared yet");
+    }
+  }
+
+  // execute the function immediately on page load
+  checkTime();
+  
+  // Set an interval to check the time every minute
+  setInterval( checkTime, 60000);
+  
+  // ======================= timer cache ======================= 
+  
   // check that "pomodoro_cycles" key doesn't exist the first time.
   if (localStorage.getItem("pomodoro_cycles") == null) {
-    // save number of cycles
+    // save number of cycles in cache
     localStorage.setItem("pomodoro_cycles", POMODORO_CYCLES_DEFAULT);
   }
 
@@ -50,8 +80,10 @@ $(document).ready(() => {
   function formatTime(seconds) {
     let minutes = Math.floor(seconds / 60);
     let remainingSeconds = seconds % 60;
-    
-    return `${minutes < 10 ? "0" : ""}${minutes}:${remainingSeconds < 10 ? "0" : ""}${remainingSeconds}`;
+
+    return `${minutes < 10 ? "0" : ""}${minutes}:${
+      remainingSeconds < 10 ? "0" : ""
+    }${remainingSeconds}`;
   }
 
   function playAudio(id) {
@@ -65,7 +97,7 @@ $(document).ready(() => {
 
   // Shows the number of pomodoros in the HTML #1, 2, 3...
   const showNumberOfPomodoros = () => {
-    $("#pomodoro-counter").text(`#${localStorage.getItem('pomodoro_cycles')}`);
+    $("#pomodoro-counter").text(`#${localStorage.getItem("pomodoro_cycles")}`);
   };
 
   const isTimerExpired = () => {
@@ -75,7 +107,7 @@ $(document).ready(() => {
   // This method is important because it is what will allow us to know the number of
   // pomodoros (cycles) completed based on the counter (pomodoro counter) and thus be able to apply long or short rest.
   const isEqualToNumberOf = (cycles) => {
-    return (localStorage.getItem('pomodoro_cycles')) % cycles === 0;
+    return localStorage.getItem("pomodoro_cycles") % cycles === 0;
   };
 
   // This method handles the rest timer and pomodoro timer.
@@ -85,11 +117,11 @@ $(document).ready(() => {
     if (heHadBreaks) {
       setTimeInterval(POMODORO);
       // get number of cycle
-      let cycle  = Number.parseInt(localStorage.getItem('pomodoro_cycles'));
+      let cycle = Number.parseInt(localStorage.getItem("pomodoro_cycles"));
       // increase a cycle
       cycle++;
       // save in memory cache
-      localStorage.setItem('pomodoro_cycles', cycle);
+      localStorage.setItem("pomodoro_cycles", cycle);
 
       // Check that the pending task is highlighted
       if ($("ul").find("li.highlighted").length) {
@@ -183,7 +215,7 @@ $(document).ready(() => {
     playAudio("#audio-pomodoro");
   });
 
-  // maybe this button doesn't make sense
+  // maybe this button doesn't make sense in production
   $("#reset").click(() => {
     setTimeInterval(POMODORO);
     playAudio("#audio-pomodoro");
