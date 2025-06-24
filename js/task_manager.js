@@ -159,7 +159,7 @@ export default class TaskManager {
 
     fetchData(taskData)
       .then((data) => {
-        console.info(data);
+        // console.info(data);
         // update task
         this.update();
       })

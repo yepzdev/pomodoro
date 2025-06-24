@@ -113,7 +113,8 @@ export function addTaskEvents(addTaskContainer, getTemplate) {
   $addTaskContainer.on("keypress", function (e) {
     
     // to prevent the call off the click event (#btn-save)
-    e.preventDefault();
+    // e.preventDefault();
+
 
     if (e.which === 13) {
       let taskDescription = $addTaskContainer
