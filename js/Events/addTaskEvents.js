@@ -14,7 +14,9 @@ export function addTaskEvents(addTaskContainer, getTemplate) {
   }
 
   function closeTaskContainer() {
-    $addTaskContainer.removeClass("open").addClass("closed dashed");
+    $addTaskContainer
+    .removeClass("open")
+    .addClass(["closed dashed", "cursor-pointer"]);
     $addTaskContainer.empty().append(addTaskContainer);
   }
 
